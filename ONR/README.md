@@ -15,7 +15,7 @@ The `main.tex` files contain the latest editable concepts. **A compiled PDF may 
 
 The Command and Control concept is for **Dr. William Krebs** and lives in `ONR/krebs/`. For emailing, use a freshly compiled attachment named `Du_ONR_YIP_Krebs.pdf`. An older `jeffrey_morrison.md` file is only an archived development note, not the intended recipient.
 
-Source references are **development provenance**, not material to attach to PO emails. The source PDFs (#1–#8) were supplied in the ChatGPT conversation; the AFOSR Laura paper is in [../laura](../laura/). Do not assume source work is completed unless supported by publications; proposed components are future research.
+Source references are **development provenance**, not material to attach to PO emails. The source PDFs (#1–#8) were supplied in the ChatGPT conversation; the AFOSR Laura paper is in [../AFOSR/laura](../AFOSR/laura/). Do not assume source work is completed unless supported by publications; proposed components are future research.
 
 ## Review before sending
 

@@ -2,8 +2,8 @@
 
 \usepackage[letterpaper,margin=1in]{geometry}
 \usepackage{fontspec}
-\IfFileExists{ben/fonts/EBGaramond-Regular.ttf}
-  {\def\laurafontpath{ben/fonts/}}
+\IfFileExists{AFOSR/ben/fonts/EBGaramond-Regular.ttf}
+  {\def\laurafontpath{AFOSR/ben/fonts/}}
   {\def\laurafontpath{../ben/fonts/}}
 \setmainfont{EBGaramond-Regular.ttf}[
   Path=\laurafontpath,
@@ -123,8 +123,8 @@ The project will produce models of how people respond to agreement among evaluat
 
 \clearpage
 \bibliographystyle{abbrvnat}
-\IfFileExists{laura/references.bib}
-  {\bibliography{laura/references}}
+\IfFileExists{AFOSR/laura/references.bib}
+  {\bibliography{AFOSR/laura/references}}
   {\bibliography{references}}
 
 \end{document}

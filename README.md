@@ -46,7 +46,7 @@ Official sources: [FY27 YIP notice and Q&A](https://simpler.grants.gov/opportuni
 | Program Officer | Document | LaTeX source | PDF |
 | --- | --- | --- | --- |
 | Predrag Neskovic | Four-page white paper v4 (current) | [ONR/predrag/main-4page-v4.tex](ONR/predrag/main-4page-v4.tex) | [Predrag white paper](ONR/predrag/white_paper_predrag-4page-v4.pdf) |
-| Predrag Neskovic | One-page discussion note | [ONR/predrag/main.tex](ONR/predrag/main.tex) | [Predrag one-page note](ONR/predrag/white_paper_predrag.pdf) |
+| Predrag Neskovic | One-page discussion note | [ONR/predrag/main-1page.tex](ONR/predrag/main-1page.tex) | [Predrag one-page note](ONR/predrag/white_paper_predrag.pdf) |
 
 Both compile with pdfLaTeX from `ONR/predrag/`; see [ONR/predrag/README.md](ONR/predrag/README.md) for build commands. Predrag's folder also holds the Program Officer feedback and meeting notes.
 

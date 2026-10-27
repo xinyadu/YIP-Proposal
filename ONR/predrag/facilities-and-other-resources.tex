@@ -1,0 +1,39 @@
+% Facilities & Other Resources (Grants.gov R&R Other Project Information, Field 10)
+% ONR FY27 YIP, NOFO N0001426SF004. Compile with pdfLaTeX.
+\documentclass[12pt,letterpaper]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage{microtype}
+\usepackage[colorlinks=true,urlcolor=black,linkcolor=black]{hyperref}
+\usepackage{titlesec}
+\urlstyle{same}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\titleformat{\section}{\normalfont\normalsize\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{8pt}{2pt}
+\hypersetup{pdftitle={Facilities and Other Resources},pdfauthor={Xinya Du}}
+\pagestyle{empty}
+\begin{document}
+\begin{center}
+{\large\bfseries Facilities and Other Resources\par}
+\vspace{3pt}
+Trustworthy Collective Reasoning and Evaluation for AI Agents\par
+Xinya Du (PI), The University of Texas at Dallas\par
+\end{center}
+
+\section*{University and Departmental Support}
+The Department of Computer Science at The University of Texas at Dallas (UT Dallas) provides the PI, Dr.\ Xinya Du, with office space, research workspace, and administrative support. The PI directs a research group on natural language processing, large language models, and reasoning.
+
+\section*{PI Laboratory Computing Resources}
+The PI's laboratory has an EXXACT GPU server with six NVIDIA A100 GPUs (80~GB of memory each) and four NVIDIA RTX A6000 GPUs (48~GB each), acquired with support from the Computer Science department's IT office. The server supports model inference, fine-tuning, judge evaluation, and iterative experiments on collective reasoning. The research group also uses local computing infrastructure for software development, data processing, and experiment management.
+
+\section*{UT Dallas Juno High-Performance Computing Cluster}
+UT Dallas gives faculty, students, and staff access to Juno, its flagship shared high-performance computing cluster. Juno has 127 compute nodes with 8,400 CPU cores, 52~TB of memory, and 67 NVIDIA GPUs: 52 H200 GPUs (141~GB each) on 26 nodes added in 2026, seven H100 GPUs, and eight A30 GPUs. SLURM manages its CPU and GPU queues, which suit parallel experiments, model evaluation, and large-scale data processing. Juno is shared across campus, so project use depends on account authorization, scheduling, and availability, and no dedicated allocation of its GPUs is assumed (specifications: \url{https://hpc.utdallas.edu/systems-resources/juno/}, accessed October 26, 2026).
+
+\section*{Storage and Technical Support}
+IO, the HPC storage system for Juno and Ganymede~2, hosts users' home and shared group directories. The university's HPC team provides account setup, software installation, consulting, onboarding, and user documentation, including a Juno user guide. The PI's laboratory and departmental systems will hold working copies of project data and routine backups. HPC scratch storage is temporary under the university's scratch-storage policy and will not be used for long-term preservation; data and code will be preserved and released as the Data Management Plan describes.
+
+\section*{Relevance to the Proposed Research}
+Together, the PI's GPU server and the shared university cluster suit the three research goals: weighting agents so that shared mistakes count once, agentic debate before an impartial judge who re-runs tool evidence, and reinforcement learning on group decisions. The local GPUs support rapid prototyping, repeated judge comparisons, and fine-tuning of open-weight models; Juno supports parallel evaluation across models, prompts, tasks, and conditions, and larger training runs as H200 availability allows. The budget requests cloud computing and model-access costs for experiments that need closed models or more capacity; no equipment purchase is requested.
+\end{document}

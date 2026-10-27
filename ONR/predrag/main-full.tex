@@ -18,6 +18,7 @@
 \usepackage[font=small,labelfont=bf,skip=4pt]{caption}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{pdfpages}
 \usepackage{makecell}
 \usepackage{array}
 \usepackage{enumitem}
@@ -629,16 +630,16 @@ The project will follow the tenets of Executive Order 14303, as the PI's previou
 \hd{Without conflicts of interest.} The PI will disclose outside activities and support as UT Dallas policy requires, and evaluations use public or synthetic data with released code.
 
 \section{Management Approach}\label{sec:mgmt}
-This is a single-PI award with no subawardees, co-investigators, or senior personnel. The PI will direct all research and be responsible for schedules, reports, and releases. The budget supports two Ph.D.\ students for three years, \confirm{one month} of PI summer effort per year, travel to ONR Project and Program Review Meetings and to conferences, and computing.
+This is a single-PI award with no subawardees, co-investigators, or senior personnel. The PI will direct all research and be responsible for schedules, reports, and releases. The budget supports two Ph.D.\ students for three years, one month of PI summer effort per year, travel to ONR Project and Program Review Meetings and to conferences, and computing.
 
 \hd{Team and roles.} Student~1 leads the statistical and mechanism-design work and its proofs: Tasks~1.1 and~1.2, the audit analysis of Task~2.2, and testbeds A and C. Student~2 leads the agent and learning work: the harness of Task~2.1, Task~3, and testbed B, which reuses the MEQA pipeline. Both students run the red team, rotating roles so that no one attacks only their own method. Code, logs, and planted-case generators live in one shared repository, with the harness frozen at each milestone so that results stay comparable.
 
 \hd{Reporting and dissemination.} The PI will submit annual and final reports, attend Project and Program Review Meetings, publish in peer-reviewed venues, and release code, testbeds, and protocols at M1, M6, and with each paper.
 
-\hd{Relation to other support.} The PI's NSF CAREER award studies event knowledge from long documents, the subject of the MEQA pipeline that testbed B reuses; the Open Philanthropy grant supports \confirm{control evaluations of two-agent debate, not the audits, selection, and rewards proposed here}; the Amazon Research Award concerns process-guided fine-tuning. This proposal funds aims those awards do not, and any overlap with a pending proposal would be removed with the program officers.
+\hd{Relation to other support.} The PI's NSF CAREER award studies event knowledge from long documents, the subject of the MEQA pipeline that testbed B reuses; the Open Philanthropy grant supports control evaluations of AI debate; the Amazon Research Award concerns process-guided fine-tuning. This proposal funds aims those awards do not, and any overlap with a pending proposal would be removed with the program officers.
 
 \section{Principal Investigator Qualifications}\label{sec:pi}
-\hd{Position and training.} The PI, Xinya Du, has been an Assistant Professor of Computer Science at The University of Texas at Dallas since 2022, \confirm{in a first tenure-track appointment}. The PI received a Ph.D.\ in Computer Science from Cornell University in 2021, advised by Claire Cardie, and was a postdoctoral researcher with Heng Ji at the University of Illinois Urbana-Champaign, where the PI was first author of RESIN-11, a schema-guided event prediction system developed in DARPA's KAIROS program \citep{du2022resin}. The PI was named a University of Chicago Rising Star in Data Science in 2021.
+\hd{Position and training.} The PI, Xinya Du, has been an Assistant Professor of Computer Science at The University of Texas at Dallas since 2022, in a first tenure-track appointment. The PI received a Ph.D.\ in Computer Science from Cornell University in 2021, advised by Claire Cardie, and was a postdoctoral researcher with Heng Ji at the University of Illinois Urbana-Champaign, where the PI was first author of RESIN-11, a schema-guided event prediction system developed in DARPA's KAIROS program \citep{du2022resin}. The PI was named a University of Chicago Rising Star in Data Science in 2021.
 
 \hd{Recognition and service.} NSF CAREER Award (2024--2029); Amazon Research Award (2023); Cisco Research Award (2025). The PI's Ph.D.\ paper on neural question generation \citep{du2017learning} has been cited more than 700 times and is ranked by Paper Digest among the most influential ACL 2017 papers. The PI has served as an area chair for ACL (2023, 2024, 2025), EMNLP (2024, 2025), LREC-COLING 2024, and COLING 2025, and as Website Chair of NAACL 2024, and co-organized the AI4Research workshop at AAAI 2025 and the Workshop on Multimodal Knowledge and Language Modeling at IJCAI 2025.
 
@@ -656,11 +657,11 @@ This work has appeared at NeurIPS, ICLR, ACL, EMNLP, and TMLR.
 
 \hd{Ability to comply.} The UT Dallas Office of Research and Innovation administers the PI's federal awards and will administer this award under 2 CFR 200 and ONR terms; the PI's commitments, listed in Current and Pending Support, leave the proposed effort available.
 
-\hd{Performance history.} The PI has managed an NSF CAREER award (2024--2029) and industry and foundation awards, \confirm{filing reports on time; funds on current awards are being spent on schedule}.
+\hd{Performance history.} The PI has managed an NSF CAREER award (2024--2029) and industry and foundation awards, filing reports on time; funds on current awards are being spent on schedule.
 
 \hd{Integrity and business ethics.} The PI and UT Dallas follow federal research-integrity policies (DoDI 3210.7); the PI has no record of misconduct.
 
-\hd{Qualifications and eligibility.} The PI is a U.S.\ permanent resident, has held a full-time tenure-track appointment at UT Dallas since 2022, \confirm{the PI's first}, and received the Ph.D.\ from Cornell University in 2021, on or after January 1, 2019, as Section B of the NOFO requires.
+\hd{Qualifications and eligibility.} The PI is a U.S.\ permanent resident, has held a full-time tenure-track appointment at UT Dallas since 2022, the PI's first, and received the Ph.D.\ from Cornell University in 2021, on or after January 1, 2019, as Section B of the NOFO requires.
 
 \hd{Organization and controls.} UT Dallas maintains federally reviewed accounting, property-control, research-security, quality-assurance, and safety systems and is registered in SAM (UEI EJCVPNN1WFS5; CAGE 0W921); the research is computational.
 \label{techend}
@@ -808,7 +809,7 @@ This work has appeared at NeurIPS, ICLR, ACL, EMNLP, and TMLR.
 \setcounter{page}{1}
 \section*{Letter(s) of Support}
 \addcontentsline{toc}{section}{Letter(s) of Support}
-\confirm{[Insert at least one letter from UT Dallas officials stating the university's long-term commitment to the PI and the proposed research. Not counted toward the page limit.]}
+\IfFileExists{DU-LOR-ONR-YIP-signed.pdf}{\includepdf[pages=-,pagecommand={\thispagestyle{plain}}]{DU-LOR-ONR-YIP-signed.pdf}}{\confirm{[Add DU-LOR-ONR-YIP-signed.pdf (letter from Dr.\ Rym Zalila-Wenkstern, Interim Department Head) to this folder; it is inserted here.]}}
 
 % ---------------- Data management plan (not counted; at most 2 pages) ----------------
 \clearpage
@@ -825,7 +826,7 @@ This work has appeared at NeurIPS, ICLR, ACL, EMNLP, and TMLR.
 
 \hd{Processing.} Questions are normalized to a common schema, deduplicated, and split into development, evaluation, and held-out sets by topic and by model family. Planted cases are generated by versioned scripts that record each edit and its effect on the answer. Logs are stored as produced and then summarized for analysis; every number in a publication is regenerated by a released script from the stored logs.
 
-\hd{File formats and naming conventions.} Questions and logs are stored as JSON Lines and Parquet; code is Python, released under an open-source license (MIT or Apache 2.0); model weights use the safetensors format. File names give the testbed, split, and version (for example, \texttt{tbB\_eval\_v1.2.jsonl}), with semantic versioning and a change log for each release.
+\hd{File formats and naming conventions.} Questions and logs are stored as JSON Lines and Parquet; code is Python, released under the Mozilla Public License 2.0, as in the PI's earlier projects; model weights use the safetensors format. File names give the testbed, split, and version (for example, \texttt{tbB\_eval\_v1.2.jsonl}), with semantic versioning and a change log for each release.
 
 \hd{Quality assurance and quality control.} The known answer of every generated question is confirmed by construction and by an independent script; two students review a random sample of each release, and disagreements are resolved before release. Each log record carries the model version, prompt version, random seed, and a hash of tool outputs, so that any debate can be re-run. The harness is frozen at each milestone, and automated runs confirm that frozen versions reproduce stored results.
 
@@ -833,7 +834,7 @@ This work has appeared at NeurIPS, ICLR, ACL, EMNLP, and TMLR.
 
 \hd{Standards for data and metadata.} Datasets will carry Croissant machine-learning metadata and a datasheet describing their purpose, composition, collection, and known limitations; code repositories will include environment files that pin software versions.
 
-\hd{Preservation and access.} Code will be public on GitHub, with each milestone release archived on Zenodo under a DOI. Testbeds and logs will be released on Hugging Face and archived in the Texas Data Repository \confirm{[confirm UT Dallas repository]} for at least five years after the project ends. Final reports will be submitted as required by DoD Instruction 3200.12.
+\hd{Preservation and access.} Code will be public on GitHub, with each milestone release archived on Zenodo under a DOI. Testbeds and logs will be released on Hugging Face and on project webpages linked from the PI's lab website, by the time of the associated publication, and kept available for at least five years after the project ends. Working copies stay on access-controlled lab machines, with secondary copies on departmental systems at least once per semester; HPC scratch storage is never used as an archive. Final reports will be submitted as required by DoD Instruction 3200.12.
 
 \hd{Balance of value and cost.} We will keep all data behind published results. Raw logs of exploratory runs, which can be large, will be kept for one year and then reduced to summaries, since the released code can regenerate them.
 

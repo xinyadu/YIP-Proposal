@@ -1,0 +1,171 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Medium Length Graduate Curriculum Vitae
+% LaTeX Template
+% Version 1.2 (3/28/15)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Rensselaer Polytechnic Institute 
+% (http://www.rpi.edu/dept/arc/training/latex/resumes/)
+%
+% Modified by:
+% Daniel L Marks <xleafr@gmail.com> 3/28/2015
+%
+% Important note:
+% This template requires the res.cls file to be in the same directory as the
+% .tex file. The res.cls file provides the resume style used for structuring the
+% document.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%-------------------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% You can have multiple style options the legal options ones are:
+%
+%   centered:	the name and address are centered at the top of the page 
+%				(default)
+%
+%   line:		the name is the left with a horizontal line then the address to
+%				the right
+%
+%   overlapped:	the section titles overlap the body text (default)
+%
+%   margin:		the section titles are to the left of the body text
+%		
+%   11pt:		use 11 point fonts instead of 10 point fonts
+%
+%   12pt:		use 12 point fonts instead of 10 point fonts
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[10pt, letterpaper,margin,line,lmodern]{res}
+
+% Default font is the helvetica postscript font
+% \usepackage{helvet}
+% Set font to Libertine, including math support
+% \usepackage{libertine}
+
+% Increase text height
+\textheight=9.0 in
+
+% UT Dallas Instructions on The Curriculum Vitae (and Public CV)
+% https://provost.utdallas.edu/public-curriculum-vitae/
+
+%later added by XD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\namefont}{\Large\bf}
+\renewcommand{\sectionfont}{\large\sc}
+\usepackage{url}
+
+% \usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[setpagesize=false]{hyperref} %!!!!!!!!![setpagesize=false]
+\hypersetup{colorlinks=true, linkcolor=Blue, urlcolor={blue!80!black}}
+
+% \usepackage{layout}
+% \setlenght{\parindent}{5pt}
+% \setlength\parindent{24pt}
+% \setlength\indent{24pt} 
+\setlength{\parindent}{15pt}
+
+
+% bib
+\usepackage[style=numeric, block=par, backend=biber]{biblatex}
+% \addbibresource{custom.bib}
+% \bibliography{custom}
+
+\usepackage[shortlabels]{enumitem}
+
+\makeatletter
+% \newlength{\bibhang}
+\setlength{\bibhang}{0em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+\newlist{bibsection}{itemize}{3}
+\setlist[bibsection]{label=,leftmargin=\bibhang,%
+        itemindent=-\bibhang,
+        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+        topsep=0pt}
+\newlist{bibenum}{enumerate}{3}
+\setlist[bibenum]{label=[\arabic*],resume,leftmargin={\bibhang+\widthof{[999]}},%
+        itemindent=-\bibhang,
+        itemsep=0.05in,parsep=\z@,partopsep=0pt,
+        topsep=0pt}
+\let\oldendbibenum\endbibenum
+\def\endbibenum{\oldendbibenum\vspace{-.6\baselineskip}}
+\let\oldendbibsection\endbibsection
+\def\endbibsection{\oldendbibsection\vspace{-.6\baselineskip}}
+\makeatother
+
+\usepackage{layout}
+\newsectionwidth{2.9cm}
+
+% \usepackage{etoolbox}
+% \makeatletter
+% \pretocmd{\item}{\begingroup\parbox{\linewidth}}{}{}
+% \apptocmd{\item}{\endgroup}{}{}
+% \makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+% \layout
+
+%-------------------------------------------------------------------------------
+%	NAME AND ADDRESS SECTION
+%-------------------------------------------------------------------------------
+% \name{Xinya Du \ \ \ \ \ {\footnotesize The latest version of this \href{https://xinyadu.github.io/files/CV\_Xinya.pdf}{CV}}}
+\name{Xinya Du}
+
+
+% Note that addresses can be used for other contact information:
+% -phone numbers
+% -email addresses
+% -linked-in profile
+
+% \address{Address 1 line 1\\Address 1 line 2\\Address 1 line 3}
+% \address{Address 2 line 1\\Address 2 line 2\\Address 2 line 3}
+
+% Uncomment to add a third address
+%\address{Address 3 line 1\\Address 3 line 2\\Address 3 line 3}
+%-------------------------------------------------------------------------------
+
+ % Move the line to the left
+\begin{resume}
+
+% \vspace{-4mm}
+% {\ \ \ \ \ \ \ \ \ \ \ {\noindent \emph{The latest version of this CV can be found \href{https://xinyadu.github.io/files/CV\_Xinya.pdf}{here}}}}. 
+% \vspace{-2mm}
+
+
+\input{sections/contact_onr}
+
+\input{sections/interests}
+
+\input{sections/education}
+
+\input{sections/experience}
+
+\input{sections/awards_onr}
+
+\input{sections/grants}
+
+\input{sections/pubs_onr}
+
+\input{sections/teaching_mentor}
+
+\input{sections/service}
+
+
+\input{sections/talks_onr}
+
+
+\end{resume}
+
+\end{document}

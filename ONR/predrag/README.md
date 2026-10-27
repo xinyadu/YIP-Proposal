@@ -2,8 +2,9 @@
 
 | Version | LaTeX source | Compiled PDF |
 | --- | --- | --- |
-| **Four-page white paper v4 (current)** | [main-4page-v4.tex](main-4page-v4.tex) | [white_paper_predrag-4page-v4.pdf](white_paper_predrag-4page-v4.pdf) |
-| One-page discussion note | [main-1page.tex](main-1page.tex) | [white_paper_predrag.pdf](white_paper_predrag.pdf) |
+| **Full technical proposal, revision 2 (current; due Oct 30, 2026)** | [main-full.tex](main-full.tex) | [main-full.pdf](main-full.pdf) |
+| Four-page white paper v4 | [main-4page-v4.tex](main-4page-v4.tex) | [white_paper_predrag-4page-v4.pdf](white_paper_predrag-4page-v4.pdf) |
+| One-page discussion note | [main-1page.tex](main-1page.tex) | [white_paper_predrag-1page.pdf](white_paper_predrag-1page.pdf) |
 
 ## What changed in v4
 
@@ -39,7 +40,9 @@ The literature behind these choices is summarized in the project document `claud
 
 ## Overleaf
 
-After syncing from GitHub, select `ONR/predrag/main-4page-v4.tex` as the main document and compile with pdfLaTeX. The file contains its own bibliography, so BibTeX is not needed.
+After syncing from GitHub, select `ONR/predrag/main-full.tex` (full proposal) or `ONR/predrag/main-4page-v4.tex` (white paper) as the main document and compile with pdfLaTeX. Both files contain their own bibliography, so BibTeX is not needed.
+
+In `main-full.tex`, red text marks items to confirm before submission (contacts, summer months, Cisco award year, first tenure-track appointment, Open Philanthropy scope, computing, citizenship, UEI/CAGE, DMP repository, CV, letter of support). After filling them in, set `\renewcommand{\confirm}[1]{#1}` in the preamble. The technical proposal must end on page 20; Section 5 currently leaves about two lines free.
 
 ## Build locally
 

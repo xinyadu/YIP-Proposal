@@ -800,16 +800,14 @@ This work has appeared at NeurIPS, ICLR, ACL, EMNLP, and TMLR.
 \clearpage
 \renewcommand{\thepage}{CV-\arabic{page}}
 \setcounter{page}{1}
-\section*{Principal Investigator's Curriculum Vitae}
-\addcontentsline{toc}{section}{Principal Investigator's Curriculum Vitae}
-\confirm{[Insert the PI's full CV here: education, appointments, awards and honors, grants, service, students, and all publications, including journal articles, conference papers, abstracts, book chapters, and patents, as NOFO Section D.1.c requires. Not counted toward the page limit.]}
+\phantomsection\addcontentsline{toc}{section}{Principal Investigator's Curriculum Vitae}
+\IfFileExists{cv_onr.pdf}{\includepdf[pages=-,pagecommand={\thispagestyle{plain}}]{cv_onr.pdf}}{\section*{Principal Investigator's Curriculum Vitae}\confirm{[Add cv\_onr.pdf (the PI's full CV) to this folder; it is inserted here.]}}
 
 \clearpage
 \renewcommand{\thepage}{LS-\arabic{page}}
 \setcounter{page}{1}
-\section*{Letter(s) of Support}
-\addcontentsline{toc}{section}{Letter(s) of Support}
-\IfFileExists{DU-LOR-ONR-YIP-signed.pdf}{\includepdf[pages=-,pagecommand={\thispagestyle{plain}}]{DU-LOR-ONR-YIP-signed.pdf}}{\confirm{[Add DU-LOR-ONR-YIP-signed.pdf (letter from Dr.\ Rym Zalila-Wenkstern, Interim Department Head) to this folder; it is inserted here.]}}
+\phantomsection\addcontentsline{toc}{section}{Letter(s) of Support}
+\IfFileExists{DU-LOR-ONR-YIP-signed.pdf}{\includepdf[pages=-,pagecommand={\thispagestyle{plain}}]{DU-LOR-ONR-YIP-signed.pdf}}{\section*{Letter(s) of Support}\confirm{[Add DU-LOR-ONR-YIP-signed.pdf (letter from Dr.\ Rym Zalila-Wenkstern, Interim Department Head) to this folder; it is inserted here.]}}
 
 % ---------------- Data management plan (not counted; at most 2 pages) ----------------
 \clearpage

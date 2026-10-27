@@ -43,7 +43,9 @@ The literature behind these choices is summarized in the project document `claud
 
 After syncing from GitHub, select `ONR/predrag/main-full.tex` (full proposal) or `ONR/predrag/main-4page-v4.tex` (white paper) as the main document and compile with pdfLaTeX. Both files contain their own bibliography, so BibTeX is not needed.
 
-In `main-full.tex`, red text marks items to confirm before submission (contacts, summer months, Cisco award year, first tenure-track appointment, Open Philanthropy scope, computing, citizenship, UEI/CAGE, DMP repository, CV, letter of support). After filling them in, set `\renewcommand{\confirm}[1]{#1}` in the preamble. The technical proposal must end on page 20; Section 5 currently leaves about two lines free.
+In `main-full.tex`, red text marks items to confirm before submission (contacts, summer months, Cisco award year, first tenure-track appointment, Open Philanthropy scope, computing, citizenship, UEI/CAGE, DMP repository, CV, letter of support). After filling them in, set `\renewcommand{\confirm}[1]{#1}` in the preamble. The technical proposal (Sections 1–6) must end on page 20; it currently runs about six lines onto page 21, so about six lines still need to be cut.
+
+The full proposal follows the Joshi and Chen ONR YIPs: Future Naval Relevance is Section 1.4, related work is its own Section 2 (as in Chen), and Technical Approach (Section 3) has seven subsections, with schedule, goals and benchmarks, and Gold Standard Science at its end. Management Approach, PI Qualifications and Responsibility are Sections 4–6. After page 20 come Sections 7–10, outside the page limit: References Cited (also uploaded as Grants.gov Field 9), CV, Letter(s) of Support, and the Data Management Plan (at most two pages, last, as the NOFO lists it).
 
 ## Build locally
 

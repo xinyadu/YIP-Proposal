@@ -112,7 +112,7 @@ This proposal describes unclassified fundamental research. All data are public o
 \renewcommand{\contentsname}{Table of Contents}
 \tableofcontents
 \vspace{8pt}
-{\small The technical proposal (Sections 1--5) occupies pages 1--\pageref{techend}, within the 20-page limit. The cover page, this table of contents, the cited references, the curriculum vitae, the letters of support, and the data management plan do not count toward the limit.\par}
+{\small The technical proposal (Sections 1--6) occupies pages 1--\pageref{techend}, within the 20-page limit. The cover page, this table of contents, the cited references, the curriculum vitae, the letters of support, and the data management plan do not count toward the limit.\par}
 \clearpage
 
 % ---------------- Technical proposal (pages 1--20) ----------------
@@ -121,7 +121,7 @@ This proposal describes unclassified fundamental research. All data are public o
 
 \section{Overview and Objectives}\label{sec:overview}
 
-\subsection{The Problem}\label{sec:problem}
+\subsection{The Problem and Why It Matters}\label{sec:problem}
 AI agents built on large language models (LLMs) increasingly evaluate one another and decide together: they judge one another's answers, peer-review papers, supply the rewards that train new models, and vote or discuss to reach a group answer \citep{zheng2023judging,luo2025llm4sr,lee2024rlaif,du2024debate}. Yet a single LLM judge has known biases, such as favoring longer answers, the answer it reads first, or answers like its own \citep{zheng2023judging,wang2024fair,panickssery2024self}. Collective reasoning can do better than a single judge \citep{verga2024juries,du2024debate}, but averaging or voting stays biased when the judges share mistakes, and open discussion lets a persuasive agent carry the group \citep{amayuelas2024attack}. \textbf{The central problem of this project is how a group of AI agents of unknown and correlated reliability, some possibly dishonest, can reach trustworthy decisions and evaluations.}
 
 For example, five AI agents read shipping reports and are asked whether a cargo vessel has left port. Three say yes and two say no, but the vessel is still in port. Two of the yes answers rest on the same outdated schedule, and the third comes from a compromised agent that argues confidently for yes. A majority vote picks the wrong answer, and open discussion may do no better, because the compromised agent is persuasive and the two agents with the same source back each other up. We return to this example throughout (Figure~\ref{fig:overview}).
@@ -134,8 +134,7 @@ Verifying each claim directly, by an analyst or a satellite image, is slow and c
 \item \textbf{Rewards that track agreement.} Agents trained to match the group's answer are rewarded for conforming and can learn to agree on mistakes; in the example, a majority vote would reward the three agents that said yes.
 \end{enumerate}
 
-\subsection{Why It Matters}\label{sec:matters}
-All four failures have been measured. Model errors are correlated, most of all among larger, more accurate models \citep{kim2025correlated,goel2025great}, and nine AI judges from seven model families were worth about two independent ones \citep{kohli2026nine}. Pairs of agents verifying each other's work colluded in 94\% of runs when cheating paid more \citep{shi2026collusion}. One persuasive agent can sharply cut a group's accuracy \citep{amayuelas2024attack}; one round of discussion made AI judges nearly unanimous without making them more accurate \citep{shu2026unanimity}; and training a model on its own majority answers ended in a sudden collapse of accuracy \citep{shafayat2025selftrain}.
+\label{sec:matters}All four failures have been measured. Model errors are correlated, most of all among larger, more accurate models \citep{kim2025correlated,goel2025great}, and nine AI judges from seven model families were worth about two independent ones \citep{kohli2026nine}. Pairs of agents verifying each other's work colluded in 94\% of runs when cheating paid more \citep{shi2026collusion}. One persuasive agent can sharply cut a group's accuracy \citep{amayuelas2024attack}; one round of discussion made AI judges nearly unanimous without making them more accurate \citep{shu2026unanimity}; and training a model on its own majority answers ended in a sudden collapse of accuracy \citep{shafayat2025selftrain}.
 
 These failures spread: AI judges supply the rewards that train models \citep{bai2022constitutional,lee2024rlaif}, so their mistakes are copied into the models they train, and AAAI-26 gave an AI-generated review to each of the 22,977 main-track papers that entered full review \citep{biswas2026aaai}. As AI systems surpass people at more tasks, people cannot easily evaluate the systems' answers or their debates, so oversight will rely on AI evaluating AI, with people auditing a small part of the work \citep{bowman2022measuring,burns2024weak}.
 
@@ -212,9 +211,22 @@ Three testbeds (math and code, multi-document questions with maritime scenarios,
 
 \hd{Why it will succeed.} Each task extends an established principle to agents that share mistakes, argue, and may collude (Table~\ref{tab:principles}). Most tasks build on the PI's previous work: PRD and the PeerEval leaderboard \citep{li2024prd}, FG-PRM \citep{li2025fgprm}, HiPRAG \citep{wu2026hiprag}, and MEQA \citep{li2024meqa} (Section~\ref{sec:pi}).
 
-\section{Technical Approach}\label{sec:approach}
+\subsection{Future Naval Relevance}\label{sec:naval}
+\hd{ONR S\&T Focus Area.} Primary: Artificial Intelligence and Autonomy (Intelligent and Collaborative Agents; Adversarial AI \& Autonomy). Secondary: C5ISR and Naval Space (Intelligence, Decision Superiority, Command and Control (C2), and Combat Systems). The 2026 ONR S\&T Strategy will explore validating AI-produced results by ``human review, experimental confirmation or independent AI critique,'' using AI to ``validate, red-team and quality-check'' results under human oversight \citep{onr2026strategy}; this project supplies methods for such critique when the critics themselves may err together or collude. It also answers the Mathematical Data Science program's call for ``rigorous mathematical and algorithmic answers to questions that are currently addressed using heuristics or non-principled approaches'' \citep{onr2026mds}.
 
-\subsection{How the Problem Is Solved Today, and the Limitations}\label{sec:related}
+\hd{Navy needs.} The problem arises wherever several AI tools report on one question and some reports are copies, stale, forged, or produced by a compromised tool:
+\begin{itemize}
+\item \emph{Maritime domain awareness}: position broadcasts can be spoofed \citep{marad2024ais}, and most industrial fishing vessels are not publicly tracked \citep{paolo2024satellite}, so decisions must combine port records, patrol reports, and imagery.
+\item \emph{Intelligence analysis}: analysts must describe the ``quality and credibility of underlying sources'' \citep{odni2015icd203}, and repeated reports from one source can give ``an impression of confirming evidence'' \citep{wmd2005report}.
+\item \emph{Decision support by networks of agents}: the Department of War is developing AI agents ``for AI-enabled battle management and decision support'' \citep{dow2026aistrategy}, and Marine Corps decision aids seek trust ``properly aligned to accuracy of results'' \citep{onr2026tacticalai}.
+\item \emph{Evaluating AI before fielding}: more data and expertise are needed ``to quantify performance and risk of AI-enabled systems'' \citep{dote2026annual}, as AI judges increasingly score other AI systems.
+\item \emph{Maintenance, logistics, cyber defense, and collaborative autonomy}: conflicting logs and records, alerts triaged by several tools, and unmanned systems that share reports under limited communications.
+\end{itemize}
+Across these uses, Task~1.1 counts copied and stale reports once; Tasks~1.2, 2.1, and~2.2 keep a compromised agent from rating its way into a role, discard evidence that does not reproduce, and flag colluders; Task~3 improves agents when ground truth arrives late; and each decision comes with its reasons.
+
+\hd{Path to transition.} The project is fundamental research. Its products are methods with stated guarantees, an open harness, testbeds, and protocols that Navy laboratories, such as NRL's Navy Center for Applied Research in Artificial Intelligence, could evaluate on Navy data. The PI will pursue ONR Summer Faculty Research Program and Naval Research Enterprise Internship Program placements for students to work with Navy scientists on such evaluations.
+
+\section{How the Problem Is Solved Today, and the Limitations}\label{sec:related}
 Six lines of work bear on the problem. We build on each and note the gap that remains (Table~\ref{tab:compare}).
 
 \hd{AI judges and voting.} LLM judges are standard for evaluating models and training them with AI feedback \citep{zheng2023judging,bai2022constitutional,lee2024rlaif}. Panels of judges \citep{verga2024juries} and majority votes over sampled answers \citep{wang2023selfconsistency} reduce single-judge biases, but they count every vote equally, so correlated judges add little: when two models are both wrong, they give the same wrong answer about 60\% of the time on one leaderboard \citep{kim2025correlated}.
@@ -252,15 +264,16 @@ AI control \citep{greenblatt2024control} & \nonem & \fullm & \nonem & \nonem & \
 \end{tabular}
 \end{table}
 
-\subsection{Problem Setting and Design Rules}\label{sec:setting}
+\section{Technical Approach}\label{sec:approach}
+
+\subsection{Problem Setting and Formal Framework}\label{sec:setting}
 \hd{Agents and questions.} A pool of AI agents, each built on an underlying model (which several may share) with tools and role instructions, handles a stream of questions. A question $q$ asks for a decision or an evaluation with a small set of candidate answers $\mathcal{Y}$, such as yes or no, a choice among options, or a score band for a paper. For each question, the harness assigns at random which agents answer and which are held out as possible judges, so no agent can become a judge by declining to answer. Each answering agent first answers alone, giving an answer $x_{aq}$, a step-by-step argument, and its evidence.
 
 \hd{Unknowns, resources, and threat model.} The true answer $y_q$, each agent's skill, which agents share mistakes, and which are dishonest are unknown. Available are planted cases (questions whose answers we know, mixed into the stream), a small, fixed budget of human audits (a person or a direct measurement finds the right answer for decisions drawn at random), and tools whose results can be re-run in a sandbox. Dishonest agents may coordinate and may answer, rate, argue, or judge strategically; they know the protocol but not its random draws, and may try to recognize planted cases. Honest agents may still share mistakes, for example from similar training data.
 
 \hd{Output and design rules.} Each decision comes with its reasons: whose answers carried weight, which step decided the debate, and which evidence the judge reproduced. Five rules hold throughout. (R1)~Every answering agent answers alone, before seeing the others. (R2)~Peer ratings pick only who argues; the weighted vote (for a clear leader) or the judge (after a debate) picks the answer. (R3)~Tool evidence counts only if the judge re-runs it and obtains the same result. (R4)~Audits only catch collusion; they never settle a debate, and nothing triggers a human audit, so its cost stays fixed. (R5)~Planted cases never enter training, so agents cannot learn to spot them.
 
-\subsection{Formal Framework: Where a Group's Errors Come From}\label{sec:framework}
-Each task controls one source of error in the group's decision. Let $\pi_q$ be the posterior probability of the leading answer $\hat y_q$ from Task~1.1, and let the question go to debate when $\pi_q<\tau$. The decision $D_q$ is $\hat y_q$ without a debate and the judge's choice after one, and its chance of being wrong splits into terms that the tasks control:
+\hd{Formal framework: where a group's errors come from.}\label{sec:framework} Each task controls one source of error in the group's decision. Let $\pi_q$ be the posterior probability of the leading answer $\hat y_q$ from Task~1.1, and let the question go to debate when $\pi_q<\tau$. The decision $D_q$ is $\hat y_q$ without a debate and the judge's choice after one, and its chance of being wrong splits into terms that the tasks control:
 \begin{equation}
 P(D_q\neq y_q)\;\le\;\underbrace{(1-\tau)\,P(\pi_q\ge\tau)}_{\text{no debate: Task 1.1}}\;+\;P(\pi_q<\tau)\,\big[\underbrace{\epsilon_{\text{cand}}}_{\text{Task 1.1}}+\underbrace{\epsilon_{\text{role}}}_{\text{Tasks 1.2, 2.2}}+\underbrace{\epsilon_{\text{step}}}_{\text{Task 2.1}}\big].
 \label{eq:decomp}
@@ -519,7 +532,7 @@ Proposition~6 explains each design choice. Every reference more often right than
 
 \hd{Evaluation and risks.} On all three testbeds, we compare our rewards with rewards for majority agreement and for debate wins \citep{arnesen2024selfplay} at matched compute, on open-weight models from several families, measuring the accuracy of decisions and first answers on held-out questions and dishonest behavior during training: invented evidence, unsupported changes of answer, and wrong decisions the red team gets through (H5). A misconception most agents share makes $\eta_q$ exceed one half on some questions, and peer prediction can pay for it \citep{denisovblanch2026consensus}; accuracy on held-out questions with known answers detects this, and training stops if it falls. Training on the same decisions can make agents alike, so we measure shared error factors before and after training and train agents on different subsets of decisions. Debaters could learn to join the judge's likely decision instead of defending their answer; if so, we will credit messages for moving the judge toward the debater's own answer, which makes (\ref{eq:credit}) a shaped debate-win reward.
 
-\subsection{Testbeds, Red Team, and Evaluation Protocol}\label{sec:eval}
+\subsection{Evaluation, Expected Results, and Limitations}\label{sec:eval}
 All data are public or synthetic, and every question has a known answer for scoring, kept apart from the planted cases agents may meet. In experiments, a human audit reveals the known answer of a decision drawn at random; we also study audits that are sometimes wrong (Table~\ref{tab:testbeds}).
 
 \begin{table}[t]
@@ -546,30 +559,7 @@ C.\ Scientific claims and peer review & Whether a paper's evidence supports its 
 
 \hd{Metrics, baselines, and statistics.} Primary metrics are decision accuracy and calibration, wrong decisions under attack, correct minorities recovered and correct majorities overturned, audits needed to flag colluders, and cost in computation and tool calls. Each term of (\ref{eq:decomp}) is measured separately, so a gain can be traced to the task that produced it. Baselines are a single AI judge, majority vote, and averaging with equal weights, at matched compute; ablations remove each component in turn. We report means with confidence intervals over seeds and question samples.
 
-\subsection{Expected Results, New Knowledge, and Limitations}\label{sec:expected}
-\hd{Results and new knowledge.} If successful, the project will produce (i)~a rater model that counts a group sharing a mistake at most once, with conditions for learning it without an answer key and rates for detecting groups; (ii)~an impartial mechanism for choosing debaters and judges, with its measured price and bounds on coalition gains; (iii)~an open agentic debate harness that reduces judging a question to judging single steps, with the judge's error measured for each kind of step; (iv)~an audit scheme with bounds on the harm a colluder can do before it is flagged; and (v)~a self-improvement method whose expected update follows accuracy rather than agreement. Scientifically, it will show when a debate among AI agents can be trusted and how few audits keep the agents honest; because people audit only a few decisions and training needs no labels, the methods are built to scale to AI whose answers people cannot easily evaluate.
-
-\hd{Limitations.} Where no tool applies, the judge rules on argument alone. A misconception every agent shares cannot be detected from answers alone (Proposition~2); a group that cheats once is caught at most with the audit probability (Proposition~5); paraphrasing limits but does not remove hidden signals \citep{mathew2025hidden}; and Navy use would need Navy data and expert validation.
-
-\subsection{Future Naval Relevance}\label{sec:naval}
-\hd{ONR S\&T Focus Area.} Primary: Artificial Intelligence and Autonomy (Intelligent and Collaborative Agents; Adversarial AI \& Autonomy). Secondary: C5ISR and Naval Space (Intelligence, Decision Superiority, Command and Control (C2), and Combat Systems). The 2026 ONR S\&T Strategy will explore validating AI-produced results by ``human review, experimental confirmation or independent AI critique,'' using AI to ``validate, red-team and quality-check'' results under human oversight \citep{onr2026strategy}; this project supplies methods for such critique when the critics themselves may err together or collude. It also answers the Mathematical Data Science program's call for ``rigorous mathematical and algorithmic answers to questions that are currently addressed using heuristics or non-principled approaches'' \citep{onr2026mds}.
-
-\hd{Navy needs.} The problem arises wherever several AI tools report on one question and some reports are copies, stale, forged, or produced by a compromised tool:
-\begin{itemize}
-\item \emph{Maritime domain awareness}: position broadcasts can be spoofed \citep{marad2024ais}, and most industrial fishing vessels are not publicly tracked \citep{paolo2024satellite}, so decisions must combine port records, patrol reports, and imagery.
-\item \emph{Intelligence analysis}: analysts must describe the ``quality and credibility of underlying sources'' \citep{odni2015icd203}, and repeated reports from one source can give ``an impression of confirming evidence'' \citep{wmd2005report}.
-\item \emph{Decision support by networks of agents}: the Department of War is developing AI agents ``for AI-enabled battle management and decision support'' \citep{dow2026aistrategy}, and Marine Corps decision aids seek trust ``properly aligned to accuracy of results'' \citep{onr2026tacticalai}.
-\item \emph{Evaluating AI before fielding}: more data and expertise are needed ``to quantify performance and risk of AI-enabled systems'' \citep{dote2026annual}, as AI judges increasingly score other AI systems.
-\item \emph{Maintenance, logistics, cyber defense, and collaborative autonomy}: conflicting logs and records, alerts triaged by several tools, and unmanned systems that share reports under limited communications.
-\end{itemize}
-Across these uses, Task~1.1 counts copied and stale reports once; Tasks~1.2, 2.1, and~2.2 keep a compromised agent from rating its way into a role, discard evidence that does not reproduce, and flag colluders; Task~3 improves agents when ground truth arrives late; and each decision comes with its reasons.
-
-\hd{Path to transition.} The project is fundamental research. Its products are methods with stated guarantees, an open harness, testbeds, and protocols that Navy laboratories, such as NRL's Navy Center for Applied Research in Artificial Intelligence, could evaluate on Navy data. The PI will pursue ONR Summer Faculty Research Program and Naval Research Enterprise Internship Program placements for students to work with Navy scientists on such evaluations.
-
-\subsection{Project Schedule and Milestones}\label{sec:schedule}
-The project runs 36 months from April 1, 2027. Table~\ref{tab:schedule} gives the schedule by half-year; milestones M1--M6 mark results.
-
-\newcommand{\g}{\cellcolor{ganttfill}}
+\label{sec:expected}\newcommand{\g}{\cellcolor{ganttfill}}
 \begin{table}[t]
 \centering\small
 \caption{Schedule by half-year (Y1 = April 2027 -- March 2028) and milestones.}
@@ -593,10 +583,6 @@ Red-team level 4; full evaluation; release & & & & & \g & \g\\
 \bottomrule
 \end{tabularx}
 \end{table}
-
-\subsection{Goals and Benchmarks}\label{sec:goalsbench}
-Each goal has a benchmark and a criterion for success (Table~\ref{tab:goals}); results that miss the criteria will be reported as findings.
-
 \begin{table}[t]
 \centering\small
 \caption{Goals, benchmarks (testbeds A--C, PeerEval), and success criteria, fixed before the experiments.}
@@ -615,6 +601,19 @@ G6. Code, testbeds, protocols; peer-reviewed papers with proofs & Public release
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\hd{Results and new knowledge.} If successful, the project will produce (i)~a rater model that counts a group sharing a mistake at most once, with conditions for learning it without an answer key and rates for detecting groups; (ii)~an impartial mechanism for choosing debaters and judges, with its measured price and bounds on coalition gains; (iii)~an open agentic debate harness that reduces judging a question to judging single steps, with the judge's error measured for each kind of step; (iv)~an audit scheme with bounds on the harm a colluder can do before it is flagged; and (v)~a self-improvement method whose expected update follows accuracy rather than agreement. Scientifically, it will show when a debate among AI agents can be trusted and how few audits keep the agents honest; because people audit only a few decisions and training needs no labels, the methods are built to scale to AI whose answers people cannot easily evaluate.
+
+\hd{Limitations.} Where no tool applies, the judge rules on argument alone. A misconception every agent shares cannot be detected from answers alone (Proposition~2); a group that cheats once is caught at most with the audit probability (Proposition~5); paraphrasing limits but does not remove hidden signals \citep{mathew2025hidden}; and Navy use would need Navy data and expert validation.
+
+\subsection{Project Schedule, Milestones, Goals, and Benchmarks}\label{sec:schedule}
+The project runs 36 months from April 1, 2027. Table~\ref{tab:schedule} gives the schedule by half-year; milestones M1--M6 mark results.
+
+
+
+\hd{Goals and benchmarks.}\label{sec:goalsbench} Each goal has a benchmark and a criterion for success (Table~\ref{tab:goals}); results that miss the criteria will be reported as findings.
+
+
 
 \subsection{Gold Standard Science}\label{sec:gss}
 The project will follow the tenets of Executive Order 14303, as the PI's previous work does.
@@ -670,8 +669,7 @@ This work has appeared at NeurIPS, ICLR, ACL, EMNLP, and TMLR.
 \clearpage
 \renewcommand{\thepage}{R-\arabic{page}}
 \setcounter{page}{1}
-\phantomsection
-\addcontentsline{toc}{section}{References Cited}
+\renewcommand{\bibsection}{\section{References Cited}\label{sec:refs}}
 \begingroup
 \small
 \setlength{\bibsep}{2.5pt}
@@ -802,21 +800,20 @@ This work has appeared at NeurIPS, ICLR, ACL, EMNLP, and TMLR.
 \clearpage
 \renewcommand{\thepage}{CV-\arabic{page}}
 \setcounter{page}{1}
-\phantomsection\addcontentsline{toc}{section}{Principal Investigator's Curriculum Vitae}
+\refstepcounter{section}\phantomsection\addcontentsline{toc}{section}{\protect\numberline{\thesection}Principal Investigator's Curriculum Vitae}
 \IfFileExists{cv_onr.pdf}{\includepdf[pages=-,pagecommand={\thispagestyle{plain}}]{cv_onr.pdf}}{\section*{Principal Investigator's Curriculum Vitae}\confirm{[Add cv\_onr.pdf (the PI's full CV) to this folder; it is inserted here.]}}
 
 \clearpage
 \renewcommand{\thepage}{LS-\arabic{page}}
 \setcounter{page}{1}
-\phantomsection\addcontentsline{toc}{section}{Letter(s) of Support}
+\refstepcounter{section}\phantomsection\addcontentsline{toc}{section}{\protect\numberline{\thesection}Letter(s) of Support}
 \IfFileExists{DU-LOR-ONR-YIP-signed.pdf}{\includepdf[pages=-,pagecommand={\thispagestyle{plain}}]{DU-LOR-ONR-YIP-signed.pdf}}{\section*{Letter(s) of Support}\confirm{[Add DU-LOR-ONR-YIP-signed.pdf (letter from Dr.\ Rym Zalila-Wenkstern, Interim Department Head) to this folder; it is inserted here.]}}
 
 % ---------------- Data management plan (not counted; at most 2 pages) ----------------
 \clearpage
 \renewcommand{\thepage}{DMP-\arabic{page}}
 \setcounter{page}{1}
-\section*{Data Management Plan}
-\addcontentsline{toc}{section}{Data Management Plan}
+\section{Data Management Plan}\label{sec:dmp}
 \small
 \hd{Types of data, software, and other materials.} The project will produce (1)~three testbeds of questions with known answers: math and code problems with planted shared mistakes (A), multi-document questions composed from event structures, including synthetic maritime scenarios (B), and scientific-claim and peer-review questions with planted errors (C); (2)~logs of agent answers, ratings, debates, tool calls and their outputs, judge rulings, and audit outcomes; (3)~software: the agentic debate harness, the shared-error-factor rater model, the impartial selection mechanism, the audit scheme, red-team agents, reinforcement-learning code, and the simulation code behind the theoretical results; and (4)~fine-tuned weights of open-weight models, where the original licenses permit release.
 

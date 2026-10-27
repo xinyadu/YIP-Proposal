@@ -9,7 +9,7 @@ The LaTeX files contain the latest editable text. **A compiled PDF may lag behin
 | Program Officer | PDF | LaTeX | Research question |
 | --- | --- | --- | --- |
 | Predrag Neskovic (311), Mathematical Data Science | [white_paper_predrag-4page-v4.pdf](predrag/white_paper_predrag-4page-v4.pdf) (four-page white paper v4, current) | [main-4page-v4.tex](predrag/main-4page-v4.tex) | Trustworthy collective AI reasoning through agentic debate, impartial judging, and self-improvement |
-| Predrag Neskovic (311), Mathematical Data Science | [white_paper_predrag.pdf](predrag/white_paper_predrag.pdf) (one-page discussion note) | [main.tex](predrag/main.tex) | Trustworthy collective AI reasoning, peer evaluation, and evidence-seeking deliberation |
+| Predrag Neskovic (311), Mathematical Data Science | [white_paper_predrag.pdf](predrag/white_paper_predrag.pdf) (one-page discussion note) | [main-1page.tex](predrag/main-1page.tex) | Trustworthy collective AI reasoning, peer evaluation, and evidence-seeking deliberation |
 
 Predrag's folder also holds the Program Officer feedback ([program_officer_feedback_2026-10.md](predrag/program_officer_feedback_2026-10.md)) and meeting notes ([meeting_predrag/](predrag/meeting_predrag/)). See [predrag/README.md](predrag/README.md) for what changed in v4 and how to build it.
 

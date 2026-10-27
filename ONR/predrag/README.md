@@ -3,7 +3,7 @@
 | Version | LaTeX source | Compiled PDF |
 | --- | --- | --- |
 | **Four-page white paper v4 (current)** | [main-4page-v4.tex](main-4page-v4.tex) | [white_paper_predrag-4page-v4.pdf](white_paper_predrag-4page-v4.pdf) |
-| One-page discussion note | [main.tex](main.tex) | [white_paper_predrag.pdf](white_paper_predrag.pdf) |
+| One-page discussion note | [main-1page.tex](main-1page.tex) | [white_paper_predrag.pdf](white_paper_predrag.pdf) |
 
 ## What changed in v4
 

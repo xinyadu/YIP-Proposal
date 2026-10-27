@@ -3,6 +3,7 @@
 | Version | LaTeX source | Compiled PDF |
 | --- | --- | --- |
 | **Full technical proposal, revision 2 (current; due Oct 30, 2026)** | [main-full.tex](main-full.tex) | [main-full.pdf](main-full.pdf) |
+| References Cited (Grants.gov Field 9, separate upload; the list itself is in [references-list.tex](references-list.tex)) | [references-cited.tex](references-cited.tex) | [references-cited.pdf](references-cited.pdf) |
 | Facilities & Other Resources (Grants.gov Field 10, separate upload) | [facilities-and-other-resources.tex](facilities-and-other-resources.tex) | [facilities-and-other-resources.pdf](facilities-and-other-resources.pdf) |
 | Four-page white paper v4 | [main-4page-v4.tex](main-4page-v4.tex) | [white_paper_predrag-4page-v4.pdf](white_paper_predrag-4page-v4.pdf) |
 | One-page discussion note | [main-1page.tex](main-1page.tex) | [white_paper_predrag-1page.pdf](white_paper_predrag-1page.pdf) |
@@ -41,11 +42,11 @@ The literature behind these choices is summarized in the project document `claud
 
 ## Overleaf
 
-After syncing from GitHub, select `ONR/predrag/main-full.tex` (full proposal) or `ONR/predrag/main-4page-v4.tex` (white paper) as the main document and compile with pdfLaTeX. Both files contain their own bibliography, so BibTeX is not needed.
+After syncing from GitHub, select `ONR/predrag/main-full.tex` (full proposal), `ONR/predrag/references-cited.tex` (its reference list), or `ONR/predrag/main-4page-v4.tex` (white paper) as the main document and compile with pdfLaTeX. BibTeX is not needed. The full proposal's reference list lives in `references-list.tex`: `main-full.tex` reads it without printing it, so its citations resolve, and `references-cited.tex` prints it. Edit references there only.
 
 In `main-full.tex`, red text marks items to confirm before submission (contacts, summer months, Cisco award year, first tenure-track appointment, Open Philanthropy scope, computing, citizenship, UEI/CAGE, DMP repository, CV, letter of support). After filling them in, set `\renewcommand{\confirm}[1]{#1}` in the preamble. The technical proposal (Sections 1–6) must end on page 20; it currently runs about six lines onto page 21, so about six lines still need to be cut.
 
-The full proposal follows the Joshi and Chen ONR YIPs: Future Naval Relevance is Section 1.4, related work is its own Section 2 (as in Chen), and Technical Approach (Section 3) has seven subsections, with schedule, goals and benchmarks, and Gold Standard Science at its end. Management Approach, PI Qualifications and Responsibility are Sections 4–6. After page 20 come Sections 7–10, outside the page limit: References Cited (also uploaded as Grants.gov Field 9), CV, Letter(s) of Support, and the Data Management Plan (at most two pages, last, as the NOFO lists it).
+The full proposal follows the Joshi and Chen ONR YIPs: Future Naval Relevance is Section 1.4, related work is its own Section 2 (as in Chen), and Technical Approach (Section 3) has seven subsections, with schedule, goals and benchmarks, and Gold Standard Science at its end. Management Approach, PI Qualifications and Responsibility are Sections 4–6. After page 20 come Sections 7–9, outside the page limit: CV, Letter(s) of Support, and the Data Management Plan (at most two pages, last, as the NOFO lists it). The references may not appear in the technical proposal (UT Dallas grants office, Oct 27), so they are not in `main-full.pdf` or its table of contents; `references-cited.pdf` is the Grants.gov Field 9 upload. Citations in the proposal stay blue author-year but are no longer links.
 
 ## Build locally
 

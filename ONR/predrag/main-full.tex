@@ -233,8 +233,9 @@ For example, a watch officer at a Navy maritime operations center must decide wh
   fb/.style={-{Stealth[length=5.5pt,width=4.5pt]}, line width=1pt, dashed, black!60},
   lab/.style={font=\footnotesize\itshape, text=black!70, fill=white, inner sep=1.5pt}]
 % Column 1: each agent answers alone
-\node[box, wa] (q1) at (1.868,0) {\textbf{\textit{Question}} from a watch officer: Has cargo vessel V left port? (In fact, it has not.)};
+\node[box, wa] (q1) at (1.868,0) {\ico{ship}\ \textbf{\textit{Question}} from a watch officer: Has cargo vessel V left port? (In fact, it has not.)};
 \node[box, wa, below=0.18cm of q1] (a1) {\renewcommand{\arraystretch}{1.1}%
+\ico{robot}\ \textit{Answers:}\\[1pt]
 \begin{tabular}{@{}l@{\hspace{2.5pt}}l@{\hspace{2.5pt}}l@{}}
 A1 & \textbf{Yes} & schedule S\\
 A2 & \textbf{Yes} & schedule S\\
@@ -242,7 +243,7 @@ A3 & \textbf{Yes} & \ico{user-secret}\textit{compromised}\\
 A4 & \textbf{No} & port report\\
 A5 & \textbf{No} & position track\\
 \end{tabular}\\[3pt]
-A6 did not answer and is available to judge.};
+\ico{gavel}\ A6 did not answer and is available to judge.};
 \node[box, wa, below=0.18cm of a1] (mv) {\ico{circle-xmark}\ \textit{Majority vote:} Yes, 3 to 2. \textbf{Wrong.}\\[2pt]
 \ico{circle-xmark}\ \textit{Open discussion:} A3 argues confidently, and A1 and A2 back each other up. \textbf{May do no better.}};
 % Column 2: RG1
@@ -279,10 +280,10 @@ Agents train on the decision. Each first answer is scored against the other grou
 \bandpanel{c4}{rgthreebg}{goodfill}{goodline}{0.66cm}
 \end{scope}
 \node[ptitle, text=black!75] at ([yshift=-0.33cm]c1.north) {Answer alone};
-\node[ptitle, text=rgonedark] at ([yshift=-0.33cm]c2.north) {RG1: Weigh, assign};
-\node[ptitle, text=rgtwodark] at ([yshift=-0.33cm]c3.north) {RG2: Debate, audit};
-\node[ptitle, text=rgthreedark] at ([yshift=-0.33cm]c4.north) {RG3: Self-improve};
-\foreach \a/\b in {c1/c2,c2/c3,c3/c4} \node[single arrow, fill=black!75, draw=none, minimum height=0.82cm, minimum width=0.64cm, single arrow head extend=0.1cm, single arrow tip angle=95, inner sep=0pt] at ($([yshift=-0.33cm]\a.north east)!0.5!([yshift=-0.33cm]\b.north west)$) {};
+\node[ptitle, text=rgonedark] at ([yshift=-0.33cm]c2.north) {\ico{rg1-scale-balanced}\ RG1: Weigh, assign};
+\node[ptitle, text=rgtwodark] at ([yshift=-0.33cm]c3.north) {\ico{rg2-comments}\ RG2: Debate, audit};
+\node[ptitle, text=rgthreedark] at ([xshift=0.08cm, yshift=-0.33cm]c4.north) {\ico{rg3-graduation-cap}\ RG3: Self-improve};
+\foreach \a/\b in {c1/c2,c2/c3,c3/c4} \node[single arrow, fill=black!75, draw=none, minimum height=0.62cm, minimum width=0.64cm, single arrow head extend=0.1cm, single arrow tip angle=95, inner sep=0pt] at ($([yshift=-0.33cm]\a.north east)!0.5!([yshift=-0.33cm]\b.north west)$) {};
 % Feedback (dashed): audits reach RG1; RG3 trains every agent
 \draw[fb] (t22.west) -- (t22.west -| c2.east);
 \draw[fb] (c4.south) -- ++(0,-0.4) -| node[lab, pos=0.25]{RG3 updates every agent with RL on the group's decisions} (c1.south);

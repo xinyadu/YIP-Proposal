@@ -2,10 +2,23 @@
 
 | Version | LaTeX source | Compiled PDF |
 | --- | --- | --- |
-| **Full technical proposal, revision 2 (current; due Oct 30, 2026)** | [main-full.tex](main-full.tex) | [main-full.pdf](main-full.pdf) |
+| **Full technical proposal, revision 3 (current; due Oct 30, 2026)** | [main-full.tex](main-full.tex) | [main-full.pdf](main-full.pdf) |
 | Facilities & Other Resources (Grants.gov Field 10, separate upload) | [facilities-and-other-resources.tex](facilities-and-other-resources.tex) | [facilities-and-other-resources.pdf](facilities-and-other-resources.pdf) |
 | Four-page white paper v4 | [main-4page-v4.tex](main-4page-v4.tex) | [white_paper_predrag-4page-v4.pdf](white_paper_predrag-4page-v4.pdf) |
 | One-page discussion note | [main-1page.tex](main-1page.tex) | [white_paper_predrag-1page.pdf](white_paper_predrag-1page.pdf) |
+
+## Revision 3 of the full proposal (Oct 28): response to the v1 reviews
+
+Both reviews ([chatgpt_comment_v1.pdf](chatgpt_comment_v1.pdf), [claude_comments_v1.pdf](claude_comments_v1.pdf)) read commit 029dff1; revision 2 (4b12b31) had already credited Jaffe et al., cut the propositions to three, and added the "what remains open" lines. Revision 3 keeps the central question, three RGs, five tasks, and section order, and makes targeted edits:
+
+- **Audits:** human audits run at a fixed rate ρ (cost a fixed share of decisions), not a fixed total budget; the conjectured harm before flagging is of order √(n log log n / ρ) (Howard et al. 2021); blame models each agent's effect, with partners, across random pairings.
+- **Eq. (1):** adds ε_cal, the overconfidence on questions that skip debate, so the bound holds without a calibration assumption and covers colluders who push a wrong answer past τ; Task 1.1 merges agents flagged together into one group; rule (3) is credited as Chow's reject rule.
+- **Task 1.2:** the partition mechanism of Alon et al., applied to groups (groups split at random; the first half's top member, rated by the second half, argues), which guarantees half the best arguer's quality however many groups give an answer. Judges are drawn from agents with a reliable record on planted debates. Figures 1 and 3 updated.
+- **Task 2.1:** the judge sentence answers "why trust the judge"; Proposition 3 now bounds ε_step ≤ P(not i) + P(not ii) + 2ε_J; unsettled rulings stay out of training.
+- **Task 3:** messages are credited only in debates settled by reproduced tool evidence (restoring the white paper's "tool-backed decisions weigh more"); ω_q uses the posterior's margin with more answers and is applied after GRPO's normalization; the noisy-label identity cites Natarajan et al. 2013.
+- **Evaluation and record:** a single judge with the debaters' tools is a baseline; testbed B reports missed and false departure calls per 100 vessel questions; G1 has a 5-point target; Gold Standard Science names past releases (MEQA, DSBench, LMR-Bench, PeerEval); Section 5 adds PRD's uptake, HiPRAG's 2.3%, and the ICML/ICLR/NeurIPS area-chair roles.
+- **Declined:** recasting the novelty claims, the central question, or the vessel example in weaker terms; calling the propositions "design lemmas"; deleting Table 1 or Figures 3 and 5 and resetting all figure text to 12 pt (ask the grants office whether the font rule covers figures and captions); new baselines beyond the tool-using judge.
+- **Still open:** the five orange pilot results (each now has an expected-outcome version commented beside it in the .tex), the Open Philanthropy boundary sentence in Section 4, and the script behind Figure 2(a), which is not in the repository.
 
 ## What changed in v4
 
@@ -43,7 +56,7 @@ The literature behind these choices is summarized in the project document `claud
 
 After syncing from GitHub, select `ONR/predrag/main-full.tex` (full proposal) or `ONR/predrag/main-4page-v4.tex` (white paper) as the main document and compile with pdfLaTeX. Both files contain their own bibliography, so BibTeX is not needed.
 
-In `main-full.tex`, red text marks items to confirm before submission (contacts, summer months, Cisco award year, first tenure-track appointment, Open Philanthropy scope, computing, citizenship, UEI/CAGE, DMP repository, CV, letter of support). After filling them in, set `\renewcommand{\confirm}[1]{#1}` in the preamble. The technical proposal (Sections 1–6) must end on page 20; it currently runs about six lines onto page 21, so about six lines still need to be cut.
+In `main-full.tex`, red text marks items to confirm before submission (contacts, summer months, Cisco award year, first tenure-track appointment, Open Philanthropy scope, computing, citizenship, UEI/CAGE, DMP repository, CV, letter of support). After filling them in, set `\renewcommand{\confirm}[1]{#1}` in the preamble. The technical proposal (Sections 1–6) must end on page 20; it currently ends there with about three lines to spare.
 
 The full proposal follows the Joshi and Chen ONR YIPs: Future Naval Relevance is Section 1.4, related work is its own Section 2 (as in Chen), and Technical Approach (Section 3) has seven subsections, with schedule, goals and benchmarks, and Gold Standard Science at its end. Management Approach, PI Qualifications and Responsibility are Sections 4–6. After page 20 come Sections 7–9, outside the page limit: CV, Letter(s) of Support, and the Data Management Plan (at most two pages, last, as the NOFO lists it). The references may not be part of the technical proposal (UT Dallas grants office, Oct 27); they are a separate Grants.gov upload (Field 9). They are printed at the very end of `main-full.pdf`, after the Data Management Plan, on pages R-1 onward and outside the table of contents, and the grants office extracts those pages. Citations stay blue author-year but are not links, so nothing breaks when the pages are removed.
 

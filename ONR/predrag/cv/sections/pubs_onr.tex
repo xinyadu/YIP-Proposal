@@ -1,5 +1,6 @@
 %-------------------------------------------------------------------------------
-%	PUBLICATIONS (ONR version: complete list, grouped by type)
+%	PUBLICATIONS (ONR version: complete list, grouped by type). Generated from the
+%	academic CV's pubs.tex plus the additions noted in the commit history.
 %-------------------------------------------------------------------------------
 \section{Publications}
 
@@ -26,6 +27,7 @@
 \newcommand{\AISTATS}{International Conference on Artificial Intelligence and Statistics (AISTATS)}
 \newcommand{\ICML}{International Conference on Machine Learning (ICML)}
 \newcommand{\CVPR}{The IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}
+\newcommand{\ICMR}{ACM International Conference on Multimedia Retrieval (ICMR)}
 
 \noindent Notes: $^{\dagger}$ co-leading author; $^{*}$ equal contribution; $\star$ work most related to the proposed ONR research. Current lists are also on [\href{https://dblp.org/pid/200/8114.html}{DBLP}] and [\href{https://scholar.google.com/citations?hl=en&user=R-lKQqkAAAAJ&view_op=list_works&sortby=pubdate}{Google Scholar}]. In computer science, peer-reviewed conference proceedings are the primary archival venue for research; the main tracks of NeurIPS, ICLR, ICML, ACL, EMNLP, NAACL, EACL, and AAAI are highly selective, most accepting roughly 20--30\% of submissions.
 \vspace{1mm}
@@ -36,15 +38,23 @@
 \begin{enumerate}[{[}1{]},leftmargin=*]
 
 \parbox{\linewidth}{
+\item\label{pub:llm4sr}
+$\star$\,{\bf LLM4SR: A Survey on Large Language Models for Scientific Research}
+\href{https://arxiv.org/abs/2501.04306}{{{[pdf]}}} \\
+Ziming Luo, Zonglin Yang, Zexin Xu, Wei Yang, \textbf{Xinya Du} \\
+{\it In ACM Computing Surveys (CSUR), to appear.} \\
+}
+
+\parbox{\linewidth}{
 \item
 {\bf Dr.V: A Hierarchical Perception-Temporal-Cognition Framework to Diagnose Video Hallucination by Fine-Grained Spatial-Temporal Grounding}
-\href{https://arxiv.org/abs/2509.25771}{{{[pdf]}}} \\
+\href{https://arxiv.org/abs/2509.11866}{{{[pdf]}}} \\
 Meng Luo, Shengqiong Wu, Liqiang Jing, Tianjie Ju, Li Zheng, Jinxiang Lai, Tianlong Wu, \textbf{Xinya Du}, Jian Li, Siyuan Yan, Jiebo Luo, William Yang Wang, Hao Fei, Mong-Li Lee, Wynne Hsu \\
 {\it In International Journal of Computer Vision (IJCV), 2026.} \\
 }
 
 \parbox{\linewidth}{
-\item
+\item\label{pub:sftrl}
  
 {\bf SFT or RL? An Early Investigation into Training R1-Like Reasoning Large Vision-Language Models} 
 \href{https://openreview.net/pdf?id=wZI5qkQeDF}{{{[pdf]}}} \\
@@ -189,12 +199,13 @@ Peilin Wu, Mian Zhang, Xinlu Zhang, \textbf{Xinya Du}, Zhiyu Chen \\
 }
 
 \parbox{\linewidth}{
-\item
+\item\label{pub:dsbench}
  
-{\bf DSBench: How Far Are Data Science Agents to Become Data Science Experts?} 
+{\bf DSBench: How Far Are Data Science Agents from Becoming Data Science Experts?} 
 \href{https://arxiv.org/pdf/2409.07703}{{{[pdf]}}} \\
      Liqiang Jing, Zhehui Huang, Xiaoyang Wang, Wenlin Yao, Wenhao Yu, Kaixin Ma, Hongming Zhang, \textbf{Xinya Du}, Dong Yu \\
 {\it In \ICLR, 2025.} \\
+{\textcolor{blue}{\textbf{Used by OpenAI to evaluate ChatGPT agent.}}} \href{https://openai.com/index/introducing-chatgpt-agent/}{\textcolor{blue}{\textbf{[Link]}}} \\
 }
 
 \parbox{\linewidth}{
@@ -503,7 +514,7 @@ Aliva Das$^{*}$, {\bf Xinya Du}$^{*}$, Barry Wang$^{*}$, Kejian Shi, Jiayuan Gu,
 
 \vspace{1.5mm}
 \needspace{5\baselineskip}
-\noindent \textbf{Workshop Papers and Shared-Task Reports}
+\noindent \textbf{Workshop Papers, Tutorial Abstracts, and Shared-Task Reports}
 \begin{enumerate}[{[}1{]},resume,leftmargin=*]
 
 \parbox{\linewidth}{
@@ -512,6 +523,22 @@ Aliva Das$^{*}$, {\bf Xinya Du}$^{*}$, Barry Wang$^{*}$, Kejian Shi, Jiayuan Gu,
 {\bf Efficient Document-level Event Relation Extraction} \\
 Ruochen Li, Zimu Wang, \textbf{Xinya Du} \\
 {\it In 10th Workshop on Representation Learning for NLP at \NAACL, 2025.} \\
+}
+
+\parbox{\linewidth}{
+\item\label{pub:icmr}
+{\bf Hallucinations in Large Language Models and Large Vision-Language Models (Tutorial)}
+\href{https://doi.org/10.1145/3731715.3734581}{{{[pdf]}}} \\
+Liqiang Jing, Yue Zhang, \textbf{Xinya Du} \\
+{\it In Proceedings of the ACM International Conference on Multimedia Retrieval (ICMR), pp.\ 2138--2139, 2025.} \\
+}
+
+\parbox{\linewidth}{
+\item\label{pub:nlrse}
+{\bf Logical Reasoning over Natural Language as Knowledge Representation: A Survey}
+\href{https://arxiv.org/abs/2303.12023}{{{[pdf]}}} \\
+Zonglin Yang, \textbf{Xinya Du}, Rui Mao, Jinjie Ni, Erik Cambria \\
+{\it In Workshop on Natural Language Reasoning and Structured Explanations (NLRSE) at \ACL, 2023.} \\
 }
 
 \parbox{\linewidth}{
@@ -535,16 +562,8 @@ Xiaomeng Jin, Haoyang Wen, \textbf{Xinya Du}, Heng Ji \\
 
 \vspace{1.5mm}
 \needspace{5\baselineskip}
-\noindent \textbf{Surveys, Challenge Proceedings, and Preprints}
+\noindent \textbf{Challenge Proceedings}
 \begin{enumerate}[{[}1{]},resume,leftmargin=*]
-
-\parbox{\linewidth}{
-\item\label{pub:llm4sr}
-$\star$\,{\bf LLM4SR: A Survey on Large Language Models for Scientific Research}
-\href{https://arxiv.org/abs/2501.04306}{{{[pdf]}}} \\
-Ziming Luo, Zonglin Yang, Z. Xu, Wei Yang, \textbf{Xinya Du} \\
-{\it arXiv:2501.04306, 2025.} \\
-}
 
 \parbox{\linewidth}{
 \item\label{pub:comet}
@@ -554,12 +573,59 @@ Z. Xu, T. Li, R. S. Rathnasuriya, Z. Song, J. Ren, B. Mandalapu, S. Setayeshpour
 {\it In 1st Proceedings of Amazon Nova AI Challenge (Trusted AI), 2025.} \\
 }
 
+\end{enumerate}
+
+\vspace{1.5mm}
+\needspace{5\baselineskip}
+\noindent \textbf{Preprints}
+\begin{enumerate}[{[}1{]},resume,leftmargin=*]
+
+\parbox{\linewidth}{
+\item\label{pub:beconsistent}
+{\bf Be Consistent! Enhancing Robust Visual Reasoning in LVLMs with Consistency Constraints}
+\href{https://arxiv.org/abs/2607.21722}{{{[pdf]}}} \\
+Liqiang Jing, Xiong Zhou, Siddharth Varia, Neha Anna John, \textbf{Xinya Du}, Vassilis N. Ioannidis \\
+{\it arXiv:2607.21722, 2026.} \\
+}
+
+\parbox{\linewidth}{
+\item\label{pub:eellm}
+{\bf Event Extraction in Large Language Model}
+\href{https://arxiv.org/abs/2512.19537}{{{[pdf]}}} \\
+Bobo Li, Xudong Han, Jiang Liu, Yuzhe Ding, Liqiang Jing, Zhaoqi Zhang, Jinheng Li, \textbf{Xinya Du}, Fei Li, Meishan Zhang, Min Zhang, Aixin Sun, Philip S. Yu, Hao Fei \\
+{\it arXiv:2512.19537, 2025.} \\
+}
+
+\parbox{\linewidth}{
+\item\label{pub:gear}
+{\bf GEAR: A General Evaluation Framework for Abductive Reasoning}
+\href{https://arxiv.org/abs/2509.24096}{{{[pdf]}}} \\
+Kaiyu He, Peilin Wu, Mian Zhang, Kun Wan, Wentian Zhao, \textbf{Xinya Du}, Zhiyu Chen \\
+{\it arXiv:2509.24096, 2025.} \\
+}
+
 \parbox{\linewidth}{
 \item\label{pub:aalc}
 {\bf AALC: Large Language Model Efficient Reasoning via Adaptive Accuracy-Length Control}
 \href{https://arxiv.org/abs/2506.20160}{{{[pdf]}}} \\
 Ruosen Li, Ziming Luo, Quan Zhang, Ruochen Li, Ben Zhou, Ali Payani, \textbf{Xinya Du} \\
-{\it arXiv:2506.20160, 2025.} \cvnote{add venue if accepted} \\
+{\it arXiv:2506.20160, 2025.} \\
+}
+
+\parbox{\linewidth}{
+\item\label{pub:mrvg}
+{\bf Multimodal Reference Visual Grounding}
+\href{https://arxiv.org/abs/2504.02876}{{{[pdf]}}} \\
+Yangxiao Lu, Ruosen Li, Liqiang Jing, Jikai Wang, \textbf{Xinya Du}, Yunhui Guo, Nicholas Ruozzi, Yu Xiang \\
+{\it arXiv:2504.02876, 2025.} \\
+}
+
+\parbox{\linewidth}{
+\item\label{pub:ragneeds}
+{\bf Do Retrieval-Augmented Language Models Adapt to Varying User Needs?}
+\href{https://arxiv.org/abs/2502.19779}{{{[pdf]}}} \\
+Peilin Wu, Xinlu Zhang, Wenhao Yu, Xingyu Liu, \textbf{Xinya Du}, Zhiyu Zoey Chen \\
+{\it arXiv:2502.19779, 2025.} \\
 }
 
 \parbox{\linewidth}{
@@ -567,7 +633,23 @@ Ruosen Li, Ziming Luo, Quan Zhang, Ruochen Li, Ben Zhou, Ali Payani, \textbf{Xin
 {\bf MLR-Copilot: Autonomous Machine Learning Research based on Large Language Models Agents}
 \href{https://arxiv.org/abs/2408.14033}{{{[pdf]}}} \\
 Ruochen Li, Teerth Patel, Qingyun Wang, \textbf{Xinya Du} \\
-{\it arXiv:2408.14033, 2024.} \cvnote{add venue if accepted} \\
+{\it arXiv:2408.14033, 2024.} \\
+}
+
+\parbox{\linewidth}{
+\item\label{pub:via}
+{\bf VIA: Unified Spatiotemporal Video Adaptation Framework for Global and Local Video Editing}
+\href{https://arxiv.org/abs/2406.12831}{{{[pdf]}}} \\
+Jing Gu, Yuwei Fang, Ivan Skorokhodov, Peter Wonka, \textbf{Xinya Du}, Sergey Tulyakov, Xin Eric Wang \\
+{\it arXiv:2406.12831, 2024.} \\
+}
+
+\parbox{\linewidth}{
+\item\label{pub:agent}
+{\bf AGent: A Novel Pipeline for Automatically Creating Unanswerable Questions}
+\href{https://arxiv.org/abs/2309.05103}{{{[pdf]}}} \\
+Son Quoc Tran, Gia-Huy Do, Phong Nguyen-Thuan Do, Matt Kretchmar, \textbf{Xinya Du} \\
+{\it arXiv:2309.05103, 2023.} \\
 }
 
 \end{enumerate}

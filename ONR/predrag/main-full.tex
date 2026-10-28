@@ -168,9 +168,9 @@ Navy decisions face all of these problems at once: analysts fuse reports with AI
   arr/.style={-{Stealth[length=4pt]}, semithick, black!70},
   lab/.style={font=\scriptsize, text=black!75, fill=white, inner sep=1pt}]
 \node[stage, fill=agentfill] (s1) at (0,0) {\textbf{Answer alone}\\[-1pt]{\scriptsize each agent, with its evidence}};
-\node[stage, fill=rgfill, right=0.44cm of s1] (s2) {\textbf{RG1: Weigh, pick}\\[-1pt]{\scriptsize Tasks 1.1 and 1.2}};
+\node[stage, fill=rgfill, right=0.44cm of s1] (s2) {\textbf{RG1: Weigh, assign}\\[-1pt]{\scriptsize Tasks 1.1 and 1.2}};
 \node[stage, fill=rgfill, right=0.44cm of s2] (s3) {\textbf{RG2: Debate, audit}\\[-1pt]{\scriptsize Tasks 2.1 and 2.2}};
-\node[stage, fill=rgfill, right=0.44cm of s3] (s4) {\textbf{Decision; RG3: Train}\\[-1pt]{\scriptsize Task 3}};
+\node[stage, fill=rgfill, right=0.44cm of s3] (s4) {\textbf{RG3: Self-improve}\\[-1pt]{\scriptsize Task 3, on the decision}};
 \foreach \a/\b in {s1/s2,s2/s3,s3/s4} \draw[arr] (\a) -- (\b);
 \coordinate (ptop) at (0,-0.68);
 % Panel 1: agents answer alone
@@ -218,11 +218,11 @@ A4 (no): (1) Agreed. (2) A port report at 09:10, from the call \texttt{ports(V,\
 \subsection{Objectives and Research Goals}\label{sec:goals}
 We propose a framework in which groups of AI agents reach trustworthy decisions and evaluations through debate (Figure~\ref{fig:overview}). Each agent first answers alone, with its evidence. Our central hypothesis is that a group of AI agents can decide more reliably than a single judge or a vote when it (i)~weighs each judgment by a credibility estimated without an answer key, counting shared mistakes once; (ii)~settles conflicts with evidence that an impartial judge can reproduce; and (iii)~learns from its own decisions through rewards that agreement alone cannot raise. The project has three interconnected research goals (RGs); each task rests on one principle whose properties we prove, and each property controls one source of error (Section~\ref{sec:framework}).
 
-\textbf{RG1: Decide what to debate, and pick debaters and judges impartially} (Section~\ref{sec:rg1}). Task~1.1 weighs answers so that a group sharing a mistake counts at most once (F1) and sends a question to debate only when that is worth its cost; Task~1.2 picks debaters and a judge so that no agent's ratings on a question can change its own chance of a role on it (F2).
+\textbf{RG1: Weigh answers and assign debate roles impartially} (Section~\ref{sec:rg1}). Task~1.1 weighs answers so that a group sharing a mistake counts at most once (F1) and sends a question to debate only when that is worth its cost; Task~1.2 picks debaters and a judge so that no agent's ratings on a question can change its own chance of a role on it (F2).
 
-\textbf{RG2: Settle disputes by agentic debate, and catch collusion} (Section~\ref{sec:rg2}). Task~2.1 replaces open discussion with debate in an agentic harness, in which each side disputes a step of the other's argument and an impartial judge, whose choice is the group's decision, re-runs the tool evidence (F3); Task~2.2 catches colluders with planted cases and random human audits (F2).
+\textbf{RG2: Settle disputes by agentic debate, and audit for collusion} (Section~\ref{sec:rg2}). Task~2.1 replaces open discussion with debate in an agentic harness, in which each side disputes a step of the other's argument and an impartial judge, whose choice is the group's decision, re-runs the tool evidence (F3); Task~2.2 catches colluders with planted cases and random human audits (F2).
 
-\textbf{RG3: Let agents self-improve with reinforcement learning on the group's decisions} (Section~\ref{sec:rg3}). Task~3 scores each first answer against the answer the rest of the group favors without that agent's group, beyond chance agreement, and credits each debate message by how far it moved the judge toward the decision (F4). When that reference is more often right than wrong, training follows the agents' true accuracy in expectation, without human labels, so it can keep working after the agents outgrow human judges.
+\textbf{RG3: Self-improve with reinforcement learning on the group's decisions} (Section~\ref{sec:rg3}). Task~3 scores each first answer against the answer the rest of the group favors without that agent's group, beyond chance agreement, and credits each debate message by how far it moved the judge toward the decision (F4). When that reference is more often right than wrong, training follows the agents' true accuracy in expectation, without human labels, so it can keep working after the agents outgrow human judges.
 
 Three testbeds (math and code, multi-document questions with maritime scenarios, and scientific claims and peer review) vary how widely mistakes are shared and how many agents are dishonest, and a red team trains agents to collude \citep{greenblatt2024control} (Section~\ref{sec:eval}).
 
@@ -300,13 +300,13 @@ P(D_q\neq y_q)\;\le\;\underbrace{(1-\tau)\,P(\pi_q\ge\tau)}_{\text{no debate: Ta
 \end{equation}
 The first term holds when the posterior is calibrated (answers given probability $\pi$ are right a fraction $\pi$ of the time); a vote that ignores shared mistakes is overconfident and breaks it (Figure~\ref{fig:t11}(a)), so Task~1.1 supplies a posterior that accounts for them and sets $\tau$ by weighing a debate's cost against the stakes. In a debate, $\epsilon_{\text{cand}}$ is the chance that neither debated answer is right, $\epsilon_{\text{role}}$ the chance that a dishonest agent holds a role and steers the outcome, and $\epsilon_{\text{step}}$ the chance that a debate without such steering still ends wrong. Tasks~1.2 and~2.2 shrink $\epsilon_{\text{role}}$, Task~2.1 shrinks $\epsilon_{\text{step}}$, and Task~3 lowers the agents' own error rates, which can shrink every term (Sections~\ref{sec:rg1}--\ref{sec:rg3}). Removing a task leaves its term uncontrolled, and our ablations measure each term (Section~\ref{sec:eval}).
 
-\subsection{RG1: Decide What to Debate, and Pick Debaters and Judges Impartially}\label{sec:rg1}
+\subsection{RG1: Weigh Answers and Assign Debate Roles Impartially}\label{sec:rg1}
 \hd{Challenges.} Before any debate, the group must decide which questions deserve one and who argues and judges. We identify three challenges. \textbf{First, shared mistakes make a vote overconfident.} A vote is informative only to the extent that voters err independently, and correlated votes can void the jury theorem's guarantee \citep{ladha1992condorcet}; LLM errors are correlated in practice \citep{kim2025correlated,goel2025great,kohli2026nine}. In Figure~\ref{fig:t11}(a), agents copying one source drag the majority vote of five independent agents from 84\% to the source's 70\%, and a rater model that assumes independent errors falls sooner, reading the copies' agreement as skill. \textbf{Second, debate is too costly to run on every question.} It uses three to five times the tokens of a single answer, can overturn correct answers \citep{fan2026imad}, and often fails to beat voting \citep{smit2024mad,choi2025debate}; yet a unanimous answer can rest on a shared mistake, so neither agreement nor confidence shows which questions need a debate. \textbf{Third, agents that choose debaters and judges can favor themselves.} If agents rate one another to pick a representative for each answer and a judge, an agent can rate rivals low to be picked, agents built on similar models favor one another's outputs \citep{panickssery2024self,goel2025great}, and a judge that shares a model with one side has a stake in the outcome.
 
 \hd{Overview.} RG1 passes to RG2 the question, the two debated answers, their representatives, and the judge. Two tasks meet its challenges and control the first two sources of error in (\ref{eq:decomp}) and, with Task~2.2, the third (Figures~\ref{fig:t11} and~\ref{fig:t12}):
 \begin{itemize}
 \item Task~1.1 meets the first two with a rater model in which a group sharing a mistake counts at most once, and a rule, derived from expected loss, for which questions to debate.
-\item Task~1.2 meets the third with an impartial choice of debaters and judges, so that no agent's ratings can raise its own chance of a role.
+\item Task~1.2 meets the third by assigning debaters and judges impartially, so that no agent's ratings can raise its own chance of a role.
 \end{itemize}
 
 \begin{figure}[t]
@@ -373,7 +373,7 @@ so higher stakes lead to more debates. The debate is between the two answers wit
 
 \hd{Evaluation and risks.} On testbed A, where some agents receive the same flawed hint, we measure recovery of the seeded groups, accuracy, calibration, and questions needed to detect a group; the model without shared factors is an ablation. H1 predicts a gain over majority vote that grows with how widely mistakes are shared and disappears with fewer than three independent groups. If EM converges poorly, we will start it from a spectral method \citep{zhang2016spectral} or use a pairwise measure of agreement on mistakes \citep{goel2025great}.
 
-\subsubsection{Task 1.2: Impartial choice of debaters and judges}\label{sec:t12}
+\subsubsection{Task 1.2: Assigning debaters and judges impartially}\label{sec:t12}
 \begin{figure}[t]
 \centering
 \begin{minipage}[c]{0.42\textwidth}\centering
@@ -414,7 +414,7 @@ A single agent is a one-member group, so (a) gives impartiality in the usual sen
 
 \hd{Evaluation and risks.} We measure manipulability, the largest gain in selection probability a strategic rater or coalition achieves by misreporting (found by the red team), the price of impartiality, and the accuracy of the resulting debates (H2), on PeerEval and testbed C. With few underlying models there are few groups; we will then diversify agents by role instructions and tools, or draw judges from a held-out pool of models that never answer.
 
-\subsection{RG2: Settle Disputes by Agentic Debate, and Catch Collusion}\label{sec:rg2}
+\subsection{RG2: Settle Disputes by Agentic Debate, and Audit for Collusion}\label{sec:rg2}
 \hd{Challenges.} Settling a dispute among AI agents raises three challenges. \textbf{First, open discussion erases the disagreement that exposes errors:} one round can make a panel nearly unanimous without making it more accurate \citep{shu2026unanimity}. \textbf{Second, a judge that reads only words can be persuaded.} Standard debate keeps the disagreement but leaves the judge to weigh arguments alone, so a persuasive debater can win a step that one database query would settle, and judges shown a log claiming that tool calls succeeded accept most failed outputs \citep{xu2026log}. \textbf{Third, debaters or the judge can collude}, steering a debate to the wrong side by arguing badly on purpose \citep{vanderweij2025sandbagging}, by misleading with true but selectively chosen facts \citep{hu2026lying}, or by favoring one side, none of which re-running evidence catches. LLM agents collude when it pays \citep{shi2026collusion}, hide signals in ordinary text \citep{mathew2025hidden}, and often tell evaluations from real use \citep{needham2025evaluated}, so checks on planted examples alone can be evaded.
 
 \hd{Overview.} Two tasks meet them and control the remaining terms of (\ref{eq:decomp}) (Figures~\ref{fig:t21} and~\ref{fig:t22}):
@@ -462,7 +462,7 @@ The judge need not be wiser than the debaters: it rules only on single steps, re
 \end{minipage}
 \end{figure}
 
-\subsubsection{Task 2.1: Debate before an impartial judge}\label{sec:t21}
+\subsubsection{Task 2.1: Debating before an impartial judge that re-runs evidence}\label{sec:t21}
 \hd{Approach.} How can a ruling depend on evidence rather than on persuasion? Debate lets a judge settle a whole question by ruling on single steps: if a side loses whenever one of its disputed steps is struck, a judge who rules each disputed step correctly picks the right side \citep{irving2018debate,browncohen2024doubly}.
 
 \textit{Proposition~4 (judging a question reduces to judging single steps).} Suppose that (i)~every argument whose steps are all true reaches the right answer, (ii)~the side defending the right answer argues with true steps and can find a false step in the other side's argument, and (iii)~the judge rules correctly on any single step it is shown. Then, if a side loses exactly when one of its disputed steps is struck, the side defending the right answer wins. \textit{Proof.} The other side's argument reaches a wrong answer, so by (i) it contains a false step, which the right side disputes and the judge strikes; any step of the right side's argument that the other side disputes is true, and the judge upholds it.\hfill$\square$
@@ -473,7 +473,7 @@ We propose an agentic debate harness, built so that these assumptions hold as of
 
 \hd{Evaluation and risks.} We measure accuracy on disputed questions, correct minorities that prevail and correct majorities overturned, how often re-running evidence changes the outcome, the judge's error on each kind of step, and cost. H3 predicts that debate beats open discussion among the same agents, more so as the share of steps a tool can settle grows; ablations remove each harness part, remove tools or re-running, and replace debate with open discussion. If neither side finds a false step, the judge reads both arguments, and a close ruling is reported as unsettled, with its probability and the step in dispute; tool evidence can be out of date, so the judge weighs its provenance, and human audits measure how often this happens.
 
-\subsubsection{Task 2.2: Automatic and human audits against collusion}\label{sec:t22}
+\subsubsection{Task 2.2: Catching collusion with automatic and human audits}\label{sec:t22}
 \begin{figure}[t]
 \centering
 \begin{minipage}[c]{0.38\textwidth}\centering
@@ -507,7 +507,7 @@ Planted cases add cheap evidence as long as they cannot be told from real questi
 
 \hd{Evaluation and risks.} Against the red team, we measure wrong decisions that get through at each audit budget, time to flag colluders, false flags, and whether a discriminator can tell planted cases from real ones (H4). A group that cheats only once is caught with probability at most $\rho$, and if planted cases stay recognizable, flags rest on the human audits alone, which slows flagging.
 
-\subsection{RG3: Let Agents Self-Improve with Reinforcement Learning on the Group's Decisions}\label{sec:rg3}
+\subsection{RG3: Self-Improve with Reinforcement Learning on the Group's Decisions}\label{sec:rg3}
 \hd{Challenges.} Self-improvement without labels needs rewards that track correct answers, and this raises three challenges. \textbf{First, the obvious label-free rewards can be gamed:} majority agreement rewards conformity and can collapse accuracy \citep{shafayat2025selftrain}, debate wins reward persuasion when the judge can be fooled \citep{kenton2026debate}, and approval rewards misleading the evaluator \citep{wen2025mislead}. \textbf{Second, the group's own decisions are imperfect labels}, so wrong decisions could reinforce the behavior that produced them. \textbf{Third, a group's reward must say whose messages helped}; otherwise training rewards agents that contributed nothing and misses the agent that found the decisive evidence.
 
 \hd{Overview.} Task~3 meets these challenges with two kinds of reward, both free of human labels and protected by RG1 and RG2 (shared mistakes count once, flagged agents are dropped, judges re-run evidence); by improving the agents, it can shrink every term of (\ref{eq:decomp}):
@@ -516,7 +516,7 @@ Planted cases add cheap evidence as long as they cannot be told from real questi
 \item credit for each debate message by how far it moves an evidence-checking judge toward the decision (the third).
 \end{itemize}
 
-\subsubsection{Task 3: Rewards for contributions to trustworthy decisions}\label{sec:t3}
+\subsubsection{Task 3: Rewarding contributions to trustworthy decisions}\label{sec:t3}
 \hd{Approach.} What reward makes agents more accurate when the only labels are the group's own, imperfect decisions? We treat each decision as a noisy label: if it is wrong with probability $\eta_q<\frac12$, rewarding agreement with it still pushes an agent toward the right answer, scaled by $1-2\eta_q$, provided the reference does not depend on the agent's own answer and agreement by chance earns nothing. We propose rewards built to meet these conditions. \emph{First answers.} Agent $a$'s first answer to $q$ is scored against $D_q^{-a}$, the answer that the posterior of Task~1.1 favors when $a$'s group is left out, minus the agreement of its answer to another question $q'$ with that reference on a third, $q''$, both on its topic and drawn at random:
 \begin{equation}
 r_a(q)=\omega_q\mathbf{1}\{x_{aq}=D_q^{-a}\}-\omega_{q''}\mathbf{1}\{x_{aq'}=D_{q''}^{-a}\},

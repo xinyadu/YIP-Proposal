@@ -10,6 +10,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{mathptmx}
 \usepackage{amsmath,amssymb}
+\usepackage{pifont}
 \usepackage{microtype}
 \usepackage[authoryear,round]{natbib}
 \usepackage[table]{xcolor}
@@ -56,10 +57,13 @@
 
 % Run-in heads inside a task.
 \newcommand{\hd}[1]{\textbf{#1}\hspace{0.35em}}
-% Marks for Table 1.
-\DeclareRobustCommand{\fullm}{\tikz[baseline=-0.6ex]\fill[black!80] (0,0) circle (2.6pt);}
-\DeclareRobustCommand{\halfm}{\tikz[baseline=-0.6ex]{\draw[black!80] (0,0) circle (2.6pt);\fill[black!80] (0,0) -- (90:2.6pt) arc (90:270:2.6pt) -- cycle;}}
-\DeclareRobustCommand{\nonem}{\tikz[baseline=-0.6ex]\draw[black!80] (0,0) circle (2.6pt);}
+% Marks for Table 1: green tick (addressed), orange dot (partly), red cross (not addressed).
+\definecolor{markyes}{RGB}{34,139,80}
+\definecolor{markpart}{RGB}{230,126,34}
+\definecolor{markno}{RGB}{165,42,42}
+\DeclareRobustCommand{\fullm}{\textcolor{markyes}{\ding{51}}}
+\DeclareRobustCommand{\halfm}{\tikz[baseline=-0.6ex]\fill[markpart] (0,0) circle (2.6pt);}
+\DeclareRobustCommand{\nonem}{\textcolor{markno}{\ding{55}}}
 % Items Xinya should confirm before submission (red). To hide the color, use
 % \renewcommand{\confirm}[1]{#1}.
 \newcommand{\confirm}[1]{\textcolor{red!70!black}{#1}}

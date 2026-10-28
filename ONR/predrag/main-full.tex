@@ -189,25 +189,25 @@ A5 & \textbf{No} & position track\\
 A6 did not answer and is available to judge.}};
 % Panel 2: RG1
 \node[panel] (p2) at (s2.south |- ptop) {\parbox[t][5.95cm][t]{3.6cm}{\raggedright%
-\textit{Task 1.1, weights.} A1 and A2 have often given the same unusual answers, so they share an error factor and count about once.\\[2pt]
-Yes $\approx 2$, \ No $\approx 2$: no clear leader, so the question goes to debate.\\[4pt]
-\textit{Task 1.2, roles.} Agents sharing an underlying model form a group rated only by outsiders.\\[2pt]
+\textbf{Task 1.1, weights.} A1 and A2 have often given the same unusual answers, so they share an error factor and count about once.\\[2pt]
+Yes $\approx 2$, \ No $\approx 2$: no clear leader, so the question goes to debate.\par\vspace{2.5pt}{\color{black!35}\hrule}\vspace{2.5pt}
+\textbf{Task 1.2, roles.} Agents sharing an underlying model form a group rated only by outsiders.\\[2pt]
 Judge, drawn first: A6, which did not answer; it rates no one.\\
 Yes: drawn group \{A3\} $\rightarrow$ A3\\
 No: drawn group \{A4\} $\rightarrow$ A4\\
 Neither group shares A6's model.}};
 % Panel 3: RG2
 \node[panel] (p3) at (s3.south |- ptop) {\parbox[t][5.95cm][t]{3.6cm}{\raggedright%
-\textit{Task 2.1, debate.}\\[1pt]
+\textbf{Task 2.1, debate.}\\[1pt]
 A3 (yes): (1) S lists departure at 06:00; no delay was posted. (2) So V left at 06:00.\\[2pt]
 A4 (no): (1) Agreed. (2) A port report at 09:10, from the call \texttt{ports(V,\,since=06:00)}, lists V at berth 4.\\[2pt]
-\textit{Disputed:} A4 disputes A3's step (2) with the report; A3 disputes A4's (2). A6 re-runs the call and picks \textbf{No}.\\[4pt]
-\textit{Task 2.2, audits.} Planted debates and random human audits later flag A3, which is barred from roles; its later decisions are dropped from training.}};
+\textit{Disputed:} A4 disputes A3's step (2) with the report; A3 disputes A4's (2). A6 re-runs the call and picks \textbf{No}.\par\vspace{2.5pt}{\color{black!35}\hrule}\vspace{2.5pt}
+\textbf{Task 2.2, audits.} Planted debates and random human audits later flag A3, which loses its roles; its decisions are dropped from training.}};
 % Panel 4: decision and RG3
 \node[panel] (p4) at (s4.south |- ptop) {\parbox[t][5.95cm][t]{3.6cm}{\raggedright%
 \textbf{Decision: No.} V is still in port.\\[2pt]
-\textit{Reasons:} A1 and A2 counted about once; the debate turned on step (2); the judge reproduced the port report.\\[4pt]
-\textit{Task 3, training.} Agents train on the decision. A4's tool-backed step earns the most credit, and A3's unsupported claim is penalized.}};
+\textit{Reasons:} A1 and A2 counted about once; the debate turned on step (2); the judge reproduced the port report.\par\vspace{2.5pt}{\color{black!35}\hrule}\vspace{2.5pt}
+\textbf{Task 3, training.} Agents train on the decision. A4's tool-backed step earns the most credit, and A3's unsupported claim is penalized.}};
 % loops
 \draw[arr] (p4.south) -- ++(0,-0.36) -| node[lab, pos=0.25, fill=white]{RG3 updates every agent with RL on the group's decisions} (p1.south);
 \end{tikzpicture}

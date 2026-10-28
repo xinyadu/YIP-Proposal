@@ -20,6 +20,7 @@
 \pgfplotsset{compat=1.18}
 \usepackage[font=small,labelfont=bf,skip=4pt]{caption}
 \usepackage{booktabs}
+\usepackage{wrapfig}
 \usepackage{tabularx}
 \usepackage{pdfpages}
 \usepackage{makecell}
@@ -375,9 +376,8 @@ so higher stakes lead to more debates. This is the classical reject rule \citep{
 \hd{Evaluation and risks.} On testbed A, where some agents receive the same flawed hint, we measure recovery of the seeded groups, accuracy, calibration, and questions needed to detect a group; the model without shared factors is an ablation. H1 predicts a gain over majority vote that grows with how widely mistakes are shared and disappears with fewer than three independent groups. If EM converges poorly, we will start it from a spectral method \citep{zhang2016spectral} or use a pairwise measure of agreement on mistakes \citep{goel2025great}.
 
 \subsubsection{Task 1.2: Assigning debaters and judges impartially}\label{sec:t12}
-\begin{figure}[t]
+\begin{wrapfigure}{r}{0.44\textwidth}
 \centering
-\begin{minipage}[c]{0.42\textwidth}\centering
 \begin{tikzpicture}[font=\scriptsize,
   grp/.style={draw=black!55, rounded corners=2pt, fill=agentfill, inner sep=2.5pt, align=center, minimum width=1.9cm, minimum height=0.62cm},
   pick/.style={grp, fill=rgfill, line width=0.9pt},
@@ -394,12 +394,9 @@ so higher stakes lead to more debates. This is the classical reject rule \citep{
 \draw[rate] (g4.north) -- (g3.south);
 \node[font=\scriptsize, text=black!60, align=center, inner sep=1pt] at (1.375,-0.55) {second half rates};
 \end{tikzpicture}
-\end{minipage}\hfill
-\begin{minipage}[c]{0.54\textwidth}
 \caption{Task~1.2 on the running example. Agents on one underlying model (M1--M5) form a group. The judge A6, drawn first, rates no one. The other groups are split at random; for each answer, the first half's member (M2, M3) rated highest by the second half (M1, M4; dashed) argues (bold).}
 \label{fig:t12}
-\end{minipage}
-\end{figure}
+\end{wrapfigure}
 \hd{Approach.} How can debaters and a judge be picked so that no agent can rate its way into a role, at a small cost in quality? We choose representatives by weighted peer ratings of the arguments behind first answers, as in our PRD and PeerEval \citep{li2024prd}, with raters weighted by track record (Task~1.1), and make the choice impartial with the partition mechanism of \citet{alon2011sum}, applied to groups. Agents that share an underlying model, or whose error factors Task~1.1 finds shared, form a group, fixed before any rating. The judge is drawn first, by lottery from agents that did not answer and have a reliable record on planted debates (Task~2.2), and rates no one. The other groups are split at random into two halves, without regard to ratings; for each debated answer, the first-half member rated highest by second-half agents that gave it and by agents that did not answer represents it, from a different group than the other side's where possible. An answer with no eligible group, such as the alternative to a unanimous answer sent to debate, gets a random agent outside the judge's group. Ratings pick only who argues; the judge picks the answer (Figure~\ref{fig:t12}).
 
 \emph{Why this method.} Because every draw ignores ratings and an agent either rates or may be chosen, never both, neither an agent's ratings nor its group's can change its members' chances of a role: impartiality in the usual sense \citep{kurokawa2015impartial}, extended to collusion within a group. Its price is small and explicit. With honest ratings, the best arguer for an answer lands in the first half with probability at least $\frac12$ and is then chosen, so a representative's expected quality is at least half the best arguer's, however many groups give that answer. No answering agent rates the other side and the judge rates no one, so neither can rate the other side's best arguer low. Impartiality limits manipulation of who is chosen, not judging error, which the reliability bar and Tasks~2.1 and~2.2 address. \emph{What remains open:} colluders in other groups, or held out, can still shift ratings; we will bound what such coalitions gain and measure the price of impartiality.
@@ -411,18 +408,8 @@ so higher stakes lead to more debates. This is the classical reject rule \citep{
 \hd{Evaluation and risks.} We measure manipulability, the largest gain in selection probability a strategic rater or coalition achieves by misreporting (found by the red team), the price of impartiality, and the accuracy of the resulting debates (H2), on PeerEval and testbed C. With few underlying models there are few groups; we will then diversify agents by role instructions and tools, or draw judges from a held-out pool of models that never answer.
 
 \subsection{RG2: Settle Disputes by Agentic Debate, and Audit for Collusion}\label{sec:rg2}
-\hd{Challenges.} Settling a dispute among AI agents raises three challenges. \textbf{First, open discussion erases the disagreement that exposes errors:} one round can make a panel nearly unanimous without making it more accurate \citep{shu2026unanimity}. \textbf{Second, a judge that reads only words can be persuaded.} Standard debate keeps the disagreement but leaves the judge to weigh arguments alone, so a persuasive debater can win a step that one database query would settle, or get a failed output accepted by showing a log that claims its tool calls succeeded \citep{xu2026log}. \textbf{Third, debaters or the judge can collude}, steering a debate to the wrong side by arguing badly on purpose \citep{vanderweij2025sandbagging}, by misleading with true but selectively chosen facts \citep{hu2026lying}, or by favoring one side, none of which re-running evidence catches. LLM agents collude when it pays \citep{shi2026collusion}, hide signals in ordinary text \citep{mathew2025hidden}, and often tell evaluations from real use \citep{needham2025evaluated}, so checks on planted examples alone can be evaded.
-
-\hd{Overview.} Two tasks meet them and control the remaining terms of (\ref{eq:decomp}) (Figures~\ref{fig:t21} and~\ref{fig:t22}):
-\begin{itemize}
-\item Task~2.1 meets the first two with debate in an agentic harness, in which the judge rules on single disputed steps and re-runs their tool evidence, shrinking $\epsilon_{\text{step}}$.
-\item Task~2.2 meets the third with automatic audits on planted debates and human audits of random real decisions, shrinking $\epsilon_{\text{role}}$ with Task~1.2.
-\end{itemize}
-The judge need not be wiser than the debaters: it rules only on single steps, reproduces tool evidence itself, is drawn impartially from agents reliable on planted debates (Task~1.2), and is barred if its audited rulings go wrong more often than predicted (Task~2.2).
-
-\begin{figure}[t]
+\begin{wrapfigure}{r}{0.60\textwidth}
 \centering
-\begin{minipage}[c]{0.63\textwidth}\centering
 \begin{tikzpicture}[font=\scriptsize,
   hpart/.style={draw=black!55, rounded corners=2pt, fill=white, align=left, inner sep=3pt, text width=2.6cm},
   lstep/.style={draw=black!45, rounded corners=1.5pt, fill=rgfill, align=left, inner sep=2pt, text width=2.9cm},
@@ -451,12 +438,18 @@ The judge need not be wiser than the debaters: it rules only on single steps, re
 \node[anchor=north, align=center, font=\scriptsize] (out) at ([yshift=-0.28cm]h.south) {\textbf{Decision with reasons} $\rightarrow$ audits (Task 2.2) and training (Task 3)};
 \draw[arr] (c4.south) -- (out.north);
 \end{tikzpicture}
-\end{minipage}\hfill
-\begin{minipage}[c]{0.34\textwidth}
 \caption{Task~2.1: the agentic debate harness. The control loop sets who speaks, who judges, and when to stop, and the judge rules on the disputed steps after re-running any tool evidence. Each part helps an assumption of Proposition~3 hold.}
 \label{fig:t21}
-\end{minipage}
-\end{figure}
+\end{wrapfigure}
+\hd{Challenges.} Settling a dispute among AI agents raises three challenges. \textbf{First, open discussion erases the disagreement that exposes errors:} one round can make a panel nearly unanimous without making it more accurate \citep{shu2026unanimity}. \textbf{Second, a judge that reads only words can be persuaded.} Standard debate keeps the disagreement but leaves the judge to weigh arguments alone, so a persuasive debater can win a step that one database query would settle, or get a failed output accepted by showing a log that claims its tool calls succeeded \citep{xu2026log}. \textbf{Third, debaters or the judge can collude}, steering a debate to the wrong side by arguing badly on purpose \citep{vanderweij2025sandbagging}, by misleading with true but selectively chosen facts \citep{hu2026lying}, or by favoring one side, none of which re-running evidence catches. LLM agents collude when it pays \citep{shi2026collusion}, hide signals in ordinary text \citep{mathew2025hidden}, and often tell evaluations from real use \citep{needham2025evaluated}, so checks on planted examples alone can be evaded.
+
+\hd{Overview.} Two tasks meet them and control the remaining terms of (\ref{eq:decomp}) (Figures~\ref{fig:t21} and~\ref{fig:t22}):
+\begin{itemize}
+\item Task~2.1 meets the first two with debate in an agentic harness, in which the judge rules on single disputed steps and re-runs their tool evidence, shrinking $\epsilon_{\text{step}}$.
+\item Task~2.2 meets the third with automatic audits on planted debates and human audits of random real decisions, shrinking $\epsilon_{\text{role}}$ with Task~1.2.
+\end{itemize}
+The judge need not be wiser than the debaters: it rules only on single steps, reproduces tool evidence itself, is drawn impartially from agents reliable on planted debates (Task~1.2), and is barred if its audited rulings go wrong more often than predicted (Task~2.2).
+
 
 \subsubsection{Task 2.1: Debating before an impartial judge that re-runs evidence}\label{sec:t21}
 \hd{Approach.} How can a ruling depend on evidence rather than on persuasion? Debate lets a judge settle a whole question by ruling on single steps: if a side loses whenever one of its disputed steps is struck, a judge who rules each disputed step correctly picks the right side \citep{irving2018debate,browncohen2024doubly}.
@@ -474,9 +467,8 @@ We propose an agentic debate harness, built so that these assumptions hold as of
 \hd{Evaluation and risks.} We measure accuracy on disputed questions, correct minorities that prevail and correct majorities overturned, how often re-running evidence changes the outcome, the judge's error on each kind of step, and cost. H3 predicts that debate beats open discussion among the same agents, more so as the share of steps a tool can settle grows; ablations remove each harness part, remove tools or re-running, and replace debate with open discussion. If neither side finds a false step, the judge reads both arguments, and a close ruling is reported as unsettled, with its probability and the step in dispute, and kept out of training; tool evidence can be out of date, so the judge weighs its provenance, and human audits measure how often this happens.
 
 \subsubsection{Task 2.2: Catching collusion with automatic and human audits}\label{sec:t22}
-\begin{figure}[t]
+\begin{wrapfigure}{r}{0.40\textwidth}
 \centering
-\begin{minipage}[c]{0.38\textwidth}\centering
 \begin{tikzpicture}[font=\scriptsize, x=0.36cm, y=0.36cm]
 \node[anchor=west, font=\scriptsize\bfseries] at (0,1.6) {Stream of decisions};
 \foreach \i in {1,...,14} {\draw[black!45, fill=white] (\i-1,0) rectangle (\i-0.2,0.8);}
@@ -491,12 +483,9 @@ We propose an agentic debate harness, built so that these assumptions hold as of
 \node[anchor=north] at (3,-6.7) {planted (P)};
 \node[anchor=north] at (9,-6.7) {audited real (H)};
 \end{tikzpicture}
-\end{minipage}\hfill
-\begin{minipage}[c]{0.58\textwidth}
 \caption{Task~2.2: two kinds of audits. Planted debates (P), whose answers are known, are mixed into the stream; human audits (H) check a few real decisions drawn at random after they are made. An agent that does much worse on audited real decisions than on planted ones of similar difficulty, like A3 here (illustrative numbers), is flagged: its weight drops (Task~1.1) and it is barred from roles (Task~1.2).}
 \label{fig:t22}
-\end{minipage}
-\end{figure}
+\end{wrapfigure}
 \hd{Approach.} How can colluding debaters or judges be caught when people check only a small, fixed share of decisions? We use random inspection \citep{avenhaus2002inspection} in two forms (Figure~\ref{fig:t22}). \emph{Automatic audits} mix planted debates on planted cases into the real stream, formatted like real questions; a planted case can be a paper with a deliberately inserted error \citep{schroter2008errors}. \emph{Human audits} cover a few real decisions drawn at random after they are made: a person or a direct measurement, such as a satellite image, finds the right answer.
 
 \emph{Why this method.} A human audit drawn at random after a decision is made cannot be dodged: every decision a colluder steers is audited with probability $\rho$, whatever it can infer about planted cases, so its first $n$ steered decisions all escape audit with probability $(1-\rho)^n$ \citep{avenhaus2002inspection}.

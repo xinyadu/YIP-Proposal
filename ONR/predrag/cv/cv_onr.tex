@@ -118,15 +118,14 @@
 % Placeholders inside \confirm (e.g., Scholar numbers) must be filled first.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newif\ifcvdraft
-\cvdrafttrue   % <-- change to \cvdraftfalse for the submitted PDF
+\cvdraftfalse  % final mode; use \cvdrafttrue to show red notes
 \newcommand{\confirm}[1]{\ifcvdraft{\color{red}#1}\else#1\fi}
 \newcommand{\cvnote}[1]{\ifcvdraft{\color{red}\footnotesize\,[#1]}\fi}
 \newcommand{\pubref}[1]{\ref{#1}}
-% Google Scholar numbers for the Research Impact section, e.g. {4,321} and {30}.
-% If left empty, the numbers are simply omitted (a red reminder shows in draft mode).
-\newcommand{\scholarcites}{}
-\newcommand{\scholarhindex}{}
-\newcommand{\cvempty}{}
+% Google Scholar numbers for the Research Impact section (update before each use).
+\newcommand{\scholarcites}{4,735}
+\newcommand{\scholarhindex}{29}
+\newcommand{\scholarifive}{41}
 % res.cls calls \nofiles; the publication cross-references ([n]) need the .aux
 % file, so turn aux output and \label back on. Compile twice.
 \makeatletter

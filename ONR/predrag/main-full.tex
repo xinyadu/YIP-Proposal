@@ -162,22 +162,22 @@ Navy staff who must act on one answer from several AI tools face all of these pr
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}[font=\small,
-  stage/.style={draw=black!60, rounded corners=2pt, minimum height=0.9cm, text width=3.6cm, align=center, inner sep=2pt, font=\footnotesize},
-  panel/.style={draw=black!35, rounded corners=2pt, inner sep=3pt, font=\scriptsize, anchor=north},
+  stage/.style={draw=black!60, rounded corners=2pt, minimum height=1.34cm, text width=3.78cm, align=center, inner sep=2pt, font=\footnotesize},
+  panel/.style={draw=black!35, rounded corners=2pt, inner sep=2pt, font=\footnotesize, anchor=north},
   arr/.style={-{Stealth[length=4pt]}, semithick, black!70},
-  lab/.style={font=\scriptsize, text=black!75, fill=white, inner sep=1pt}]
-\node[stage, fill=agentfill] (s1) at (0,0) {\textbf{Answer alone}\\[-1pt]{\scriptsize each agent, with its evidence}};
-\node[stage, fill=rgfill, right=0.44cm of s1] (s2) {\textbf{RG1: Weigh, assign}\\[-1pt]{\scriptsize Tasks 1.1 and 1.2}};
-\node[stage, fill=rgfill, right=0.44cm of s2] (s3) {\textbf{RG2: Debate, audit}\\[-1pt]{\scriptsize Tasks 2.1 and 2.2}};
-\node[stage, fill=rgfill, right=0.44cm of s3] (s4) {\textbf{RG3: Self-improve}\\[-1pt]{\scriptsize Task 3, on the decision}};
+  lab/.style={font=\footnotesize, text=black!75, fill=white, inner sep=1pt}]
+\node[stage, fill=agentfill] (s1) at (0,0) {\textbf{Answer alone}\\[-1pt]{\footnotesize each agent, with its evidence}};
+\node[stage, fill=rgfill, right=0.25cm of s1] (s2) {\textbf{RG1: Weigh, assign}\\[-1pt]{\footnotesize Tasks 1.1 and 1.2}};
+\node[stage, fill=rgfill, right=0.25cm of s2] (s3) {\textbf{RG2: Debate, audit}\\[-1pt]{\footnotesize Tasks 2.1 and 2.2}};
+\node[stage, fill=rgfill, right=0.25cm of s3] (s4) {\textbf{RG3: Self-improve}\\[-1pt]{\footnotesize Task 3, on the decision}};
 \foreach \a/\b in {s1/s2,s2/s3,s3/s4} \draw[arr] (\a) -- (\b);
-\coordinate (ptop) at (0,-0.68);
+\coordinate (ptop) at (0,-0.86);
 % Panel 1: agents answer alone
-\node[panel] (p1) at (s1.south |- ptop) {\parbox[t][5.95cm][t]{3.6cm}{\raggedright%
+\node[panel] (p1) at (s1.south |- ptop) {\parbox[t][9.0cm][t]{3.78cm}{\raggedright%
 \textbf{Question} from a watch officer: Has cargo vessel V left port? (In fact, it has not.)\\[4pt]
 \renewcommand{\arraystretch}{1.1}%
 \begin{tabular}{@{}l@{\hspace{5pt}}l@{\hspace{5pt}}l@{}}
-\textit{Agent} & \textit{Answer} & \textit{Source}\\
+& \textit{Answer} & \textit{Source}\\
 A1 & \textbf{Yes} & schedule S\\
 A2 & \textbf{Yes} & schedule S\\
 A3 & \textbf{Yes} & \textit{compromised}\\
@@ -187,21 +187,21 @@ A5 & \textbf{No} & position track\\
 \textit{Majority vote:} Yes, 3 to 2. \textbf{Wrong.}\\[4pt]
 A6 did not answer and is available to judge.}};
 % Panel 2: RG1
-\node[panel] (p2) at (s2.south |- ptop) {\parbox[t][5.95cm][t]{3.6cm}{\raggedright%
+\node[panel] (p2) at (s2.south |- ptop) {\parbox[t][9.0cm][t]{3.78cm}{\raggedright%
 \textbf{Task 1.1, weights.} A1 and A2 often gave the same unusual answers, so they share an error factor and count about once.\\[2pt]
 Yes $\approx 2$, \ No $\approx 2$: no clear leader, so the question is debated.\par\vspace{2.5pt}{\color{black!35}\hrule}\vspace{2.5pt}
 \textbf{Task 1.2, roles.} Agents sharing an underlying model form a group.\\[2pt]
 Judge, drawn first: A6, which did not answer; it rates no one.\\[2pt]
 Groups split at random: \{A3\} and \{A4\} may argue, and \{A1,\,A2\} and \{A5\} rate them. A3 argues yes; A4 argues no.}};
 % Panel 3: RG2
-\node[panel] (p3) at (s3.south |- ptop) {\parbox[t][5.95cm][t]{3.6cm}{\raggedright%
+\node[panel] (p3) at (s3.south |- ptop) {\parbox[t][9.0cm][t]{3.78cm}{\raggedright%
 \textbf{Task 2.1, debate.}\\[1pt]
 A3 (yes): (1) S lists departure at 06:00; no delay was posted. (2) So V left at 06:00.\\[2pt]
 A4 (no): (1) Agreed. (2) A port report at 09:10, from the call \texttt{ports(V,\,since=06:00)}, lists V at berth 4.\\[2pt]
 \textit{Disputed:} A4 disputes A3's step (2) with the report; A3 disputes A4's (2). A6 re-runs the call and picks \textbf{No}.\par\vspace{2.5pt}{\color{black!35}\hrule}\vspace{2.5pt}
 \textbf{Task 2.2, audits.} Planted debates and random human audits later flag A3, which loses its weight and its roles.}};
 % Panel 4: decision and RG3
-\node[panel] (p4) at (s4.south |- ptop) {\parbox[t][5.95cm][t]{3.6cm}{\raggedright%
+\node[panel] (p4) at (s4.south |- ptop) {\parbox[t][9.0cm][t]{3.78cm}{\raggedright%
 \textbf{Decision: No.} V is still in port, so no patrol is sent.\\[2pt]
 \textit{Reasons:} A1 and A2 counted about once; the dispute came down to step (2); the judge reproduced the port report.\par\vspace{2.5pt}{\color{black!35}\hrule}\vspace{2.5pt}
 \textbf{Task 3, training.} Agents train on the decision. A4's tool-backed step earns the most credit, and A3's unsupported claim is penalized.}};
@@ -311,36 +311,36 @@ Here $\epsilon_{\text{cal}}=\mathbb{E}[(P(\hat y_q\neq y_q\mid\pi_q)-1+\pi_q)_+\
 
 \begin{figure}[t]
 \centering
-\begin{minipage}[b]{0.40\textwidth}\centering
+\begin{minipage}[b]{0.52\textwidth}\centering
 \begin{tikzpicture}
-\begin{axis}[width=5.72cm, height=4.7cm, xmin=-0.5, xmax=15.5, ymin=0.63, ymax=0.88,
+\begin{axis}[width=8.4cm, height=6.0cm, xmin=-0.5, xmax=15.5, ymin=0.63, ymax=0.88,
   xlabel={Agents that copy one source}, ylabel={Accuracy of decisions},
-  xlabel style={font=\scriptsize, yshift=3pt}, ylabel style={font=\scriptsize, yshift=-4pt},
-  tick label style={font=\scriptsize}, xtick={0,3,6,9,12,15}, ytick={0.7,0.75,0.8,0.85},
-  grid=major, grid style={black!8}, every axis plot/.append style={line width=1pt}]
-\addplot[blue!70!black, mark=*, mark size=1.2pt] coordinates {(0,0.828) (1,0.830) (2,0.837) (3,0.838) (4,0.834) (5,0.835) (6,0.832) (8,0.840) (10,0.845) (12,0.839) (15,0.837)};
-\addplot[black, mark=square*, mark size=1.1pt] coordinates {(0,0.838) (1,0.833) (2,0.838) (3,0.804) (4,0.762) (5,0.736) (6,0.715) (8,0.700) (10,0.702) (12,0.696) (15,0.700)};
-\addplot[orange!85!black, densely dotted, mark=triangle*, mark size=1.4pt] coordinates {(0,0.829) (1,0.830) (2,0.704) (3,0.704) (4,0.697) (5,0.696) (6,0.700) (8,0.697) (10,0.700) (12,0.696) (15,0.700)};
-\node[font=\scriptsize, anchor=south, inner sep=1pt, text=blue!70!black] at (axis cs:8.5,0.848) {shared factors, learned};
-\node[font=\scriptsize, anchor=west, inner sep=1pt] at (axis cs:5.2,0.752) {majority vote};
-\node[font=\scriptsize, anchor=north, inner sep=1pt, text=orange!85!black] at (axis cs:8.5,0.688) {independent-error model};
+  xlabel style={font=\footnotesize, yshift=3pt}, ylabel style={font=\footnotesize, yshift=-4pt},
+  tick label style={font=\footnotesize}, xtick={0,3,6,9,12,15}, ytick={0.7,0.75,0.8,0.85},
+  grid=major, grid style={black!8}, every axis plot/.append style={line width=1.2pt}]
+\addplot[blue!70!black, mark=*, mark size=1.6pt] coordinates {(0,0.828) (1,0.830) (2,0.837) (3,0.838) (4,0.834) (5,0.835) (6,0.832) (8,0.840) (10,0.845) (12,0.839) (15,0.837)};
+\addplot[black, mark=square*, mark size=1.5pt] coordinates {(0,0.838) (1,0.833) (2,0.838) (3,0.804) (4,0.762) (5,0.736) (6,0.715) (8,0.700) (10,0.702) (12,0.696) (15,0.700)};
+\addplot[orange!85!black, densely dotted, mark=triangle*, mark size=1.9pt] coordinates {(0,0.829) (1,0.830) (2,0.704) (3,0.704) (4,0.697) (5,0.696) (6,0.700) (8,0.697) (10,0.700) (12,0.696) (15,0.700)};
+\node[font=\footnotesize, anchor=south, inner sep=1pt, text=blue!70!black] at (axis cs:8.5,0.848) {shared factors, learned};
+\node[font=\footnotesize, anchor=west, inner sep=1pt] at (axis cs:5.2,0.752) {majority vote};
+\node[font=\footnotesize, anchor=north, inner sep=1pt, text=orange!85!black] at (axis cs:8.5,0.688) {independent-error model};
 \end{axis}
 \end{tikzpicture}\\[-1pt]
-{\scriptsize\textbf{(a)} Copies drag a vote down; a group counts once.}
-\end{minipage}\hspace{0.06\textwidth}
-\begin{minipage}[b]{0.36\textwidth}\centering
-\begin{tikzpicture}[x=0.5cm, y=-0.5cm, font=\scriptsize]
+{\small\textbf{(a)} Copies drag a vote down; a group counts once.}
+\end{minipage}\hspace{0.03\textwidth}
+\begin{minipage}[b]{0.44\textwidth}\centering
+\begin{tikzpicture}[x=0.68cm, y=-0.62cm, font=\footnotesize]
 \foreach \q in {1,...,6} \node at (\q,0) {$q_{\q}$};
 \foreach \r/\lab in {1/A1,2/A2,3/A3,4/A4,5/A5} \node[anchor=east] at (0.55,\r) {\lab};
 % answers: rows are agents A1..A5, columns questions q1..q6 (true answers: 1 2 1 3 2 1)
 \foreach \q in {2,5} {\fill[auditfill] (\q-0.45,0.55) rectangle (\q+0.45,2.45);}
-\node[anchor=east, font=\scriptsize\itshape, text=black!70] at (0.55,0) {agent};
+\node[anchor=east, font=\footnotesize\itshape, text=black!70] at (0.55,0) {agent};
 \foreach \r/\row in {1/{1,3,1,3,4,1},2/{1,3,1,3,4,1},3/{1,2,2,3,2,1},4/{1,2,1,3,2,3},5/{2,2,1,3,2,1}} {
   \foreach \v [count=\q] in \row { \node at (\q,\r) {\v}; } }
 \draw[black!30] (0.55,0.55) rectangle (6.45,5.45);
-\draw[decorate, decoration={brace, amplitude=3pt, mirror}, black!70] (-0.75,0.6) -- (-0.75,2.4) node[midway, left=3pt, align=center] {shared\\factor};
+\draw[decorate, decoration={brace, amplitude=4pt, mirror}, black!70] (-0.75,0.6) -- (-0.75,2.4) node[midway, left=3pt, align=center] {shared\\factor};
 \end{tikzpicture}\\[-1pt]
-{\scriptsize\textbf{(b)} Who agrees with whom.}
+{\small\textbf{(b)} Who agrees with whom.}
 \end{minipage}
 \caption{Task~1.1. (a) Simulation: five independent agents, each right 70\% of the time, plus agents copying one source that is wrong 30\% of the time (each copy adds 5\% errors of its own); means over 20 runs of 400 questions (standard errors below 0.005). Majority vote falls to the source's accuracy, and a rater model assuming independent errors falls once two agents copy. The shared-factor model, fitted without the true answers, recovers the copying group (in 54 of 60 runs) and, as Propositions~1 and~2 predict, keeps its accuracy. With two or more copies, the independent-error model gives probability 0.95 or more to over 90\% of decisions, 28--30\% of them wrong, while the shared-factor posterior stays calibrated (calibration error below 0.03). (b) Rows are agents A1--A5 of the running example (Figure~\ref{fig:overview}), and each entry is an agent's answer to a past question. A1 and A2 share unusual answers that no one else gives (shaded), so the model infers a shared error factor and counts their agreement about once, without the true answers.}
 \label{fig:t11}
@@ -376,23 +376,23 @@ so higher stakes lead to more debates. This is the classical reject rule \citep{
 \hd{Evaluation and risks.} On testbed A, where some agents receive the same flawed hint, we measure recovery of the seeded groups, accuracy, calibration, and questions needed to detect a group; the model without shared factors is an ablation. H1 predicts a gain over majority vote that grows with how widely mistakes are shared and disappears with fewer than three independent groups. If EM converges poorly, we will start it from a spectral method \citep{zhang2016spectral} or use a pairwise measure of agreement on mistakes \citep{goel2025great}.
 
 \subsubsection{Task 1.2: Assigning debaters and judges impartially}\label{sec:t12}
-\begin{wrapfigure}{r}{0.44\textwidth}
+\begin{wrapfigure}{r}{0.52\textwidth}
 \centering
-\begin{tikzpicture}[font=\scriptsize,
-  grp/.style={draw=black!55, rounded corners=2pt, fill=agentfill, inner sep=2.5pt, align=center, minimum width=1.9cm, minimum height=0.62cm},
+\begin{tikzpicture}[font=\footnotesize,
+  grp/.style={draw=black!55, rounded corners=2pt, fill=agentfill, inner sep=2.5pt, align=center, minimum width=2.6cm, minimum height=0.72cm},
   pick/.style={grp, fill=rgfill, line width=0.9pt},
   rate/.style={-{Stealth[length=3pt]}, black!45, dashed},
   arr/.style={-{Stealth[length=3.5pt]}, black!70}]
-\node[font=\scriptsize\bfseries] at (0,0.62) {gave Yes};
-\node[font=\scriptsize\bfseries] at (2.75,0.62) {gave No};
+\node[font=\footnotesize\bfseries] at (0,0.72) {gave Yes};
+\node[font=\footnotesize\bfseries] at (3.4,0.72) {gave No};
 \node[grp] (g1) at (0,0) {model M1: A1, A2};
-\node[pick] (g2) at (0,-1.1) {model M2: \textbf{A3}};
-\node[pick] (g3) at (2.75,0) {model M3: \textbf{A4}};
-\node[grp] (g4) at (2.75,-1.1) {model M4: A5};
-\node[pick, minimum width=2.6cm] (j) at (1.375,-2.2) {judge, drawn first, model M5: \textbf{A6}};
+\node[pick] (g2) at (0,-1.3) {model M2: \textbf{A3}};
+\node[pick] (g3) at (3.4,0) {model M3: \textbf{A4}};
+\node[grp] (g4) at (3.4,-1.3) {model M4: A5};
+\node[pick, minimum width=3.6cm] (j) at (1.7,-2.6) {judge, drawn first, model M5: \textbf{A6}};
 \draw[rate] (g1.south) -- (g2.north);
 \draw[rate] (g4.north) -- (g3.south);
-\node[font=\scriptsize, text=black!60, align=center, inner sep=1pt] at (1.375,-0.55) {second half rates};
+\node[font=\footnotesize, text=black!60, align=center, inner sep=1pt] at (1.7,-0.65) {second half rates};
 \end{tikzpicture}
 \caption{Task~1.2 on the running example. Agents on one underlying model (M1--M5) form a group. The judge A6, drawn first, rates no one. The other groups are split at random; for each answer, the first half's member (M2, M3) rated highest by the second half (M1, M4; dashed) argues (bold).}
 \label{fig:t12}
@@ -408,14 +408,14 @@ so higher stakes lead to more debates. This is the classical reject rule \citep{
 \hd{Evaluation and risks.} We measure manipulability, the largest gain in selection probability a strategic rater or coalition achieves by misreporting (found by the red team), the price of impartiality, and the accuracy of the resulting debates (H2), on PeerEval and testbed C. With few underlying models there are few groups; we will then diversify agents by role instructions and tools, or draw judges from a held-out pool of models that never answer.
 
 \subsection{RG2: Settle Disputes by Agentic Debate, and Audit for Collusion}\label{sec:rg2}
-\begin{wrapfigure}{r}{0.60\textwidth}
+\begin{wrapfigure}{r}{0.64\textwidth}
 \centering
-\begin{tikzpicture}[font=\scriptsize,
-  hpart/.style={draw=black!55, rounded corners=2pt, fill=white, align=left, inner sep=3pt, text width=2.6cm},
-  lstep/.style={draw=black!45, rounded corners=1.5pt, fill=rgfill, align=left, inner sep=2pt, text width=2.9cm},
+\begin{tikzpicture}[font=\footnotesize,
+  hpart/.style={draw=black!55, rounded corners=2pt, fill=white, align=left, inner sep=3pt, text width=2.75cm},
+  lstep/.style={draw=black!45, rounded corners=1.5pt, fill=rgfill, align=left, inner sep=2pt, text width=3.05cm},
   arr/.style={-{Stealth[length=3.5pt]}, semithick, black!70}]
 % control loop column
-\node[font=\scriptsize\bfseries] (cl) at (0,0) {Control loop};
+\node[font=\footnotesize\bfseries] (cl) at (0,0) {Control loop};
 \node[lstep, below=0.12cm of cl] (c1) {1. Each side lays out its argument in numbered steps.};
 \node[lstep, below=0.16cm of c1] (c2) {2. Each side names the first step of the other's argument that it disputes.};
 \node[lstep, below=0.16cm of c2] (c3) {3. A short exchange on the disputed steps, with optional tool evidence.};
@@ -430,12 +430,13 @@ so higher stakes lead to more debates. This is the classical reject rule \citep{
 \begin{scope}[on background layer]
 \node[draw=black!50, dashed, rounded corners=3pt, fill=agentfill!60, inner sep=5pt, fit=(cl) (c4) (ri) (mem) (sb) (vf)] (h) {};
 \end{scope}
-\node[anchor=south west, font=\scriptsize\bfseries, inner sep=1pt] at ([yshift=1pt]h.north west) {Agentic debate harness};
-\node[anchor=south east, font=\scriptsize, text=black!70, inner sep=1pt] at ([yshift=1pt]h.north east) {from RG1: question, two answers, representatives, judge};
+\node[anchor=south west, font=\footnotesize\bfseries, inner sep=1pt] at ([yshift=1pt]h.north west) {Agentic debate harness};
+\node[anchor=south, font=\footnotesize, inner sep=1pt] (in) at ([yshift=0.62cm]h.north) {\textbf{From RG1:} question, two answers, representatives, judge};
+\draw[arr] (in.south) -- (cl.north);
 \draw[arr] (vf.south west) -- (c4.north east);
 \draw[arr] (sb.south west) -- (c3.north east);
 \draw[arr] (c3.west) -- (c3.west -| mem.east);
-\node[anchor=north, align=center, font=\scriptsize] (out) at ([yshift=-0.28cm]h.south) {\textbf{Decision with reasons} $\rightarrow$ audits (Task 2.2) and training (Task 3)};
+\node[anchor=north, align=center, font=\footnotesize] (out) at ([yshift=-0.28cm]h.south) {\textbf{Decision with reasons} $\rightarrow$ audits (Task 2.2) and training (Task 3)};
 \draw[arr] (c4.south) -- (out.north);
 \end{tikzpicture}
 \caption{Task~2.1: the agentic debate harness. The control loop sets who speaks, who judges, and when to stop, and the judge rules on the disputed steps after re-running any tool evidence. Each part helps an assumption of Proposition~3 hold.}
@@ -467,14 +468,14 @@ We propose an agentic debate harness, built so that these assumptions hold as of
 \hd{Evaluation and risks.} We measure accuracy on disputed questions, correct minorities that prevail and correct majorities overturned, how often re-running evidence changes the outcome, the judge's error on each kind of step, and cost. H3 predicts that debate beats open discussion among the same agents, more so as the share of steps a tool can settle grows; ablations remove each harness part, remove tools or re-running, and replace debate with open discussion. If neither side finds a false step, the judge reads both arguments, and a close ruling is reported as unsettled, with its probability and the step in dispute, and kept out of training; tool evidence can be out of date, so the judge weighs its provenance, and human audits measure how often this happens.
 
 \subsubsection{Task 2.2: Catching collusion with automatic and human audits}\label{sec:t22}
-\begin{wrapfigure}{r}{0.40\textwidth}
+\begin{wrapfigure}{r}{0.46\textwidth}
 \centering
-\begin{tikzpicture}[font=\scriptsize, x=0.36cm, y=0.36cm]
-\node[anchor=west, font=\scriptsize\bfseries] at (0,1.6) {Stream of decisions};
+\begin{tikzpicture}[font=\footnotesize, x=0.44cm, y=0.40cm]
+\node[anchor=west, font=\footnotesize\bfseries] at (0,1.6) {Stream of decisions};
 \foreach \i in {1,...,14} {\draw[black!45, fill=white] (\i-1,0) rectangle (\i-0.2,0.8);}
 \foreach \i in {3,8,12} {\draw[black!45, fill=auditfill] (\i-1,0) rectangle (\i-0.2,0.8); \node at (\i-0.6,0.4) {P};}
 \foreach \i in {6,13} {\draw[black!85, line width=1pt] (\i-1,0) rectangle (\i-0.2,0.8); \node at (\i-0.6,0.4) {H};}
-\node[anchor=west, font=\scriptsize\bfseries] at (0,-1.5) {Agent A3's error rate};
+\node[anchor=west, font=\footnotesize\bfseries] at (0,-1.5) {Agent A3's error rate};
 \draw[black!60] (0.2,-6.6) -- (13.2,-6.6);
 \fill[auditfill, draw=black!50] (1.5,-6.6) rectangle (4.5,-6.1);
 \fill[white, draw=black!85, line width=0.9pt] (7.5,-6.6) rectangle (10.5,-3.1);

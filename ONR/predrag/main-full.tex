@@ -158,7 +158,7 @@ Verifying each claim directly, by an analyst or a satellite image, is slow and c
 
 These failures spread: AI judges supply the rewards that train models \citep{bai2022constitutional,lee2024rlaif}, so their mistakes are copied into the models they train, and AAAI-26 gave an AI-generated review to each of the 22,977 main-track papers that entered full review \citep{biswas2026aaai}. As AI systems surpass people at more tasks, people cannot easily evaluate the systems' answers or their debates, so oversight will rely on AI evaluating AI, with people auditing a small part of the work \citep{bowman2022measuring,burns2024weak}.
 
-Navy decisions face all of these problems at once: analysts fuse many reports with several AI tools of unknown reliability, many reports copy one earlier report, the true answer often arrives late, an adversary may forge a report or compromise an agent, and verification is costly under limited connectivity (Section~\ref{sec:naval}).
+Navy decisions face all of these problems at once: analysts fuse reports with AI tools of unknown reliability, many reports copy an earlier one, the true answer often arrives late, an adversary may forge a report or compromise an agent, and verification is costly under limited connectivity (Section~\ref{sec:naval}).
 
 \begin{figure}[t]
 \centering
@@ -189,13 +189,12 @@ A5 & \textbf{No} & position track\\
 A6 did not answer and is available to judge.}};
 % Panel 2: RG1
 \node[panel] (p2) at (s2.south |- ptop) {\parbox[t][5.95cm][t]{3.6cm}{\raggedright%
-\textbf{Task 1.1, weights.} A1 and A2 have often given the same unusual answers, so they share an error factor and count about once.\\[2pt]
-Yes $\approx 2$, \ No $\approx 2$: no clear leader, so the question goes to debate.\par\vspace{2.5pt}{\color{black!35}\hrule}\vspace{2.5pt}
+\textbf{Task 1.1, weights.} A1 and A2 often gave the same unusual answers, so they share an error factor and count about once.\\[2pt]
+Yes $\approx 2$, \ No $\approx 2$: no clear leader, so the question is debated.\par\vspace{2.5pt}{\color{black!35}\hrule}\vspace{2.5pt}
 \textbf{Task 1.2, roles.} Agents sharing an underlying model form a group rated only by outsiders.\\[2pt]
-Judge, drawn first: A6, which did not answer; it rates no one.\\
-Yes: drawn group \{A3\} $\rightarrow$ A3\\
-No: drawn group \{A4\} $\rightarrow$ A4\\
-Neither group shares A6's model.}};
+Judge, drawn first: A6, which did not answer; it rates no one.\\[2pt]
+Yes groups \{A1,\,A2\}, \{A3\}: \{A3\} drawn, so A3 argues.\\
+No groups \{A4\}, \{A5\}: \{A4\} drawn.}};
 % Panel 3: RG2
 \node[panel] (p3) at (s3.south |- ptop) {\parbox[t][5.95cm][t]{3.6cm}{\raggedright%
 \textbf{Task 2.1, debate.}\\[1pt]
@@ -243,7 +242,7 @@ Three testbeds (math and code, multi-document questions with maritime scenarios,
 \item \emph{Evaluating AI before fielding}: more data and expertise are needed ``to quantify performance and risk of AI-enabled systems'' \citep{dote2026annual}, as AI judges increasingly score other AI systems.
 \item \emph{Maintenance, logistics, cyber defense, and collaborative autonomy}: conflicting logs and records, alerts triaged by several tools, and unmanned systems that share reports under limited communications.
 \end{itemize}
-Across these uses, Task~1.1 counts copied and stale reports once; Tasks~1.2, 2.1, and~2.2 keep a compromised agent from rating its way into a role, discard evidence that fails to reproduce, and flag colluders; Task~3 improves agents when ground truth arrives late; and each decision states its reasons.
+Here, Task~1.1 counts copied and stale reports once; Tasks~1.2, 2.1, and~2.2 keep a compromised agent from rating its way into a role, discard evidence that fails to reproduce, and flag colluders; Task~3 improves agents when ground truth arrives late; and each decision states its reasons.
 
 \hd{Path to transition.} The project is fundamental research. Its products are methods with stated guarantees, an open harness, testbeds, and protocols that Navy laboratories, such as NRL's Navy Center for Applied Research in Artificial Intelligence, could evaluate on Navy data. The PI will pursue ONR Summer Faculty Research Program and Naval Research Enterprise Internship Program placements for students to work with Navy scientists on such evaluations.
 
@@ -396,7 +395,7 @@ so higher stakes lead to more debates. The debate is between the two answers wit
 \end{tikzpicture}
 \end{minipage}\hfill
 \begin{minipage}[c]{0.54\textwidth}
-\caption{Task~1.2 on the running example. Agents that share an underlying model (M1--M5) form a group, and each group is rated only by outsiders (dashed arrows). The judge A6, drawn first from agents that did not answer, rates no one. For each answer, a group without the judge's model is drawn at random, and its top-rated member argues (bold).}
+\caption{Task~1.2 on the running example. Agents on one underlying model (M1--M5) form a group, rated only by outsiders (dashed arrows). The judge A6, drawn first from agents that did not answer, rates no one. For each answer, a group without the judge's model is drawn at random, and its top-rated member argues (bold). The drawn groups here, M2 and M3, have one member each; ratings matter only in a group of several, such as M1.}
 \label{fig:t12}
 \end{minipage}
 \end{figure}
@@ -418,7 +417,7 @@ A single agent is a one-member group, so (a) gives impartiality in the usual sen
 \subsection{RG2: Settle Disputes by Agentic Debate, and Catch Collusion}\label{sec:rg2}
 \hd{Challenges.} Settling a dispute among AI agents raises three challenges. \textbf{First, open discussion erases the disagreement that exposes errors:} one round can make a panel nearly unanimous without making it more accurate \citep{shu2026unanimity}. \textbf{Second, a judge that reads only words can be persuaded.} Standard debate keeps the disagreement but leaves the judge to weigh arguments alone, so a persuasive debater can win a step that one database query would settle, and judges shown a log claiming that tool calls succeeded accept most failed outputs \citep{xu2026log}. \textbf{Third, debaters or the judge can collude}, steering a debate to the wrong side by arguing badly on purpose \citep{vanderweij2025sandbagging}, by misleading with true but selectively chosen facts \citep{hu2026lying}, or by favoring one side, none of which re-running evidence catches. LLM agents collude when it pays \citep{shi2026collusion}, hide signals in ordinary text \citep{mathew2025hidden}, and often tell evaluations from real use \citep{needham2025evaluated}, so checks on planted examples alone can be evaded.
 
-\hd{Overview.} Two tasks meet these challenges and control the remaining terms of (\ref{eq:decomp}) (Figures~\ref{fig:t21} and~\ref{fig:t22}):
+\hd{Overview.} Two tasks meet them and control the remaining terms of (\ref{eq:decomp}) (Figures~\ref{fig:t21} and~\ref{fig:t22}):
 \begin{itemize}
 \item Task~2.1 meets the first two with debate in an agentic harness, in which the judge rules on single disputed steps and re-runs their tool evidence, shrinking $\epsilon_{\text{step}}$.
 \item Task~2.2 meets the third with automatic audits on planted debates and human audits of random real decisions, shrinking $\epsilon_{\text{role}}$ with Task~1.2.
@@ -561,7 +560,7 @@ C.\ Scientific claims and peer review & Whether a paper's evidence supports its 
 
 \hd{A peer-review example.} In testbed C, two AI reviewers disagree on whether a paper's experiments support its claimed five-point gain; the doubter disputes the step ``the baseline was evaluated on the same data split,'' and the judge re-runs the released evaluation script for both settings, so an area chair sees the disputed step and the reproduced numbers.
 
-\hd{Agent pools and red team.} Agents are built on open-weight models of several families and sizes, plus commercial models where licenses allow, with varied role instructions and tools. In testbed C, published reproducibility reports supply known answers for human audits \citep{pineau2021reproducibility}, and agents are not told which claims have reports, so Proposition~5 holds within that set. Our red team, modeled on AI control evaluations \citep{greenblatt2024control}, builds attackers of increasing strength: (1)~a fixed dishonest agent; (2)~an agent that knows the protocol but not its random draws; (3)~an agent trained to spot planted debates that cheats rarely, and only when it expects no audit; and (4)~a debater and a judge that coordinate through hidden signals. We report wrong decisions that get through at each audit budget, together with how much useful work the framework still does, as safety--usefulness curves.
+\hd{Agent pools and red team.} Agents are built on open-weight models of several families and sizes, plus commercial models where licenses allow, with varied role instructions and tools. In testbed C, published reproducibility reports supply known answers for human audits \citep{pineau2021reproducibility}, and agents are not told which claims have reports, so Proposition~5 holds within that set. Our red team, modeled on AI control evaluations \citep{greenblatt2024control}, builds attackers of increasing strength: (1)~a fixed dishonest agent; (2)~an agent that knows the protocol but not its random draws; (3)~an agent trained to spot planted debates that cheats rarely, and only when it expects no audit; and (4)~a debater and a judge that coordinate through hidden signals. We report wrong decisions that get through at each audit budget, and the useful work still done, as safety--usefulness curves.
 
 \hd{Conditions varied.} Each hypothesis predicts where its method should help and where it should fail, so experiments vary the conditions that decide this: (i)~how widely mistakes are shared, from no agents to most given the same flawed hint or outdated report, and the number of model families, from one to five; (ii)~dishonesty, from none to 30\% of agents, at red-team levels 1--4; (iii)~evidence, the share of disputed steps a tool can settle and of reports that are outdated or forged; (iv)~budgets for debates, audits, and computation, including small models and few tool calls, as under limited connectivity; and (v)~answer types, from yes or no to score bands. Regimes where the propositions say the methods fail are included, so failures are measured, not assumed; transfer is measured on held-out topics and model families.
 
@@ -626,7 +625,7 @@ The project runs 36 months from April 1, 2027 (schedule and milestones M1--M6 in
 \subsection{Gold Standard Science}\label{sec:gss}
 The project will follow the tenets of Executive Order 14303, as the PI's previous work does.
 
-\hd{Reproducible and transparent.} The harness logs every debate with its exact tool calls, model versions, prompts, and seeds, and tool evidence is re-runnable by design. Code, testbeds, prompts, and protocols are released with each paper, and the PI's group studies reproducibility \citep{yan2025lmrbench}.
+\hd{Reproducible and transparent.} The harness logs every debate with exact tool calls, model versions, prompts, and seeds, and tool evidence is re-runnable by design. Code, testbeds, prompts, and protocols are released with each paper, and our group studies reproducibility \citep{yan2025lmrbench}.
 
 \hd{Communicative of error and uncertainty.} Every guarantee is stated with its assumptions, decisions carry calibrated probabilities, and the framework's accuracy is estimated from random human audits with valid confidence intervals \citep{angelopoulos2023ppi}.
 

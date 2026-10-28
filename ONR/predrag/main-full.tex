@@ -19,6 +19,7 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \usepackage[font=small,labelfont=bf,skip=4pt]{caption}
+\captionsetup[figure]{skip=9pt}
 \usepackage{booktabs}
 \usepackage{wrapfig}
 \usepackage{tabularx}
@@ -415,11 +416,11 @@ where $r_{ba}$ is $b$'s rating of $a$'s argument and $w_b$ its track-record weig
 \hd{Evaluation and risks.} We measure manipulability, the largest gain in selection probability a strategic rater or coalition achieves by misreporting (found by the red team), the price of impartiality against the bound of Proposition~3(b), and the accuracy of the resulting debates (H2), on PeerEval and testbed C. With few underlying models there are few groups; judges then come from a held-out pool of models that never answer.
 
 \subsection{RG2: Settle Disputes by Agentic Debate, and Audit for Collusion}\label{sec:rg2}
-\begin{wrapfigure}{r}{0.64\textwidth}
+\begin{figure}[t]
 \centering
 \begin{tikzpicture}[font=\footnotesize,
-  hpart/.style={draw=black!55, rounded corners=2pt, fill=white, align=left, inner sep=3pt, text width=2.75cm},
-  lstep/.style={draw=black!45, rounded corners=1.5pt, fill=rgfill, align=left, inner sep=2pt, text width=3.05cm},
+  hpart/.style={draw=black!55, rounded corners=2pt, fill=white, align=left, inner sep=3pt, text width=4.2cm},
+  lstep/.style={draw=black!45, rounded corners=1.5pt, fill=rgfill, align=left, inner sep=2pt, text width=4.9cm},
   arr/.style={-{Stealth[length=3.5pt]}, semithick, black!70}]
 % control loop column
 \node[font=\footnotesize\bfseries] (cl) at (0,0) {Control loop};
@@ -429,16 +430,16 @@ where $r_{ba}$ is $b$'s rating of $a$'s argument and $w_b$ its track-record weig
 \node[lstep, below=0.16cm of c3] (c4) {4. Stop. The judge re-runs the evidence and rules on the disputed steps.};
 \draw[arr] (c1) -- (c2); \draw[arr] (c2) -- (c3); \draw[arr] (c3) -- (c4);
 % left column
-\node[hpart, anchor=north east] (ri) at ([xshift=-0.3cm]c1.north west) {\textbf{Role instructions.} Debaters defend one answer, step by step, attaching evidence where a tool applies. The judge rules only on the disputed steps.};
+\node[hpart, anchor=north east] (ri) at ([xshift=-0.45cm]c1.north west) {\textbf{Role instructions.} Debaters defend one answer, step by step, attaching evidence where a tool applies. The judge rules only on the disputed steps.};
 \node[hpart, anchor=north east] (mem) at ([xshift=0cm, yshift=-0.25cm]ri.south east) {\textbf{Memory.} Logs every message, tool call, and result, for audits and training.};
 % right column
-\node[hpart, anchor=north west] (sb) at ([xshift=0.3cm]c1.north east) {\textbf{Sandbox with tools.} Document search, structured databases, code execution.};
+\node[hpart, anchor=north west] (sb) at ([xshift=0.45cm]c1.north east) {\textbf{Sandbox with tools.} Document search, structured databases, code execution.};
 \node[hpart, anchor=north west] (vf) at ([xshift=0cm, yshift=-0.25cm]sb.south west) {\textbf{Verification.} Tool evidence carries its exact call; the judge re-runs it, and evidence that does not reproduce is discarded.};
 \begin{scope}[on background layer]
 \node[draw=black!50, dashed, rounded corners=3pt, fill=agentfill!60, inner sep=5pt, fit=(cl) (c4) (ri) (mem) (sb) (vf)] (h) {};
 \end{scope}
 \node[anchor=south west, font=\footnotesize\bfseries, inner sep=1pt] at ([yshift=1pt]h.north west) {Agentic debate harness};
-\node[anchor=south, font=\footnotesize, inner sep=1pt] (in) at ([yshift=0.62cm]h.north) {\textbf{From RG1:} question, two answers, representatives, judge};
+\node[anchor=south, font=\footnotesize, inner sep=1pt] (in) at ([yshift=0.36cm]h.north) {\textbf{From RG1:} question, two answers, representatives, judge};
 \draw[arr] (in.south) -- (cl.north);
 \draw[arr] (vf.south west) -- (c4.north east);
 \draw[arr] (sb.south west) -- (c3.north east);
@@ -448,7 +449,7 @@ where $r_{ba}$ is $b$'s rating of $a$'s argument and $w_b$ its track-record weig
 \end{tikzpicture}
 \caption{Task~2.1: the agentic debate harness. The control loop sets who speaks, who judges, and when to stop, and the judge rules on the disputed steps after re-running any tool evidence. Each part helps an assumption of Proposition~4 hold.}
 \label{fig:t21}
-\end{wrapfigure}
+\end{figure}
 \hd{Challenges.} Settling a dispute among AI agents raises three challenges. \textbf{First, open discussion erases the disagreement that exposes errors:} one round can make a panel nearly unanimous without making it more accurate \citep{shu2026unanimity}. \textbf{Second, a judge that reads only words can be persuaded.} Standard debate keeps the disagreement but leaves the judge to weigh arguments alone, so a persuasive debater can win a step that one database query would settle, or get a failed output accepted by showing a log that claims its tool calls succeeded \citep{xu2026log}. \textbf{Third, debaters or the judge can collude}, steering a debate to the wrong side by arguing badly on purpose \citep{vanderweij2025sandbagging}, by misleading with true but selectively chosen facts \citep{hu2026lying}, or by favoring one side, none of which re-running evidence catches. LLM agents collude when it pays \citep{shi2026collusion}, hide signals in ordinary text \citep{mathew2025hidden}, and often tell evaluations from real use \citep{needham2025evaluated}, so checks on planted examples alone can be evaded.
 
 \hd{Overview.} Two tasks meet them and control the remaining terms of (\ref{eq:decomp}) (Figures~\ref{fig:t21} and~\ref{fig:t22}):
@@ -475,6 +476,10 @@ We propose an agentic debate harness, built so that these assumptions hold as of
 \hd{Evaluation and risks.} We measure accuracy on disputed questions, correct minorities that prevail and correct majorities overturned, how often re-running evidence changes the outcome, the judge's error on each kind of step, and cost. H3 predicts that debate beats open discussion among the same agents, more so as the share of steps a tool can settle grows; ablations remove each harness part, remove tools or re-running, and replace debate with open discussion. If neither side finds a false step, the judge reads both arguments, and a close ruling is reported as unsettled, with its probability and the step in dispute, and kept out of training; tool evidence can be out of date, so the judge weighs its provenance, and human audits measure how often this happens.
 
 \subsubsection{Task 2.2: Catching collusion with automatic and human audits}\label{sec:t22}
+\hd{Approach.} How can colluding debaters or judges be caught when people check only a small, fixed share of decisions? We use random inspection \citep{avenhaus2002inspection} in two forms (Figure~\ref{fig:t22}). \emph{Automatic audits} mix planted debates on planted cases into the real stream, formatted like real questions; a planted case can be a paper with a deliberately inserted error \citep{schroter2008errors}. \emph{Human audits} cover a few real decisions drawn at random after they are made: a person or a direct measurement, such as a satellite image, finds the right answer.
+
+\emph{Why this method.} A human audit drawn at random after a decision is made cannot be dodged: every decision a colluder steers is audited with probability $\rho$, whatever it can infer about planted cases, so its first $n$ steered decisions all escape audit with probability $(1-\rho)^n$ \citep{avenhaus2002inspection}.
+
 \begin{wrapfigure}{r}{0.46\textwidth}
 \centering
 \begin{tikzpicture}[font=\footnotesize, x=0.44cm, y=0.40cm]
@@ -494,10 +499,6 @@ We propose an agentic debate harness, built so that these assumptions hold as of
 \caption{Task~2.2: two kinds of audits. Planted debates (P), whose answers are known, are mixed into the stream; human audits (H) check a few real decisions drawn at random after they are made. An agent that does much worse on audited real decisions than on planted ones of similar difficulty, like A3 here (illustrative numbers), is flagged: its weight drops (Task~1.1) and it is barred from roles (Task~1.2).}
 \label{fig:t22}
 \end{wrapfigure}
-\hd{Approach.} How can colluding debaters or judges be caught when people check only a small, fixed share of decisions? We use random inspection \citep{avenhaus2002inspection} in two forms (Figure~\ref{fig:t22}). \emph{Automatic audits} mix planted debates on planted cases into the real stream, formatted like real questions; a planted case can be a paper with a deliberately inserted error \citep{schroter2008errors}. \emph{Human audits} cover a few real decisions drawn at random after they are made: a person or a direct measurement, such as a satellite image, finds the right answer.
-
-\emph{Why this method.} A human audit drawn at random after a decision is made cannot be dodged: every decision a colluder steers is audited with probability $\rho$, whatever it can infer about planted cases, so its first $n$ steered decisions all escape audit with probability $(1-\rho)^n$ \citep{avenhaus2002inspection}.
-
 Planted cases add cheap evidence as long as they cannot be told from real questions, so we make them from real questions by controlled edits, such as changing a timestamp in a port report, with a discriminator that guides the generator until it can no longer tell planted from real \citep{checco2018gold}; human audits keep the guarantee when it can, as random tax audits deter evasion \citep{allingham1972tax,gans2026randomized}. Blame is assigned by a model of each agent's effect on audited wrong decisions, which random pairings make identifiable. An agent is flagged when its audited decisions go wrong more often than its track record and its partners predict, or when it does much worse on audited real decisions than on planted ones of matched difficulty, by an anytime-valid sequential test \citep{ramdas2023game} that keeps the chance that an agent erring no more than predicted is ever flagged below a chosen level $\alpha$ (split across agents), however long monitoring runs; the number of audits needed to flag a colluder then depends on $\alpha$ and on how much more often its decisions go wrong, not on the number of decisions \citep{steinhardt2016avoiding}. Flags lower the agent's weight in Task~1.1 and bar it from arguing or judging. Treating auditing as an inspection game, we expect that a colluder that tunes how often it cheats can cause, before it is flagged, at most of order $\sqrt{n\log\log n/\rho}$ wrong decisions beyond the honest error rate in $n$ decisions when honest agents also err, the slack any anytime-valid test must allow \citep{howard2021timeuniform}, and a bounded number when they rarely do; we will prove such bounds and compare them with the red team's best attacks. A colluder that mimics a weak honest agent is never flagged, but a weak record earns little weight (Task~1.1) and no seat as judge (Task~1.2). We also look for rulings that favor one debater more than the evidence explains \citep{dong2009dependence}, and paraphrase messages against hidden signals \citep{roger2023preventing}.
 
 \hd{Preliminary results.} The PI co-advised one of five university red teams in the Amazon Nova AI Challenge \citep{sahai2025nova}, whose COMET framework elicited harmful outputs from guarded code models \citep{comet2025}. \pending{In a pilot, a strong model told templated planted cases from real questions with an AUC of 0.86, but planted cases made by controlled edits only with an AUC of 0.56; in simulation, colluders whose audited decisions went wrong three times as often as their track records predicted were flagged after a median of 40 audited decisions, and no honest agent was flagged ($\alpha=0.05$).}

@@ -30,7 +30,7 @@
 \usepackage[colorlinks=true,citecolor=blue,linkcolor=black,urlcolor=black]{hyperref}
 
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{4pt}
+\setlength{\parskip}{3pt}
 \setlength{\textfloatsep}{9pt plus 2pt minus 2pt}
 \setlength{\floatsep}{8pt plus 2pt minus 2pt}
 \setlength{\intextsep}{8pt plus 2pt minus 2pt}
@@ -178,6 +178,7 @@ Navy decisions face all of these problems at once: analysts fuse many reports wi
 \textbf{Question:} Has cargo vessel V left port? (In fact, it has not.)\\[4pt]
 \renewcommand{\arraystretch}{1.1}%
 \begin{tabular}{@{}l@{\hspace{5pt}}l@{\hspace{5pt}}l@{}}
+\textit{Agent} & \textit{Answer} & \textit{Source}\\
 A1 & \textbf{Yes} & schedule S\\
 A2 & \textbf{Yes} & schedule S\\
 A3 & \textbf{Yes} & \textit{compromised}\\
@@ -298,12 +299,12 @@ AI control \citep{greenblatt2024control} & \nonem & \fullm & \nonem & \nonem & \
 P(D_q\neq y_q)\;\le\;\underbrace{(1-\tau)\,P(\pi_q\ge\tau)}_{\text{no debate: Task 1.1}}\;+\;P(\pi_q<\tau)\,\big[\underbrace{\epsilon_{\text{cand}}}_{\text{Task 1.1}}+\underbrace{\epsilon_{\text{role}}}_{\text{Tasks 1.2, 2.2}}+\underbrace{\epsilon_{\text{step}}}_{\text{Task 2.1}}\big].
 \label{eq:decomp}
 \end{equation}
-The first term holds when the posterior is calibrated (answers given probability $\pi$ are right a fraction $\pi$ of the time); a vote that ignores shared mistakes is overconfident and breaks it (Figure~\ref{fig:rg1}(a)), so Task~1.1 supplies a posterior that accounts for them and sets $\tau$ by weighing a debate's cost against the stakes. In a debate, $\epsilon_{\text{cand}}$ is the chance that neither debated answer is right, $\epsilon_{\text{role}}$ the chance that a dishonest agent holds a role and steers the outcome, and $\epsilon_{\text{step}}$ the chance that a debate without such steering still ends wrong. Tasks~1.2 and~2.2 shrink $\epsilon_{\text{role}}$, Task~2.1 shrinks $\epsilon_{\text{step}}$, and Task~3 lowers the agents' own error rates, which can shrink every term (Sections~\ref{sec:rg1}--\ref{sec:rg3}). Removing a task leaves its term uncontrolled, and our ablations measure each term (Section~\ref{sec:eval}).
+The first term holds when the posterior is calibrated (answers given probability $\pi$ are right a fraction $\pi$ of the time); a vote that ignores shared mistakes is overconfident and breaks it (Figure~\ref{fig:t11}(a)), so Task~1.1 supplies a posterior that accounts for them and sets $\tau$ by weighing a debate's cost against the stakes. In a debate, $\epsilon_{\text{cand}}$ is the chance that neither debated answer is right, $\epsilon_{\text{role}}$ the chance that a dishonest agent holds a role and steers the outcome, and $\epsilon_{\text{step}}$ the chance that a debate without such steering still ends wrong. Tasks~1.2 and~2.2 shrink $\epsilon_{\text{role}}$, Task~2.1 shrinks $\epsilon_{\text{step}}$, and Task~3 lowers the agents' own error rates, which can shrink every term (Sections~\ref{sec:rg1}--\ref{sec:rg3}). Removing a task leaves its term uncontrolled, and our ablations measure each term (Section~\ref{sec:eval}).
 
 \subsection{RG1: Decide What to Debate, and Pick Debaters and Judges Impartially}\label{sec:rg1}
-\hd{Challenges.} Before any debate, the group must decide which questions deserve one and who argues and judges. We identify three challenges. \textbf{First, shared mistakes make a vote overconfident.} A vote is informative only to the extent that voters err independently, and correlated votes can void the jury theorem's guarantee \citep{ladha1992condorcet}; LLM errors are correlated in practice \citep{kim2025correlated,goel2025great,kohli2026nine}. In Figure~\ref{fig:rg1}(a), agents copying one source drag the majority vote of five independent agents from 84\% to the source's 70\%, and a rater model that assumes independent errors falls sooner, reading the copies' agreement as skill. \textbf{Second, debate is too costly to run on every question.} It uses three to five times the tokens of a single answer, can overturn correct answers \citep{fan2026imad}, and often fails to beat voting \citep{smit2024mad,choi2025debate}; yet a unanimous answer can rest on a shared mistake, so neither agreement nor confidence shows which questions need a debate. \textbf{Third, agents that choose debaters and judges can favor themselves.} If agents rate one another to pick a representative for each answer and a judge, an agent can rate rivals low to be picked, agents built on similar models favor one another's outputs \citep{panickssery2024self,goel2025great}, and a judge that shares a model with one side has a stake in the outcome.
+\hd{Challenges.} Before any debate, the group must decide which questions deserve one and who argues and judges. We identify three challenges. \textbf{First, shared mistakes make a vote overconfident.} A vote is informative only to the extent that voters err independently, and correlated votes can void the jury theorem's guarantee \citep{ladha1992condorcet}; LLM errors are correlated in practice \citep{kim2025correlated,goel2025great,kohli2026nine}. In Figure~\ref{fig:t11}(a), agents copying one source drag the majority vote of five independent agents from 84\% to the source's 70\%, and a rater model that assumes independent errors falls sooner, reading the copies' agreement as skill. \textbf{Second, debate is too costly to run on every question.} It uses three to five times the tokens of a single answer, can overturn correct answers \citep{fan2026imad}, and often fails to beat voting \citep{smit2024mad,choi2025debate}; yet a unanimous answer can rest on a shared mistake, so neither agreement nor confidence shows which questions need a debate. \textbf{Third, agents that choose debaters and judges can favor themselves.} If agents rate one another to pick a representative for each answer and a judge, an agent can rate rivals low to be picked, agents built on similar models favor one another's outputs \citep{panickssery2024self,goel2025great}, and a judge that shares a model with one side has a stake in the outcome.
 
-\hd{Overview.} RG1 passes to RG2 the question, the two debated answers, their representatives, and the judge. Two tasks meet its challenges and control the first two sources of error in (\ref{eq:decomp}) and, with Task~2.2, the third (Figure~\ref{fig:rg1}):
+\hd{Overview.} RG1 passes to RG2 the question, the two debated answers, their representatives, and the judge. Two tasks meet its challenges and control the first two sources of error in (\ref{eq:decomp}) and, with Task~2.2, the third (Figures~\ref{fig:t11} and~\ref{fig:t12}):
 \begin{itemize}
 \item Task~1.1 meets the first two with a rater model in which a group sharing a mistake counts at most once, and a rule, derived from expected loss, for which questions to debate.
 \item Task~1.2 meets the third with an impartial choice of debaters and judges, so that no agent's ratings can raise its own chance of a role.
@@ -311,7 +312,7 @@ The first term holds when the posterior is calibrated (answers given probability
 
 \begin{figure}[t]
 \centering
-\begin{minipage}[b]{0.335\textwidth}\centering
+\begin{minipage}[b]{0.40\textwidth}\centering
 \begin{tikzpicture}
 \begin{axis}[width=5.72cm, height=4.7cm, xmin=-0.5, xmax=15.5, ymin=0.63, ymax=0.88,
   xlabel={Agents that copy one source}, ylabel={Accuracy of decisions},
@@ -327,43 +328,23 @@ The first term holds when the posterior is calibrated (answers given probability
 \end{axis}
 \end{tikzpicture}\\[-1pt]
 {\scriptsize\textbf{(a)} Copies drag a vote down; a group counts once.}
-\end{minipage}\hfill
-\begin{minipage}[b]{0.3\textwidth}\centering
+\end{minipage}\hspace{0.06\textwidth}
+\begin{minipage}[b]{0.36\textwidth}\centering
 \begin{tikzpicture}[x=0.5cm, y=-0.5cm, font=\scriptsize]
 \foreach \q in {1,...,6} \node at (\q,0) {$q_{\q}$};
 \foreach \r/\lab in {1/A1,2/A2,3/A3,4/A4,5/A5} \node[anchor=east] at (0.55,\r) {\lab};
-% answers: rows A1..A5, columns q1..q6 (true answers: a b a c b a)
+% answers: rows are agents A1..A5, columns questions q1..q6 (true answers: 1 2 1 3 2 1)
 \foreach \q in {2,5} {\fill[auditfill] (\q-0.45,0.55) rectangle (\q+0.45,2.45);}
-\foreach \r/\row in {1/{a,c,a,c,d,a},2/{a,c,a,c,d,a},3/{a,b,b,c,b,a},4/{a,b,a,c,b,c},5/{b,b,a,c,b,a}} {
+\node[anchor=east, font=\scriptsize\itshape, text=black!70] at (0.55,0) {agent};
+\foreach \r/\row in {1/{1,3,1,3,4,1},2/{1,3,1,3,4,1},3/{1,2,2,3,2,1},4/{1,2,1,3,2,3},5/{2,2,1,3,2,1}} {
   \foreach \v [count=\q] in \row { \node at (\q,\r) {\v}; } }
 \draw[black!30] (0.55,0.55) rectangle (6.45,5.45);
 \draw[decorate, decoration={brace, amplitude=3pt, mirror}, black!70] (-0.75,0.6) -- (-0.75,2.4) node[midway, left=3pt, align=center] {shared\\factor};
-\node[align=left, anchor=north west, text width=4.35cm, inner sep=0pt] at (-1.8,5.95) {A1 and A2 share unusual answers that no one else gives (shaded), so the model infers a shared error factor and counts their agreement about once. The true answers are never needed.};
 \end{tikzpicture}\\[-1pt]
-{\scriptsize\textbf{(b)} Task 1.1: who agrees with whom.}
-\end{minipage}\hfill
-\begin{minipage}[b]{0.33\textwidth}\centering
-\begin{tikzpicture}[font=\scriptsize,
-  grp/.style={draw=black!55, rounded corners=2pt, fill=agentfill, inner sep=2.5pt, align=center, minimum width=1.9cm, minimum height=0.62cm},
-  pick/.style={grp, fill=rgfill, line width=0.9pt},
-  rate/.style={-{Stealth[length=3pt]}, black!45, dashed},
-  arr/.style={-{Stealth[length=3.5pt]}, black!70}]
-\node[font=\scriptsize\bfseries] at (0,0.62) {gave Yes};
-\node[font=\scriptsize\bfseries] at (2.75,0.62) {gave No};
-\node[grp] (g1) at (0,0) {model M1: A1, A2};
-\node[pick] (g2) at (0,-1.1) {model M2: \textbf{A3}};
-\node[pick] (g3) at (2.75,0) {model M3: \textbf{A4}};
-\node[grp] (g4) at (2.75,-1.1) {model M4: A5};
-\node[pick, minimum width=2.6cm] (j) at (1.375,-2.2) {judge, drawn first, model M5: \textbf{A6}};
-\draw[rate, {Stealth[length=3pt]}-{Stealth[length=3pt]}] (g1.south) -- (g2.north);
-\draw[rate, {Stealth[length=3pt]}-{Stealth[length=3pt]}] (g3.south) -- (g4.north);
-\node[font=\scriptsize, text=black!60, align=center, inner sep=1pt] at (1.375,-0.55) {outsiders rate};
-\node[align=center, text width=5.2cm, anchor=north, inner sep=0pt] at (1.375,-2.75) {Dashed arrows: who rates whom. The judge, drawn first from agents that did not answer, rates no one. For each answer, a group without the judge's model is drawn at random, and its top-rated member argues.};
-\end{tikzpicture}\\[-1pt]
-{\scriptsize\textbf{(c)} Task 1.2: impartial roles.}
+{\scriptsize\textbf{(b)} Who agrees with whom.}
 \end{minipage}
-\caption{RG1. (a) Simulation: five independent agents, each right 70\% of the time, plus agents copying one source that is wrong 30\% of the time (each copy adds 5\% errors of its own); means over 20 runs of 400 questions (standard errors below 0.005). Majority vote falls to the source's accuracy, and a rater model assuming independent errors falls once two agents copy. The shared-factor model, fitted without the true answers, recovers the copying group (exactly, in 54 of 60 runs inspected) and, as Propositions~1 and~2 predict, keeps its accuracy. With two or more copies, the independent-error model gives probability 0.95 or more to over 90\% of decisions, 28--30\% of them wrong, while the shared-factor posterior stays calibrated (calibration error below 0.03). In (c), bold boxes are the agents chosen in the running example.}
-\label{fig:rg1}
+\caption{Task~1.1. (a) Simulation: five independent agents, each right 70\% of the time, plus agents copying one source that is wrong 30\% of the time (each copy adds 5\% errors of its own); means over 20 runs of 400 questions (standard errors below 0.005). Majority vote falls to the source's accuracy, and a rater model assuming independent errors falls once two agents copy. The shared-factor model, fitted without the true answers, recovers the copying group (exactly, in 54 of 60 runs inspected) and, as Propositions~1 and~2 predict, keeps its accuracy. With two or more copies, the independent-error model gives probability 0.95 or more to over 90\% of decisions, 28--30\% of them wrong, while the shared-factor posterior stays calibrated (calibration error below 0.03). (b) Rows are agents A1--A5 of the running example (Figure~\ref{fig:overview}), and each entry is an agent's answer to a past question. A1 and A2 share unusual answers that no one else gives (shaded), so the model infers a shared error factor and counts their agreement about once, without the true answers.}
+\label{fig:t11}
 \end{figure}
 
 \subsubsection{Task 1.1: Deciding what to debate, counting shared mistakes once}\label{sec:t11}
@@ -387,19 +368,44 @@ Proposition~2 states in advance when reliability can be learned without ground t
 \pi_q<\tau=1-\epsilon_D-c/L,
 \label{eq:threshold}
 \end{equation}
-so higher stakes lead to more debates. The debate is between the two answers with the highest posterior, so $\epsilon_{\text{cand}}$ is the chance that the right answer is neither; $\epsilon_D$ is estimated on development questions with known answers, separately for disputes a tool can settle. Because $\pi_q$ counts effective votes, a unanimous answer from agents that share a mistake can still fall below $\tau$ and go to debate, which rules triggered by low confidence or disagreement cannot do (Section~\ref{sec:related}). In the vessel example, the two agents with the outdated schedule often gave the same unusual answers (Figure~\ref{fig:rg1}(b)), so the pair counts about once, and with no clear leader the question goes to debate.
+so higher stakes lead to more debates. The debate is between the two answers with the highest posterior, so $\epsilon_{\text{cand}}$ is the chance that the right answer is neither; $\epsilon_D$ is estimated on development questions with known answers, separately for disputes a tool can settle. Because $\pi_q$ counts effective votes, a unanimous answer from agents that share a mistake can still fall below $\tau$ and go to debate, which rules triggered by low confidence or disagreement cannot do (Section~\ref{sec:related}). In the vessel example, the two agents with the outdated schedule often gave the same unusual answers (Figure~\ref{fig:t11}(b)), so the pair counts about once, and with no clear leader the question goes to debate.
 
-\hd{Preliminary results.} The simulation in Figure~\ref{fig:rg1}(a) bears out Propositions~1 and~2. \pending{In a pilot with nine agents from four open-weight model families on 300 GSM8K problems, in which up to four agents received the same hint, wrong on a third of the problems, majority vote fell from 0.89 to 0.74 and the classical rater model to 0.71, while the shared-factor model stayed at 0.87 and recovered the hinted group in 9 of 10 runs.} Our Peer Rank, which weights each AI reviewer by how highly the others rate its answers, agreed with human preferences more often than the strongest single judge (67.3\% vs.\ 64.3\% for GPT-4) \citep{li2024prd}; track records keep models that share mistakes from raising one another's standing.
+\hd{Preliminary results.} The simulation in Figure~\ref{fig:t11}(a) bears out Propositions~1 and~2. \pending{In a pilot with nine agents from four open-weight model families on 300 GSM8K problems, in which up to four agents received the same hint, wrong on a third of the problems, majority vote fell from 0.89 to 0.74 and the classical rater model to 0.71, while the shared-factor model stayed at 0.87 and recovered the hinted group in 9 of 10 runs.} Our Peer Rank, which weights each AI reviewer by how highly the others rate its answers, agreed with human preferences more often than the strongest single judge (67.3\% vs.\ 64.3\% for GPT-4) \citep{li2024prd}; track records keep models that share mistakes from raising one another's standing.
 
 \hd{Evaluation and risks.} On testbed A, where some agents receive the same flawed hint, we measure recovery of the seeded groups, accuracy, calibration, and questions needed to detect a group; the model without shared factors is an ablation. H1 predicts a gain over majority vote that grows with how widely mistakes are shared and disappears with fewer than three independent groups. If EM converges poorly, we will start it from a spectral method \citep{zhang2016spectral} or use a pairwise measure of agreement on mistakes \citep{goel2025great}.
 
 \subsubsection{Task 1.2: Impartial choice of debaters and judges}\label{sec:t12}
+\begin{figure}[t]
+\centering
+\begin{minipage}[c]{0.42\textwidth}\centering
+\begin{tikzpicture}[font=\scriptsize,
+  grp/.style={draw=black!55, rounded corners=2pt, fill=agentfill, inner sep=2.5pt, align=center, minimum width=1.9cm, minimum height=0.62cm},
+  pick/.style={grp, fill=rgfill, line width=0.9pt},
+  rate/.style={-{Stealth[length=3pt]}, black!45, dashed},
+  arr/.style={-{Stealth[length=3.5pt]}, black!70}]
+\node[font=\scriptsize\bfseries] at (0,0.62) {gave Yes};
+\node[font=\scriptsize\bfseries] at (2.75,0.62) {gave No};
+\node[grp] (g1) at (0,0) {model M1: A1, A2};
+\node[pick] (g2) at (0,-1.1) {model M2: \textbf{A3}};
+\node[pick] (g3) at (2.75,0) {model M3: \textbf{A4}};
+\node[grp] (g4) at (2.75,-1.1) {model M4: A5};
+\node[pick, minimum width=2.6cm] (j) at (1.375,-2.2) {judge, drawn first, model M5: \textbf{A6}};
+\draw[rate, {Stealth[length=3pt]}-{Stealth[length=3pt]}] (g1.south) -- (g2.north);
+\draw[rate, {Stealth[length=3pt]}-{Stealth[length=3pt]}] (g3.south) -- (g4.north);
+\node[font=\scriptsize, text=black!60, align=center, inner sep=1pt] at (1.375,-0.55) {outsiders rate};
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.54\textwidth}
+\caption{Task~1.2 on the running example. Agents that share an underlying model (M1--M5) form a group, and each group is rated only by outsiders (dashed arrows). The judge A6, drawn first from agents that did not answer, rates no one. For each answer, a group without the judge's model is drawn at random, and its top-rated member argues (bold).}
+\label{fig:t12}
+\end{minipage}
+\end{figure}
 \hd{Approach.} How can debaters and a judge be picked so that no agent can rate its way into a role, at a small cost in quality? We choose representatives by weighted peer ratings of the arguments behind first answers, as in our PRD and PeerEval \citep{li2024prd}, with raters weighted by track record (Task~1.1), and make the choice impartial by having each group rated only by outsiders \citep{alon2011sum}. Agents that share an underlying model, or whose error factors Task~1.1 finds shared, form a group, fixed before any rating; $g(a)$ is agent $a$'s group, $H_q$ the agents that did not answer $q$, and $E_y$ the groups with a member answering $y$. On question $q$: (1)~the judge $J\sim\mathrm{Unif}(H_q)$ is drawn first and rates no one; (2)~for each debated answer $y$, a group $K_y$ is drawn from $E_y\setminus\{g(J)\}$ with probabilities $\pi_y$ that do not depend on ratings, avoiding groups drawn for other answers where possible; (3)~its representative is
 \begin{equation}
 R_y=\mathop{\arg\max}_{a\in K_y:\,x_{aq}=y}\ \sum_{b\in O_y(a)} w_b\,r_{ba},
 \label{eq:rep}
 \end{equation}
-where $r_{ba}$ is $b$'s rating of $a$'s argument, $w_b$ is $b$'s track-record weight, and the raters $O_y(a)$ are the agents outside $g(a)$, other than $J$, that answered $y$ or did not answer. An answer with no eligible group, such as the alternative to a unanimous answer sent to debate, gets a random agent outside $g(J)$. Ratings pick only who argues; the judge picks the answer (Figure~\ref{fig:rg1}(c)).
+where $r_{ba}$ is $b$'s rating of $a$'s argument, $w_b$ is $b$'s track-record weight, and the raters $O_y(a)$ are the agents outside $g(a)$, other than $J$, that answered $y$ or did not answer. An answer with no eligible group, such as the alternative to a unanimous answer sent to debate, gets a random agent outside $g(J)$. Ratings pick only who argues; the judge picks the answer (Figure~\ref{fig:t12}).
 
 \textit{Proposition~3 (impartiality and its price).} (a)~For any group $g$ and any two rating profiles that differ only in ratings given by members of $g$, each member of $g$ has the same probability of being the judge or a representative. (b)~If ratings are honest and rank each group's members by argument quality $Q\ge0$, then $\mathbb{E}[Q(R_y)]\ge\pi^*_y\,Q(a^*_y)$, where $a^*_y$ is the best agent answering $y$ and $\pi^*_y$ the probability that its group is drawn. \textit{Proof.} (a)~$J$, the debated answers, and every $K_y$ are drawn independently of ratings. If $K_y\ne g$, no member of $g$ represents $y$; if $K_y=g$, (\ref{eq:rep}) uses no rating from $g$, and the weights do not depend on ratings. (b)~Whenever $g(a^*_y)$ is drawn, (\ref{eq:rep}) selects $a^*_y$.\hfill$\square$
 
@@ -412,7 +418,7 @@ A single agent is a one-member group, so (a) gives impartiality in the usual sen
 \subsection{RG2: Settle Disputes by Agentic Debate, and Catch Collusion}\label{sec:rg2}
 \hd{Challenges.} Settling a dispute among AI agents raises three challenges. \textbf{First, open discussion erases the disagreement that exposes errors:} one round can make a panel nearly unanimous without making it more accurate \citep{shu2026unanimity}. \textbf{Second, a judge that reads only words can be persuaded.} Standard debate keeps the disagreement but leaves the judge to weigh arguments alone, so a persuasive debater can win a step that one database query would settle, and judges shown a log claiming that tool calls succeeded accept most failed outputs \citep{xu2026log}. \textbf{Third, debaters or the judge can collude}, steering a debate to the wrong side by arguing badly on purpose \citep{vanderweij2025sandbagging}, by misleading with true but selectively chosen facts \citep{hu2026lying}, or by favoring one side, none of which re-running evidence catches. LLM agents collude when it pays \citep{shi2026collusion}, hide signals in ordinary text \citep{mathew2025hidden}, and often tell evaluations from real use \citep{needham2025evaluated}, so checks on planted examples alone can be evaded.
 
-\hd{Overview.} Two tasks meet these challenges and control the remaining terms of (\ref{eq:decomp}) (Figure~\ref{fig:rg2}):
+\hd{Overview.} Two tasks meet these challenges and control the remaining terms of (\ref{eq:decomp}) (Figures~\ref{fig:t21} and~\ref{fig:t22}):
 \begin{itemize}
 \item Task~2.1 meets the first two with debate in an agentic harness, in which the judge rules on single disputed steps and re-runs their tool evidence, shrinking $\epsilon_{\text{step}}$.
 \item Task~2.2 meets the third with automatic audits on planted debates and human audits of random real decisions, shrinking $\epsilon_{\text{role}}$ with Task~1.2.
@@ -421,7 +427,7 @@ The judge need not be wiser than the debaters: it rules only on single steps, re
 
 \begin{figure}[t]
 \centering
-\begin{minipage}[b]{0.625\textwidth}\centering
+\begin{minipage}[c]{0.63\textwidth}\centering
 \begin{tikzpicture}[font=\scriptsize,
   hpart/.style={draw=black!55, rounded corners=2pt, fill=white, align=left, inner sep=3pt, text width=2.6cm},
   lstep/.style={draw=black!45, rounded corners=1.5pt, fill=rgfill, align=left, inner sep=2pt, text width=2.9cm},
@@ -449,32 +455,12 @@ The judge need not be wiser than the debaters: it rules only on single steps, re
 \draw[arr] (c3.west) -- (c3.west -| mem.east);
 \node[anchor=north, align=center, font=\scriptsize] (out) at ([yshift=-0.28cm]h.south) {\textbf{Decision with reasons} $\rightarrow$ audits (Task 2.2) and training (Task 3)};
 \draw[arr] (c4.south) -- (out.north);
-\end{tikzpicture}\\[-1pt]
-{\scriptsize\textbf{(a)} Task 2.1: debate before an impartial judge.}
+\end{tikzpicture}
 \end{minipage}\hfill
-\begin{minipage}[b]{0.35\textwidth}\centering
-\begin{tikzpicture}[font=\scriptsize, x=0.36cm, y=0.36cm,
-  arr/.style={-{Stealth[length=3.5pt]}, semithick, black!70}]
-\node[anchor=west, font=\scriptsize\bfseries] at (0,2.2) {Stream of decisions};
-\foreach \i in {1,...,14} {\draw[black!45, fill=white] (\i-1,0) rectangle (\i-0.2,0.8);}
-\foreach \i in {3,8,12} {\draw[black!45, fill=auditfill] (\i-1,0) rectangle (\i-0.2,0.8); \node at (\i-0.6,0.4) {P};}
-\foreach \i in {6,13} {\draw[black!85, line width=1pt] (\i-1,0) rectangle (\i-0.2,0.8); \node at (\i-0.6,0.4) {H};}
-\node[anchor=north west, text width=4.95cm, align=left, inner sep=0pt] at (0,-0.45) {\textbf{P}: planted debate, answer known (automatic audit).\\ \textbf{H}: real decision drawn at random; a person or a direct measurement finds the answer (human audit).};
-% bar chart for one agent
-\node[anchor=west, font=\scriptsize\bfseries] at (0,-5.95) {Agent A3's error rate};
-\draw[black!60] (0.2,-11.00) -- (13.2,-11.00);
-\fill[auditfill, draw=black!50] (1.5,-11.00) rectangle (4.5,-10.50);
-\fill[white, draw=black!85, line width=0.9pt] (7.5,-11.00) rectangle (10.5,-7.50);
-\node[anchor=south] at (3,-10.50) {5\%};
-\node[anchor=south] at (9,-7.50) {40\%};
-\node[anchor=north, align=center] at (3,-11.10) {planted};
-\node[anchor=north, align=center] at (9,-11.10) {audited real};
-\node[anchor=north west, text width=4.95cm, align=left, inner sep=0pt] at (0,-12.40) {Much worse on audited real decisions than on planted ones of similar difficulty: \textbf{flag}. Flags lower weight (Task 1.1) and bar roles (Task 1.2). Audits never change a decision.};
-\end{tikzpicture}\\[-1pt]
-{\scriptsize\textbf{(b)} Task 2.2: two kinds of audits.}
+\begin{minipage}[c]{0.34\textwidth}
+\caption{Task~2.1: the agentic debate harness. The control loop sets who speaks, who judges, and when to stop, and the judge rules on the disputed steps after re-running any tool evidence. Each part helps an assumption of Proposition~4 hold.}
+\label{fig:t21}
 \end{minipage}
-\caption{RG2. (a) The control loop sets who speaks, who judges, and when to stop; the judge rules on the disputed steps after re-running any tool evidence (Proposition~4). (b) Automatic audits mix planted debates into the stream, and human audits cover a few real decisions drawn at random; an agent that behaves well only on planted debates is exposed by the gap between its two error rates (illustrative numbers).}
-\label{fig:rg2}
 \end{figure}
 
 \subsubsection{Task 2.1: Debate before an impartial judge}\label{sec:t21}
@@ -482,14 +468,37 @@ The judge need not be wiser than the debaters: it rules only on single steps, re
 
 \textit{Proposition~4 (judging a question reduces to judging single steps).} Suppose that (i)~every argument whose steps are all true reaches the right answer, (ii)~the side defending the right answer argues with true steps and can find a false step in the other side's argument, and (iii)~the judge rules correctly on any single step it is shown. Then, if a side loses exactly when one of its disputed steps is struck, the side defending the right answer wins. \textit{Proof.} The other side's argument reaches a wrong answer, so by (i) it contains a false step, which the right side disputes and the judge strikes; any step of the right side's argument that the other side disputes is true, and the judge upholds it.\hfill$\square$
 
-We propose an agentic debate harness, built so that these assumptions hold as often as possible; a harness is the software that turns models into agents \citep{ning2026harness,yao2023react,yang2024sweagent}, and ours has five parts (Figure~\ref{fig:rg2}(a)). \emph{Role instructions} tell each debater which answer to defend, to argue in numbered steps, and to attach evidence where a tool applies, and tell the judge to rule only on disputed steps. The \emph{control loop} sets who speaks and who judges (picked in Task~1.2) and when to stop: the representatives lay out their arguments, each names the first step of the other's argument that it disputes, a short exchange follows, and the judge upholds or strikes each disputed step, which enforces the losing rule. \emph{Tools}, such as document search, databases, and code execution, are optional. \emph{Verification} supports~(iii): tool evidence carries its exact call (tool, arguments, data version), which the judge, itself an agent \citep{zhuge2025agent}, re-runs, and evidence that does not reproduce is discarded, so wherever a tool applies, the judge's share of $\epsilon_{\text{step}}$ in (\ref{eq:decomp}) approaches the tool's error rate. \emph{Memory} logs every message, call, and result. To support~(ii), we propose candidate false steps with models that judge whether one claim implies another and with our FG-PRM's step-level error detection \citep{li2025fgprm}, and recurse into a complex disputed step's sub-steps \citep{browncohen2025prover}. To support~(i) against true but selectively chosen facts \citep{hu2026lying}, each side may add context to the other side's evidence before the judge rules, and quotations are verified against the source \citep{khan2024debating}. In the vessel example, A4 disputes A3's step ``so V left at 06:00'' with a 09:10 port report listing V at its berth, and the judge re-runs A4's query and picks no (Figure~\ref{fig:overview}).
+We propose an agentic debate harness, built so that these assumptions hold as often as possible; a harness is the software that turns models into agents \citep{ning2026harness,yao2023react,yang2024sweagent}, and ours has five parts (Figure~\ref{fig:t21}). \emph{Role instructions} tell each debater which answer to defend, to argue in numbered steps, and to attach evidence where a tool applies, and tell the judge to rule only on disputed steps. The \emph{control loop} sets who speaks and who judges (picked in Task~1.2) and when to stop: the representatives lay out their arguments, each names the first step of the other's argument that it disputes, a short exchange follows, and the judge upholds or strikes each disputed step, which enforces the losing rule. \emph{Tools}, such as document search, databases, and code execution, are optional. \emph{Verification} supports~(iii): tool evidence carries its exact call (tool, arguments, data version), which the judge, itself an agent \citep{zhuge2025agent}, re-runs, and evidence that does not reproduce is discarded, so wherever a tool applies, the judge's share of $\epsilon_{\text{step}}$ in (\ref{eq:decomp}) approaches the tool's error rate. \emph{Memory} logs every message, call, and result. To support~(ii), we propose candidate false steps with models that judge whether one claim implies another and with our FG-PRM's step-level error detection \citep{li2025fgprm}, and recurse into a complex disputed step's sub-steps \citep{browncohen2025prover}. To support~(i) against true but selectively chosen facts \citep{hu2026lying}, each side may add context to the other side's evidence before the judge rules, and quotations are verified against the source \citep{khan2024debating}. In the vessel example, A4 disputes A3's step ``so V left at 06:00'' with a 09:10 port report listing V at its berth, and the judge re-runs A4's query and picks no (Figure~\ref{fig:overview}).
 
 \hd{Preliminary results.} In our peer discussion, agreement with human preferences rose from 72.9\% (GPT-4 alone) to 75.0\% when GPT-3.5 led the discussion but fell to 71.4\% when GPT-4 led \citep{li2024prd}: one reviewer can carry a discussion. Our HiPRAG search agents, which ground answers in retrieved evidence \citep{wu2026hiprag}, will be our first tool-using debaters. \pending{In a pilot on 200 questions whose disputed step a calculator or a port-database query settles, in which the wrong side attached a forged tool output, a judge that only read the transcript accepted the forgery in 61\% of debates; re-running the calls cut this to 1\% and raised the judge's accuracy on these disputes from 0.56 to 0.95, near the tools' own accuracy, as Proposition~4 predicts.}
 
 \hd{Evaluation and risks.} We measure accuracy on disputed questions, correct minorities that prevail and correct majorities overturned, how often re-running evidence changes the outcome, the judge's error on each kind of step, and cost. H3 predicts that debate beats open discussion among the same agents, more so as the share of steps a tool can settle grows; ablations remove each harness part, remove tools or re-running, and replace debate with open discussion. If neither side finds a false step, the judge reads both arguments, and a close ruling is reported as unsettled, with its probability and the step in dispute; tool evidence can be out of date, so the judge weighs its provenance, and human audits measure how often this happens.
 
 \subsubsection{Task 2.2: Automatic and human audits against collusion}\label{sec:t22}
-\hd{Approach.} How can colluding debaters or judges be caught with a fixed budget of human effort? We use random inspection \citep{avenhaus2002inspection} in two forms (Figure~\ref{fig:rg2}(b)). \emph{Automatic audits} mix planted debates on planted cases into the real stream, formatted like real questions; a planted case can be a paper with a deliberately inserted error \citep{schroter2008errors}. \emph{Human audits} cover a few real decisions drawn at random after they are made: a person or a direct measurement, such as a satellite image, finds the right answer.
+\begin{figure}[t]
+\centering
+\begin{minipage}[c]{0.38\textwidth}\centering
+\begin{tikzpicture}[font=\scriptsize, x=0.36cm, y=0.36cm]
+\node[anchor=west, font=\scriptsize\bfseries] at (0,1.6) {Stream of decisions};
+\foreach \i in {1,...,14} {\draw[black!45, fill=white] (\i-1,0) rectangle (\i-0.2,0.8);}
+\foreach \i in {3,8,12} {\draw[black!45, fill=auditfill] (\i-1,0) rectangle (\i-0.2,0.8); \node at (\i-0.6,0.4) {P};}
+\foreach \i in {6,13} {\draw[black!85, line width=1pt] (\i-1,0) rectangle (\i-0.2,0.8); \node at (\i-0.6,0.4) {H};}
+\node[anchor=west, font=\scriptsize\bfseries] at (0,-1.5) {Agent A3's error rate};
+\draw[black!60] (0.2,-6.6) -- (13.2,-6.6);
+\fill[auditfill, draw=black!50] (1.5,-6.6) rectangle (4.5,-6.1);
+\fill[white, draw=black!85, line width=0.9pt] (7.5,-6.6) rectangle (10.5,-3.1);
+\node[anchor=south] at (3,-6.1) {5\%};
+\node[anchor=south] at (9,-3.1) {40\%};
+\node[anchor=north] at (3,-6.7) {planted (P)};
+\node[anchor=north] at (9,-6.7) {audited real (H)};
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.58\textwidth}
+\caption{Task~2.2: two kinds of audits. Automatic audits mix planted debates (P), whose answers are known, into the stream; human audits (H) cover a few real decisions drawn at random after they are made, for which a person or a direct measurement finds the answer. An agent that does much worse on audited real decisions than on planted ones of similar difficulty, like A3 here (illustrative numbers), is flagged: its weight drops (Task~1.1) and it is barred from roles (Task~1.2). Audits never change a decision.}
+\label{fig:t22}
+\end{minipage}
+\end{figure}
+\hd{Approach.} How can colluding debaters or judges be caught with a fixed budget of human effort? We use random inspection \citep{avenhaus2002inspection} in two forms (Figure~\ref{fig:t22}). \emph{Automatic audits} mix planted debates on planted cases into the real stream, formatted like real questions; a planted case can be a paper with a deliberately inserted error \citep{schroter2008errors}. \emph{Human audits} cover a few real decisions drawn at random after they are made: a person or a direct measurement, such as a satellite image, finds the right answer.
 
 \textit{Proposition~5 (random audits cannot be dodged).} If each real decision is audited independently with probability $\rho$, drawn after the decision is made, then every decision a colluder steers is audited with probability $\rho$, whatever the colluder can infer about planted cases, and the chance that its first $n$ steered decisions all escape audit is $(1-\rho)^n$, however long the stream. \textit{Proof.} The draw is independent of everything the colluder saw when it acted.\hfill$\square$
 

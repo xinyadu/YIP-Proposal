@@ -361,15 +361,16 @@ We build on six lines of work and note the gap each leaves (Table~\ref{tab:compa
 \centering\small
 \renewcommand{\arraystretch}{1.05}
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{5.55cm}*{5}{>{\centering\arraybackslash}p{1.9cm}}@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{7.75cm}*{5}{>{\centering\arraybackslash}p{1.5cm}}@{}}
 \toprule
-& \footnotesize Counts shared mistakes once (Gap~1) & \footnotesize Resists strategic or colluding agents (Gap~2) & \footnotesize Judge re-runs tool evidence (Gap~3) & \footnotesize Rewards that resist conformity and persuasion (Gap~4) & \footnotesize Learns each agent's skill without labels\\
+& \textbf{Gap~1} & \textbf{Gap~2} & \textbf{Gap~3} & \textbf{Gap~4} & \textbf{Skill}\\[-1pt]
+& \footnotesize shared mistakes & \footnotesize collusion & \footnotesize words only & \footnotesize conformity & \footnotesize without labels\\
 \midrule
 Single AI judge \citep{zheng2023judging} & \nonem & \nonem & \nonem & \nonem & \nonem\\
 Majority vote, juries \citep{verga2024juries} & \nonem & \nonem & \nonem & \nonem & \nonem\\
-Rater models without an answer key \citep{dawid1979maximum} & \halfm & \nonem & \nonem & \nonem & \fullm\\
-Impartial peer review and panel selection \citep{kurokawa2015impartial} & \nonem & \halfm & \nonem & \nonem & \halfm\\
-Open discussion among LLMs \citep{du2024debate} & \nonem & \nonem & \nonem & \nonem & \nonem\\
+Label-free rater models \citep{dawid1979maximum} & \halfm & \nonem & \nonem & \nonem & \fullm\\
+Impartial peer review \citep{kurokawa2015impartial} & \nonem & \halfm & \nonem & \nonem & \halfm\\
+LLM open discussion \citep{du2024debate} & \nonem & \nonem & \nonem & \nonem & \nonem\\
 Standard debate \citep{irving2018debate} & \nonem & \halfm & \nonem & \halfm & \nonem\\
 AI control \citep{greenblatt2024control} & \nonem & \fullm & \nonem & \nonem & \nonem\\
 \midrule

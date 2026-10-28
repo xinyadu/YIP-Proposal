@@ -44,6 +44,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+% res.cls calls \nofiles, which disables \label. Save the kernel's \protected@write
+% here so it can be restored below (publication cross-references need it).
+\makeatletter\let\cvorig@protectedwrite\protected@write\makeatother
 \documentclass[10pt, letterpaper,margin,line,lmodern]{res}
 
 % Default font is the helvetica postscript font
@@ -80,6 +83,7 @@
 % \bibliography{custom}
 
 \usepackage[shortlabels]{enumitem}
+\usepackage{needspace}
 
 \makeatletter
 % \newlength{\bibhang}
@@ -105,6 +109,31 @@
 \usepackage{layout}
 \newsectionwidth{2.9cm}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ONR FY27 YIP version (NOFO N0001426SF004 asks for a FULL CV: entire career,
+% all awards and recognitions, all publications).
+% DRAFT MODE: \confirm{...} prints red (facts to check before submission) and
+% \cvnote{...} prints a red bracketed note. Before submission, set
+% \cvdraftfalse: confirmed text turns black and every \cvnote disappears.
+% Placeholders inside \confirm (e.g., Scholar numbers) must be filled first.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newif\ifcvdraft
+\cvdrafttrue   % <-- change to \cvdraftfalse for the submitted PDF
+\newcommand{\confirm}[1]{\ifcvdraft{\color{red}#1}\else#1\fi}
+\newcommand{\cvnote}[1]{\ifcvdraft{\color{red}\footnotesize\,[#1]}\fi}
+\newcommand{\pubref}[1]{\ref{#1}}
+% Google Scholar numbers for the Research Impact section, e.g. {4,321} and {30}.
+% If left empty, the numbers are simply omitted (a red reminder shows in draft mode).
+\newcommand{\scholarcites}{}
+\newcommand{\scholarhindex}{}
+\newcommand{\cvempty}{}
+% res.cls calls \nofiles; the publication cross-references ([n]) need the .aux
+% file, so turn aux output and \label back on. Compile twice.
+\makeatletter
+\@fileswtrue
+\let\protected@write\cvorig@protectedwrite
+\makeatother
+
 % \usepackage{etoolbox}
 % \makeatletter
 % \pretocmd{\item}{\begingroup\parbox{\linewidth}}{}{}
@@ -121,7 +150,7 @@
 %	NAME AND ADDRESS SECTION
 %-------------------------------------------------------------------------------
 % \name{Xinya Du \ \ \ \ \ {\footnotesize The latest version of this \href{https://xinyadu.github.io/files/CV\_Xinya.pdf}{CV}}}
-\name{Xinya Du}
+\name{\makebox[1.04\textwidth][l]{Xinya Du\hfill{\normalsize\normalfont Curriculum Vitae\ \ \textperiodcentered\ \ October 2026}}}
 
 
 % Note that addresses can be used for other contact information:
@@ -146,24 +175,25 @@
 
 \input{sections/contact_onr}
 
-\input{sections/interests}
+\input{sections/impact_onr}
 
-\input{sections/education}
+\input{sections/interests_onr}
 
-\input{sections/experience}
+\input{sections/education_onr}
+
+\input{sections/experience_onr}
 
 \input{sections/awards_onr}
 
-\input{sections/grants}
+\input{sections/grants_onr}
 
 \input{sections/pubs_onr}
 
-\input{sections/teaching_mentor}
-
-\input{sections/service}
-
+\input{sections/service_onr}
 
 \input{sections/talks_onr}
+
+\input{sections/teaching_mentor_onr}
 
 
 \end{resume}

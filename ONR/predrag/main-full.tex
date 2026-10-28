@@ -82,6 +82,16 @@
 \definecolor{agentfill}{RGB}{242,242,242}
 \definecolor{goodfill}{RGB}{226,242,229}
 \definecolor{ganttfill}{RGB}{140,165,215}
+% Diagram style: dashed containers on a light panel; blue boxes for stages and choices,
+% grey boxes for steps and notes, green for a correct decision, red for errors and feedback.
+\definecolor{panelbg}{RGB}{246,248,252}
+\definecolor{rgline}{RGB}{120,150,205}
+\definecolor{taskfill}{RGB}{237,240,245}
+\definecolor{taskline}{RGB}{170,176,186}
+\definecolor{goodline}{RGB}{110,170,120}
+\definecolor{badfill}{RGB}{252,233,230}
+\definecolor{badline}{RGB}{215,135,125}
+\definecolor{loopred}{RGB}{196,72,52}
 
 \hypersetup{pdftitle={Trustworthy Collective Reasoning and Evaluation for AI Agents},pdfauthor={Xinya Du}}
 \hyphenation{representative representatives}
@@ -162,52 +172,68 @@ Navy staff who must act on one answer from several AI tools face all of these pr
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[font=\small,
-  stage/.style={draw=black!60, rounded corners=2pt, minimum height=1.34cm, text width=3.78cm, align=center, inner sep=2pt, font=\footnotesize},
-  panel/.style={draw=black!35, rounded corners=2pt, inner sep=2pt, font=\footnotesize, anchor=north},
-  arr/.style={-{Stealth[length=4pt]}, semithick, black!70},
-  lab/.style={font=\footnotesize, text=black!75, fill=white, inner sep=1pt}]
-\node[stage, fill=agentfill] (s1) at (0,0) {\textbf{Answer alone}\\[-1pt]{\footnotesize each agent, with its evidence}};
-\node[stage, fill=rgfill, right=0.25cm of s1] (s2) {\textbf{RG1: Weigh, assign}\\[-1pt]{\footnotesize Tasks 1.1 and 1.2}};
-\node[stage, fill=rgfill, right=0.25cm of s2] (s3) {\textbf{RG2: Debate, audit}\\[-1pt]{\footnotesize Tasks 2.1 and 2.2}};
-\node[stage, fill=rgfill, right=0.25cm of s3] (s4) {\textbf{RG3: Self-improve}\\[-1pt]{\footnotesize Task 3, on the decision}};
-\foreach \a/\b in {s1/s2,s2/s3,s3/s4} \draw[arr] (\a) -- (\b);
-\coordinate (ptop) at (0,-0.86);
-% Panel 1: agents answer alone
-\node[panel] (p1) at (s1.south |- ptop) {\parbox[t][9.0cm][t]{3.78cm}{\raggedright%
-\textbf{Question} from a watch officer: Has cargo vessel V left port? (In fact, it has not.)\\[4pt]
-\renewcommand{\arraystretch}{1.1}%
-\begin{tabular}{@{}l@{\hspace{5pt}}l@{\hspace{5pt}}l@{}}
+\begin{tikzpicture}[font=\footnotesize,
+  col/.style={draw=black!40, dashed, rounded corners=6pt, fill=panelbg, inner sep=0.09cm},
+  coltitle/.style={font=\small\bfseries\itshape, anchor=south, inner sep=1.5pt},
+  box/.style={rounded corners=3pt, inner sep=2.5pt, align=left, anchor=north},
+  qbox/.style={box, draw=rgline, fill=rgfill},
+  tbox/.style={box, draw=taskline, fill=taskfill},
+  gbox/.style={box, draw=goodline, fill=goodfill},
+  bbox/.style={box, draw=badline, fill=badfill},
+  wa/.style={text width=3.66cm},
+  wb/.style={text width=3.38cm},
+  arr/.style={-{Stealth[length=4pt]}, semithick, black!65},
+  fb/.style={-{Stealth[length=4pt]}, semithick, dashed, loopred},
+  lab/.style={font=\footnotesize\itshape, text=loopred, fill=white, inner sep=1.5pt}]
+% Column 1: each agent answers alone
+\node[qbox, wa] (q1) at (2.02,0) {\textbf{\textit{Question}} from a watch officer: Has cargo vessel V left port? (In fact, it has not.)};
+\node[tbox, wa, below=0.18cm of q1] (a1) {\renewcommand{\arraystretch}{1.1}%
+\begin{tabular}{@{}l@{\hspace{3pt}}l@{\hspace{3pt}}l@{}}
 & \textit{Answer} & \textit{Source}\\
 A1 & \textbf{Yes} & schedule S\\
 A2 & \textbf{Yes} & schedule S\\
 A3 & \textbf{Yes} & \textit{compromised}\\
 A4 & \textbf{No} & port report\\
 A5 & \textbf{No} & position track\\
-\end{tabular}\\[4pt]
-\textit{Majority vote:} Yes, 3 to 2. \textbf{Wrong.}\\[4pt]
-A6 did not answer and is available to judge.}};
-% Panel 2: RG1
-\node[panel] (p2) at (s2.south |- ptop) {\parbox[t][9.0cm][t]{3.78cm}{\raggedright%
-\textbf{Task 1.1, weights.} A1 and A2 often gave the same unusual answers, so they share an error factor and count about once.\\[2pt]
-Yes $\approx 2$, \ No $\approx 2$: no clear leader, so the question is debated.\par\vspace{2.5pt}{\color{black!35}\hrule}\vspace{2.5pt}
-\textbf{Task 1.2, roles.} Agents sharing an underlying model form a group.\\[2pt]
+\end{tabular}\\[3pt]
+A6 did not answer and is available to judge.};
+\node[bbox, wa, below=0.18cm of a1] (mv) {\textit{Majority vote:} Yes, 3 to 2. \textbf{Wrong.}};
+% Column 2: RG1
+\node[tbox, wb] (t11) at (6.30,0) {\textbf{\textit{Task 1.1: weights}}\\[1pt]
+A1 and A2 often gave the same unusual answers, so they share an error factor and count about once.\\[2pt]
+Yes $\approx 2$, \ No $\approx 2$: no clear leader, so the question is debated.};
+\node[tbox, wb, below=0.18cm of t11] (t12) {\textbf{\textit{Task 1.2: roles}}\\[1pt]
+Agents sharing an underlying model form a group.\\[2pt]
 Judge, drawn first: A6, which did not answer; it rates no one.\\[2pt]
-Groups split at random: \{A3\} and \{A4\} may argue, and \{A1,\,A2\} and \{A5\} rate them. A3 argues yes; A4 argues no.}};
-% Panel 3: RG2
-\node[panel] (p3) at (s3.south |- ptop) {\parbox[t][9.0cm][t]{3.78cm}{\raggedright%
-\textbf{Task 2.1, debate.}\\[1pt]
+Groups split at random: \{A3\} and \{A4\} may argue, and \{A1,\,A2\} and \{A5\} rate them. A3 argues yes; A4 argues no.};
+% Column 3: RG2
+\node[tbox, wb] (t21) at (10.44,0) {\textbf{\textit{Task 2.1: debate}}\\[1pt]
 A3 (yes): (1) S lists departure at 06:00; no delay was posted. (2) So V left at 06:00.\\[2pt]
-A4 (no): (1) Agreed. (2) A port report at 09:10, from the call \texttt{ports(V,\,since=06:00)}, lists V at berth 4.\\[2pt]
-\textit{Disputed:} A4 disputes A3's step (2) with the report; A3 disputes A4's (2). A6 re-runs the call and picks \textbf{No}.\par\vspace{2.5pt}{\color{black!35}\hrule}\vspace{2.5pt}
-\textbf{Task 2.2, audits.} Planted debates and random human audits later flag A3, which loses its weight and its roles.}};
-% Panel 4: decision and RG3
-\node[panel] (p4) at (s4.south |- ptop) {\parbox[t][9.0cm][t]{3.78cm}{\raggedright%
-\textbf{Decision: No.} V is still in port, so no patrol is sent.\\[2pt]
-\textit{Reasons:} A1 and A2 counted about once; the dispute came down to step (2); the judge reproduced the port report.\par\vspace{2.5pt}{\color{black!35}\hrule}\vspace{2.5pt}
-\textbf{Task 3, training.} Agents train on the decision. A4's tool-backed step earns the most credit, and A3's unsupported claim is penalized.}};
-% loops
-\draw[arr] (p4.south) -- ++(0,-0.36) -| node[lab, pos=0.25, fill=white]{RG3 updates every agent with RL on the group's decisions} (p1.south);
+A4 (no): (1) Agreed. (2) A port report at 09:10, from the call \texttt{ports(V,\,\allowbreak since=06:00)}, lists V at berth 4.\\[2pt]
+\textit{Disputed:} A4 disputes A3's step (2) with the report; A3 disputes A4's (2). A6 re-runs the call and picks \textbf{No}.};
+\node[tbox, wb, below=0.18cm of t21] (t22) {\textbf{\textit{Task 2.2: audits}}\\[1pt]
+Planted debates and random human audits later flag A3, which loses its weight and its roles.};
+% Column 4: decision and RG3
+\node[gbox, wb] (dec) at (14.58,0) {\textbf{Decision: No.} V is still in port, so no patrol is sent.\\[2pt]
+\textit{Reasons:} A1 and A2 counted about once; the dispute came down to step (2); the judge reproduced the port report.};
+\node[tbox, wb, below=0.18cm of dec] (t3) {\textbf{\textit{Task 3: training}}\\[1pt]
+Agents train on the decision. A4's tool-backed step earns the most credit, and A3's unsupported claim is penalized.};
+% Containers of equal height, drawn behind the boxes
+\path let \p1=(mv.south), \p2=(t12.south), \p3=(t22.south), \p4=(t3.south) in coordinate (bot) at (0,{min(\y1,\y2,\y3,\y4)});
+\begin{scope}[on background layer]
+\node[col, fit=(q1)(a1)(mv)(q1.north |- bot)] (c1) {};
+\node[col, fit=(t11)(t12)(t11.north |- bot)] (c2) {};
+\node[col, fit=(t21)(t22)(t21.north |- bot)] (c3) {};
+\node[col, fit=(dec)(t3)(dec.north |- bot)] (c4) {};
+\end{scope}
+\node[coltitle] at ([yshift=1pt]c1.north) {Answer alone};
+\node[coltitle] at ([yshift=1pt]c2.north) {RG1: Weigh, assign};
+\node[coltitle] at ([yshift=1pt]c3.north) {RG2: Debate, audit};
+\node[coltitle] at ([yshift=1pt]c4.north) {RG3: Self-improve};
+\foreach \a/\b in {c1/c2,c2/c3,c3/c4} \draw[arr] (\a.east |- 0,-0.55) -- (\b.west |- 0,-0.55);
+% Feedback (red, dashed): audits reach RG1; RG3 trains every agent
+\draw[fb] (t22.west) -- (t22.west -| c2.east);
+\draw[fb] (c4.south) -- ++(0,-0.4) -| node[lab, pos=0.25]{RG3 updates every agent with RL on the group's decisions} (c1.south);
 \end{tikzpicture}
 \caption{The framework on the running example. RG1 counts the two agents that share an outdated schedule about once and, with no clear leader, picks a representative for each answer and a judge with no stake in either. In RG2's harness, each side disputes a step of the other's argument; the judge re-runs the no side's query and picks no, and audits later flag the compromised agent. RG3 trains every agent on the decision.}
 \label{fig:overview}
@@ -380,20 +406,25 @@ so higher stakes lead to more debates. This is the classical reject rule \citep{
 \begin{wrapfigure}{r}{0.52\textwidth}
 \centering
 \begin{tikzpicture}[font=\footnotesize,
-  grp/.style={draw=black!55, rounded corners=2pt, fill=agentfill, inner sep=2.5pt, align=center, minimum width=2.6cm, minimum height=0.72cm},
-  pick/.style={grp, fill=rgfill, line width=0.9pt},
-  rate/.style={-{Stealth[length=3pt]}, black!45, dashed},
-  arr/.style={-{Stealth[length=3.5pt]}, black!70}]
-\node[font=\footnotesize\bfseries] at (0,0.72) {gave Yes};
-\node[font=\footnotesize\bfseries] at (3.4,0.72) {gave No};
+  grp/.style={draw=taskline, rounded corners=3pt, fill=taskfill, inner sep=2.5pt, align=center, minimum width=2.75cm, minimum height=0.72cm},
+  pick/.style={grp, draw=rgline, fill=rgfill, line width=0.9pt},
+  col/.style={draw=black!40, dashed, rounded corners=6pt, fill=panelbg, inner sep=0.14cm},
+  coltitle/.style={font=\footnotesize\bfseries\itshape, anchor=south, inner sep=1.5pt},
+  rate/.style={-{Stealth[length=3pt]}, black!50, dashed},
+  ratelab/.style={font=\footnotesize\itshape, text=black!60, inner sep=2pt}]
 \node[grp] (g1) at (0,0) {half $B$, M1: A1, A2};
-\node[pick] (g2) at (0,-1.3) {half $A$, M2: \textbf{A3}};
-\node[pick] (g3) at (3.4,0) {half $B$, M3: \textbf{A4}};
-\node[grp] (g4) at (3.4,-1.3) {half $A$, M4: A5};
-\node[pick, minimum width=3.6cm] (j) at (1.7,-2.6) {judge, drawn first, M5: \textbf{A6}};
-\draw[rate] (g1.south) -- (g2.north);
-\draw[rate] (g4.north) -- (g3.south);
-\node[font=\footnotesize, text=black!60, align=center, inner sep=1pt] at (1.7,-0.65) {other half rates};
+\node[pick] (g2) at (0,-1.35) {half $A$, M2: \textbf{A3}};
+\node[pick] (g3) at (3.6,0) {half $B$, M3: \textbf{A4}};
+\node[grp] (g4) at (3.6,-1.35) {half $A$, M4: A5};
+\draw[rate] (g1.south) -- node[ratelab, right]{rates} (g2.north);
+\draw[rate] (g4.north) -- node[ratelab, right]{rates} (g3.south);
+\begin{scope}[on background layer]
+\node[col, fit=(g1)(g2)] (cy) {};
+\node[col, fit=(g3)(g4)] (cn) {};
+\end{scope}
+\node[coltitle] at ([yshift=1pt]cy.north) {gave Yes};
+\node[coltitle] at ([yshift=1pt]cn.north) {gave No};
+\node[pick, minimum width=3.6cm, anchor=north] (j) at ([yshift=-0.3cm]$(cy.south)!0.5!(cn.south)$) {judge, drawn first, M5: \textbf{A6}};
 \end{tikzpicture}
 \caption{Task~1.2 on the running example. Each underlying model (M1--M5) forms a group. The judge A6, drawn first, rates no one. The other groups are split at random into halves $A$ and $B$; $A$ argues yes and $B$ argues no, each through its member rated highest by the other half's agents with the same answer (dashed, bold), as in (\ref{eq:rep}).}
 \label{fig:t12}
@@ -419,27 +450,27 @@ where $r_{ba}$ is $b$'s rating of $a$'s argument and $w_b$ its track-record weig
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}[font=\footnotesize,
-  hpart/.style={draw=black!55, rounded corners=2pt, fill=white, align=left, inner sep=3pt, text width=4.2cm},
-  lstep/.style={draw=black!45, rounded corners=1.5pt, fill=rgfill, align=left, inner sep=2pt, text width=4.9cm},
+  hpart/.style={draw=taskline, rounded corners=3pt, fill=taskfill, align=left, inner sep=3pt, text width=4.2cm},
+  lstep/.style={draw=rgline, rounded corners=3pt, fill=rgfill, align=left, inner sep=2pt, text width=4.9cm},
   arr/.style={-{Stealth[length=3.5pt]}, semithick, black!70}]
 % control loop column
-\node[font=\footnotesize\bfseries] (cl) at (0,0) {Control loop};
+\node[font=\footnotesize\bfseries\itshape] (cl) at (0,0) {Control loop};
 \node[lstep, below=0.12cm of cl] (c1) {1. Each side lays out its argument in numbered steps.};
 \node[lstep, below=0.16cm of c1] (c2) {2. Each side names the first step of the other's argument that it disputes.};
 \node[lstep, below=0.16cm of c2] (c3) {3. A short exchange on the disputed steps, with optional tool evidence.};
 \node[lstep, below=0.16cm of c3] (c4) {4. Stop. The judge re-runs the evidence and rules on the disputed steps.};
 \draw[arr] (c1) -- (c2); \draw[arr] (c2) -- (c3); \draw[arr] (c3) -- (c4);
 % left column
-\node[hpart, anchor=north east] (ri) at ([xshift=-0.45cm]c1.north west) {\textbf{Role instructions.} Debaters defend one answer, step by step, attaching evidence where a tool applies. The judge rules only on the disputed steps.};
-\node[hpart, anchor=north east] (mem) at ([xshift=0cm, yshift=-0.25cm]ri.south east) {\textbf{Memory.} Logs every message, tool call, and result, for audits and training.};
+\node[hpart, anchor=north east] (ri) at ([xshift=-0.45cm]c1.north west) {\textbf{\textit{Role instructions}}\\ Debaters defend one answer, step by step, attaching evidence where a tool applies. The judge rules only on the disputed steps.};
+\node[hpart, anchor=north east] (mem) at ([xshift=0cm, yshift=-0.25cm]ri.south east) {\textbf{\textit{Memory}}\\ Logs every message, tool call, and result, for audits and training.};
 % right column
-\node[hpart, anchor=north west] (sb) at ([xshift=0.45cm]c1.north east) {\textbf{Sandbox with tools.} Document search, structured databases, code execution.};
-\node[hpart, anchor=north west] (vf) at ([xshift=0cm, yshift=-0.25cm]sb.south west) {\textbf{Verification.} Tool evidence carries its exact call; the judge re-runs it, and evidence that does not reproduce is discarded.};
+\node[hpart, anchor=north west] (sb) at ([xshift=0.45cm]c1.north east) {\textbf{\textit{Sandbox with tools}}\\ Document search, structured databases, code execution.};
+\node[hpart, anchor=north west] (vf) at ([xshift=0cm, yshift=-0.25cm]sb.south west) {\textbf{\textit{Verification}}\\ Tool evidence carries its exact call; the judge re-runs it, and evidence that does not reproduce is discarded.};
 \begin{scope}[on background layer]
-\node[draw=black!50, dashed, rounded corners=3pt, fill=agentfill!60, inner sep=5pt, fit=(cl) (c4) (ri) (mem) (sb) (vf)] (h) {};
+\node[draw=black!40, dashed, rounded corners=6pt, fill=panelbg, inner sep=5pt, fit=(cl) (c4) (ri) (mem) (sb) (vf)] (h) {};
 \end{scope}
-\node[anchor=south west, font=\footnotesize\bfseries, inner sep=1pt] at ([yshift=1pt]h.north west) {Agentic debate harness};
-\node[anchor=south, font=\footnotesize, inner sep=1pt] (in) at ([yshift=0.36cm]h.north) {\textbf{From RG1:} question, two answers, representatives, judge};
+\node[anchor=south west, font=\small\bfseries\itshape, inner sep=1.5pt] at ([yshift=1pt]h.north west) {Agentic debate harness};
+\node[anchor=south, font=\footnotesize, inner sep=1pt] (in) at ([yshift=0.62cm]h.north) {\textbf{From RG1:} question, two answers, representatives, judge};
 \draw[arr] (in.south) -- (cl.north);
 \draw[arr] (vf.south west) -- (c4.north east);
 \draw[arr] (sb.south west) -- (c3.north east);

@@ -15,7 +15,7 @@
 \usepackage[authoryear,round]{natbib}
 \usepackage[table]{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{positioning,arrows.meta,fit,backgrounds,calc,decorations.pathreplacing}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds,calc,decorations.pathreplacing,shapes.arrows}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \usepackage[font=small,labelfont=bf,skip=4pt]{caption}
@@ -106,8 +106,7 @@
 \definecolor{rgthreedark}{RGB}{40,115,60}
 \definecolor{qfill}{RGB}{255,248,222}
 \definecolor{qline}{RGB}{222,196,120}
-% Red numbered tag for Gaps 1--4 (Figures 1 and 2), and a highlighted run-in head.
-\newcommand{\gaptag}[1]{\tikz[baseline=(g.base)]\node[circle, fill=loopred, text=white, font=\footnotesize\bfseries, inner sep=0pt, minimum size=1.2em](g){#1};}
+% Highlighted run-in head.
 % Research-goal icon hanging beside the first two lines of a paragraph (Section 1.2), and
 % a smaller one in the RG section headings.
 \newcommand{\rgicon}[1]{\noindent\hangindent=2.7em\hangafter=-2\llap{\raisebox{\dimexpr 0.72em-\height\relax}[0pt][0pt]{\includegraphics[width=2.05em,height=1.75\baselineskip,keepaspectratio]{icons/#1}}\hspace{0.55em}}}
@@ -191,16 +190,15 @@ This proposal describes unclassified fundamental research. All data are public o
 \begin{wrapfigure}{r}{0.48\textwidth}
 \centering
 \begin{tikzpicture}[font=\footnotesize,
-  tile/.style={rounded corners=5pt, line width=0.8pt, align=left, inner sep=4pt, text width=2.8cm, minimum height=1.6cm},
+  tile/.style={rounded corners=5pt, line width=0.8pt, align=left, inner sep=4pt, text width=2.8cm},
   found/.style={rounded corners=4pt, draw=black!45, fill=white, align=center, inner sep=3pt, text width=4.0cm},
   big/.style={-{Stealth[length=5.5pt,width=4.5pt]}, line width=1.2pt, black!80},
   thin/.style={-{Stealth[length=4pt]}, line width=0.7pt, black!55},
-  alab/.style={font=\footnotesize\itshape, text=black!75, inner sep=1pt},
-  gt/.style={circle, fill=loopred, text=white, font=\footnotesize\bfseries, inner sep=0pt, minimum size=1.2em}]
-\node[tile, draw=rgline, fill=rgfill, anchor=north west] (r1) at (0,0) {\ico{rg1-scale-balanced}\ \textbf{\textcolor{rgonedark}{RG1}}\\[1pt] Weigh answers; assign debaters and judges impartially};
-\node[tile, draw=rgtwoline, fill=auditfill, anchor=north east] (r2) at (7.15,0) {\ico{rg2-comments}\ \textbf{\textcolor{rgtwodark}{RG2}}\\[1pt] Debate before a judge that re-runs evidence; audit for collusion};
+  alab/.style={font=\footnotesize\itshape, text=black!75, inner sep=1pt}]
+\node[tile, draw=rgline, fill=rgfill, anchor=north west] (r1) at (0,0) {\parbox[t][2.12cm][t]{\linewidth}{\raggedright\ico{rg1-scale-balanced}\ \textbf{\textcolor{rgonedark}{RG1}}\\[1pt] Weigh answers; assign debaters and judges impartially}};
+\node[tile, draw=rgtwoline, fill=auditfill, anchor=north east] (r2) at (7.15,0) {\parbox[t][2.12cm][t]{\linewidth}{\raggedright\ico{rg2-comments}\ \textbf{\textcolor{rgtwodark}{RG2}}\\[1pt] Debate before a judge that re-runs evidence; audit for collusion}};
 \node[found, anchor=north] (f) at ([yshift=-0.5cm]$(r1.south)!0.5!(r2.south)$) {\textit{Foundations:} statistics, social choice, game theory, AI safety, RL};
-\node[tile, draw=goodline, fill=goodfill, anchor=north, minimum height=1.25cm] (r3) at ([yshift=-0.5cm]f.south) {\ico{rg3-graduation-cap}\ \textbf{\textcolor{rgthreedark}{RG3}}\\[1pt] Self-improve with RL on the group's decisions};
+\node[tile, draw=goodline, fill=goodfill, anchor=north] (r3) at ([yshift=-0.5cm]f.south) {\ico{rg3-graduation-cap}\ \textbf{\textcolor{rgthreedark}{RG3}}\\[1pt] Self-improve with RL on the group's decisions};
 % flow between the goals
 \draw[big] (r1.east) -- node[alab, above=1pt]{roles} (r2.west);
 \draw[big] ([xshift=-0.35cm]r2.south east) to[out=-90, in=0] node[alab, pos=0.62, below right=-1pt]{decisions} (r3.east);
@@ -210,12 +208,8 @@ This proposal describes unclassified fundamental research. All data are public o
 \draw[thin] (f.north -| xa) -- (r1.south -| xa);
 \draw[thin] (f.north -| xb) -- (r2.south -| xb);
 \draw[thin] (f.south) -- (r3.north);
-% gaps addressed
-\node[gt] at ([xshift=-0.62cm]r1.north east) {1}; \node[gt] at ([xshift=-0.24cm]r1.north east) {2};
-\node[gt] at ([xshift=-0.62cm]r2.north east) {2}; \node[gt] at ([xshift=-0.24cm]r2.north east) {3};
-\node[gt] at ([xshift=-0.24cm]r3.north east) {4};
 \end{tikzpicture}
-\caption{Overview of the proposed research. Each research goal builds on established principles (center) and addresses the gaps in red (Section~\ref{sec:problem}). RG1 assigns the roles for RG2's debates, whose decisions train the agents in RG3; the improved agents return to RG1.}
+\caption{Overview of the proposed research. Each research goal builds on established principles (center) and addresses the research gaps of Section~\ref{sec:problem}. RG1 assigns the roles for RG2's debates, whose decisions train the agents in RG3; the improved agents return to RG1.}
 \label{fig:map}
 \end{wrapfigure}
 AI agents built on large language models (LLMs) increasingly evaluate one another and decide together: they judge one another's answers, peer-review papers, supply the rewards that train new models, and vote or discuss to reach a group answer \citep{zheng2023judging,luo2025llm4sr,lee2024rlaif,du2024debate}. Yet a single LLM judge has known biases, such as favoring longer answers, the answer it reads first, or answers like its own \citep{zheng2023judging,wang2024fair,panickssery2024self}. Collective reasoning can do better than a single judge \citep{verga2024juries,du2024debate}, but averaging or voting stays biased when the judges share mistakes, and open discussion lets a persuasive agent carry the group \citep{amayuelas2024attack}. \textbf{The central problem of this project is how a group of AI agents of unknown and correlated reliability, some possibly dishonest, can reach trustworthy decisions and evaluations.} Figure~\ref{fig:map} outlines our approach.
@@ -228,50 +222,52 @@ For example, a watch officer at a Navy maritime operations center must decide wh
 \begin{tikzpicture}[font=\footnotesize,
   ptitle/.style={font=\footnotesize\bfseries, anchor=center, inner sep=1pt},
   box/.style={rounded corners=3pt, inner sep=2.5pt, align=left, anchor=north, fill=white},
-  wa/.style={text width=4.42cm},
-  wb/.style={text width=3.22cm},
+  wa/.style={text width=3.84cm},
+  wb/.style={text width=3.67cm},
+  wc/.style={text width=3.50cm},
+  wd/.style={text width=3.20cm},
   arr/.style={-{Stealth[length=6pt,width=5pt]}, line width=1.3pt, black!85},
   fb/.style={-{Stealth[length=5.5pt,width=4.5pt]}, line width=1pt, dashed, loopred},
-  lab/.style={font=\footnotesize\itshape, text=loopred, fill=white, inner sep=1.5pt},
-  gt/.style={circle, fill=loopred, text=white, font=\footnotesize\bfseries, inner sep=0pt, minimum size=1.2em}]
+  lab/.style={font=\footnotesize\itshape, text=loopred, fill=white, inner sep=1.5pt}]
 % Column 1: each agent answers alone
-\node[box, draw=qline, fill=qfill, wa] (q1) at (2.398,0) {\ico{ship}\ \textbf{\textit{Question}} from a watch officer: Has cargo vessel V left port? (In fact, it has not.)};
+\node[box, draw=qline, fill=qfill, wa] (q1) at (2.108,0) {\ico{ship}\ \textbf{\textit{Question}} from a watch officer: Has cargo vessel V left port? (In fact, it has not.)};
 \node[box, draw=taskline, wa, below=0.18cm of q1] (a1) {\renewcommand{\arraystretch}{1.1}%
-\begin{tabular}{@{}l@{\hspace{3pt}}l@{\hspace{3pt}}l@{\hspace{3pt}}l@{}}
-\ico{robot} & \textit{Answer} & \textit{Source} &\\
-A1 & \textbf{Yes} & schedule S & \gaptag{1}\\
-A2 & \textbf{Yes} & schedule S & \gaptag{1}\\
-A3 & \textbf{Yes} & \ico{user-secret}\textit{compromised} & \gaptag{2}\\
-A4 & \textbf{No} & port report &\\
-A5 & \textbf{No} & position track &\\
+\begin{tabular}{@{}l@{\hspace{2.5pt}}l@{\hspace{2.5pt}}l@{}}
+\ico{robot} & \textit{Answer} & \textit{Source}\\
+A1 & \textbf{Yes} & schedule S\\
+A2 & \textbf{Yes} & schedule S\\
+A3 & \textbf{Yes} & \ico{user-secret}\textit{compromised}\\
+A4 & \textbf{No} & port report\\
+A5 & \textbf{No} & position track\\
 \end{tabular}\\[3pt]
 \ico{gavel}\ A6 did not answer and is available to judge.};
 \node[box, draw=badline, fill=badfill, wa, below=0.18cm of a1] (mv) {\ico{circle-xmark}\ \textit{Majority vote:} Yes, 3 to 2. \textbf{Wrong.}};
+\node[box, draw=badline, fill=badfill, wa, below=0.18cm of mv] (od) {\ico{circle-xmark}\ \textit{Open discussion:} A3 argues confidently, and A1 and A2 back each other up. \textbf{May do no better.}};
 % Column 2: RG1
-\node[box, draw=rgline, wb, inner ysep=4.5pt] (t11) at (6.894,0) {\ico{scale-balanced}\ \textbf{\textit{Task 1.1: weights}}\\[1pt]
+\node[box, draw=rgline, wb] (t11) at (6.499,0) {\ico{scale-balanced}\ \textbf{\textit{Task 1.1: weights}}\\[1pt]
 A1 and A2 often gave the same unusual answers, so they share an error factor and count about once.\\[2pt]
 Yes $\approx 2$, \ No $\approx 2$: no clear leader, so the question is debated.};
-\node[box, draw=rgline, wb, inner ysep=4.5pt, below=0.34cm of t11] (t12) {\ico{shuffle}\ \textbf{\textit{Task 1.2: roles}}\\[1pt]
-Agents sharing an underlying model form a group.\\[2pt]
+\node[box, draw=rgline, wb, below=0.18cm of t11] (t12) {\ico{shuffle}\ \textbf{\textit{Task 1.2: roles}}\\[1pt]
+Each underlying model forms a group.\\[2pt]
 Judge, drawn first: A6, which did not answer; it rates no one.\\[2pt]
-Groups split at random: \{A3\} and \{A4\} may argue, and \{A1,\,A2\} and \{A5\} rate them. A3 argues yes; A4 argues no.};
+Groups split at random: \{A3\} and \{A4\} may argue; \{A1,\,A2\} and \{A5\} rate them. A3 argues yes, A4 no.};
 % Column 3: RG2
-\node[box, draw=rgtwoline, wb, inner ysep=4.5pt] (t21) at (10.79,0) {\ico{comments}\ \textbf{\textit{Task 2.1: debate}}\\[1pt]
-A3 (yes): (1) S lists departure at 06:00; no delay was posted. (2) So V left at 06:00.\\[2pt]
+\node[box, draw=rgtwoline, wc] (t21) at (10.720,0) {\ico{comments}\ \textbf{\textit{Task 2.1: debate}}\\[1pt]
+A3 (yes): (1) S lists departure at 06:00, with no delay posted. (2) So V left at 06:00.\\[2pt]
 A4 (no): (1) Agreed. (2) A port report at 09:10, from the call \texttt{ports(V,\,\allowbreak since=06:00)}, lists V at berth 4.\\[2pt]
-\textit{Disputed:} A4 disputes A3's step (2) with the report; A3 disputes A4's (2). A6 re-runs the call and picks \textbf{No}.};
-\node[box, draw=rgtwoline, wb, inner ysep=4.5pt, below=0.34cm of t21] (t22) {\ico{magnifying-glass}\ \textbf{\textit{Task 2.2: audits}}\\[1pt]
+\textit{Disputed:} each side disputes the other's step (2). A6 re-runs the call and picks \textbf{No}.};
+\node[box, draw=rgtwoline, wc, below=0.18cm of t21] (t22) {\ico{magnifying-glass}\ \textbf{\textit{Task 2.2: audits}}\\[1pt]
 Planted debates and random human audits later flag A3, which loses its weight and its roles.};
 % Column 4: decision and RG3
-\node[box, draw=goodline, fill=goodfill, wb] (dec) at (14.686,0) {\ico{circle-check}\ \textbf{Decision: No.} V is still in port, so no patrol is sent.\\[2pt]
+\node[box, draw=goodline, fill=goodfill, wd] (dec) at (14.706,0) {\ico{circle-check}\ \textbf{Decision: No.} V is still in port, so no patrol is sent.\\[2pt]
 \textit{Reasons:} A1 and A2 counted about once; the dispute came down to step (2); the judge reproduced the port report.};
-\node[box, draw=goodline, wb, inner ysep=4.5pt, below=0.34cm of dec] (t3) {\ico{graduation-cap}\ \textbf{\textit{Task 3: training}}\\[1pt]
-Agents train on the decision. A4's tool-backed step earns the most credit, and A3's unsupported claim is penalized.};
+\node[box, draw=goodline, wd, below=0.18cm of dec] (t3) {\ico{graduation-cap}\ \textbf{\textit{Task 3: training}}\\[1pt]
+Agents train on the decision. Each first answer is scored against the other groups' answer, so A1's and A2's Yes earns nothing. A4's tool-backed step earns the most credit, and A3's unsupported claim is penalized.};
 % Panels of equal height with a title band; one color per research goal
-\path let \p1=(mv.south), \p2=(t12.south), \p3=(t22.south), \p4=(t3.south) in coordinate (bot) at (0,{min(\y1,\y2,\y3,\y4)});
+\path let \p1=(od.south), \p2=(t12.south), \p3=(t22.south), \p4=(t3.south) in coordinate (bot) at (0,{min(\y1,\y2,\y3,\y4)});
 \coordinate (top) at (0,0.80);
 \begin{scope}[on background layer]
-\node[inner xsep=0.09cm, inner ysep=0.12cm, fit=(q1)(a1)(mv)(q1.north |- bot)(q1.north |- top)] (c1) {};
+\node[inner xsep=0.09cm, inner ysep=0.12cm, fit=(q1)(a1)(mv)(od)(q1.north |- bot)(q1.north |- top)] (c1) {};
 \node[inner xsep=0.09cm, inner ysep=0.12cm, fit=(t11)(t12)(t11.north |- bot)(t11.north |- top)] (c2) {};
 \node[inner xsep=0.09cm, inner ysep=0.12cm, fit=(t21)(t22)(t21.north |- bot)(t21.north |- top)] (c3) {};
 \node[inner xsep=0.09cm, inner ysep=0.12cm, fit=(dec)(t3)(dec.north |- bot)(dec.north |- top)] (c4) {};
@@ -284,18 +280,12 @@ Agents train on the decision. A4's tool-backed step earns the most credit, and A
 \node[ptitle, text=rgonedark] at ([yshift=-0.33cm]c2.north) {\ico{rg1-scale-balanced}\ RG1: Weigh, assign};
 \node[ptitle, text=rgtwodark] at ([yshift=-0.33cm]c3.north) {\ico{rg2-comments}\ RG2: Debate, audit};
 \node[ptitle, text=rgthreedark] at ([yshift=-0.33cm]c4.north) {\ico{rg3-graduation-cap}\ RG3: Self-improve};
-\foreach \a/\b in {c1/c2,c2/c3,c3/c4} \draw[arr] ([yshift=-0.33cm]\a.north east) -- ([yshift=-0.33cm]\b.north west);
-% Gap tags on the tasks that address each gap
-\node[gt] at ([xshift=-9pt,yshift=1pt]t11.north east) {1};
-\node[gt] at ([xshift=-9pt,yshift=1pt]t12.north east) {2};
-\node[gt] at ([xshift=-9pt,yshift=1pt]t21.north east) {3};
-\node[gt] at ([xshift=-9pt,yshift=1pt]t22.north east) {2};
-\node[gt] at ([xshift=-9pt,yshift=1pt]t3.north east) {4};
+\foreach \a/\b in {c1/c2,c2/c3,c3/c4} \node[single arrow, fill=black!78, draw=none, minimum height=0.5cm, minimum width=0.44cm, single arrow head extend=0.07cm, single arrow tip angle=100, inner sep=0pt] at ($([yshift=-0.33cm]\a.north east)!0.5!([yshift=-0.33cm]\b.north west)$) {};
 % Feedback (red, dashed): audits reach RG1; RG3 trains every agent
 \draw[fb] (t22.west) -- (t22.west -| c2.east);
 \draw[fb] (c4.south) -- ++(0,-0.4) -| node[lab, pos=0.25]{RG3 updates every agent with RL on the group's decisions} (c1.south);
 \end{tikzpicture}
-\caption{The framework on the running example. RG1 counts the two agents that share an outdated schedule about once and, with no clear leader, picks a representative for each answer and a judge with no stake in either. In RG2's harness, each side disputes a step of the other's argument; the judge re-runs the no side's query and picks no, and audits later flag the compromised agent. RG3 trains every agent on the decision. Red numbers mark where Gaps~1--4 (Section~\ref{sec:problem}) arise in the example and the task that addresses each; each research goal keeps its color in later figures.}
+\caption{The framework on the running example. RG1 counts the two agents that share an outdated schedule about once and, with no clear leader, picks a representative for each answer and a judge with no stake in either. In RG2's harness, each side disputes a step of the other's argument; the judge re-runs the no side's query and picks no, and audits later flag the compromised agent. RG3 trains every agent on the decision. Each research goal keeps its color in later figures.}
 \label{fig:overview}
 \end{figure}
 }

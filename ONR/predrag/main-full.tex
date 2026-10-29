@@ -551,7 +551,7 @@ Ratings choose only the debaters; the judge decides the answer (Figure~\ref{fig:
 \node[ptitle] at ([yshift=-0.29cm]cn.north) {gave No};
 \node[pick, minimum width=3.6cm, anchor=north] (j) at ([yshift=-0.3cm]$(cy.south)!0.5!(cn.south)$) {\ico{gavel}\ judge, drawn first, M5: \textbf{A6}};
 \end{tikzpicture}
-\caption{Task~1.2 on the running example. Each underlying model (M1--M5) forms a group; the judge A6, drawn first, rates no one. The other groups are split at random into halves, and each answer is argued by the member rated highest by the other half's agents with that answer (bold), as in (\ref{eq:rep}).}
+\caption{Task~1.2 on the running example. Each underlying model (M1--M5) forms a group; the judge agent A6, drawn first, rates no one. The other groups are split at random into halves, and each answer is argued by the member rated highest by the other half's agents with that answer (bold), as in (\ref{eq:rep}).}
 \label{fig:t12}
 \end{wrapfigure}
 \slab{Why this method.} Part~(a) is impartiality in the usual sense \citep{holzman2013impartial,kurokawa2015impartial}, extended to collusion within a group: \textbf{an agent either rates or may be chosen, never both}. Part~(b) makes its price explicit and small: half the best arguer's quality however many groups give the answer, where drawing a single group guarantees only $1/k$ when $k$ groups give it. Part~(c) is why judges are drawn uniformly, as in maximally fair panel selection \citep{flanigan2021fair}. \slab{What remains open.} Colluders in other groups, or held out, can still shift ratings; we will bound what such coalitions gain and measure the price of impartiality.

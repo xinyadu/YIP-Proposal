@@ -145,13 +145,8 @@
 \hyphenation{representative representatives}
 
 \begin{document}
-% Citations stay blue author-year but are not links, since the reference pages are extracted
-% for a separate upload and links to them would break.
-\makeatletter
-\def\hyper@natlinkstart#1{\Hy@colorlink\@citecolor}
-\def\hyper@natlinkend{\Hy@endcolorlink}
-\def\hyper@natlinkbreak#1#2{\Hy@endcolorlink#1\Hy@colorlink\@citecolor}
-\makeatother
+% Citations are links to the reference list at the end of this PDF. (If the reference pages are
+% later extracted for a separate upload, the links in the technical proposal simply go nowhere.)
 % ---------------- Cover page (not counted toward the 20-page limit) ----------------
 \pagenumbering{roman}
 \thispagestyle{empty}

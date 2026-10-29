@@ -7,6 +7,16 @@
 | Four-page white paper v4 | [main-4page-v4.tex](main-4page-v4.tex) | [white_paper_predrag-4page-v4.pdf](white_paper_predrag-4page-v4.pdf) |
 | One-page discussion note | [main-1page.tex](main-1page.tex) | [white_paper_predrag-1page.pdf](white_paper_predrag-1page.pdf) |
 
+## RG3 edits (Oct 28): response to Vibhav's comment
+
+Vibhav asked what keeps wrong group decisions from reinforcing bad behavior in RG3 ([vibhav_feedback.md](vibhav_feedback.md)). Targeted edits to `main-full.tex`, adding about ten lines; the overflow past page 20 is left for the final compression pass:
+
+- **Positioning (RG3 challenges):** where a program can check the answer (math, code), RLVR trains on the answer key (Lambert et al. 2024; Guo et al. 2025, two new references); RG3 extends such training to questions without one (vessel V, a paper's claims), on which tools can check at most some steps.
+- **Which decisions are labels (RG3 overview, Task 3):** first answers are weighted by how confident the rest of the group is; debate messages are credited only where the judge settled the disputed step by re-running tool evidence. Such a decision is a "high-confidence label, not an answer key" (the tool's data can be out of date, and re-running settles only the disputed step). A decision settled by argument alone is not used as a label.
+- **Known answers test the premise (RG3 evaluation, G5):** the testbeds' known answers, which the rewards never use, measure how often the labels are wrong by topic (checking η < 1/2) and give an upper bound, training on the known answers (standard RLVR); G5 now asks for at least half of that gain.
+- **Shared misconceptions (RG3 evaluation, Limitations):** Task 2.2's random human audits also estimate each topic's error rate, and training on a topic stops once an anytime-valid test puts that rate above a preset threshold below one half; the Limitations add that training would reinforce a misconception every agent shares until the audits reveal it. R4 now reads "Audits catch collusion and measure error rates but never settle a debate" (they already estimated ε_cal).
+- **Unchanged:** the noisy-label identity, the chance-agreement term of eq. (5), dropping decisions that involve flagged agents, and keeping planted cases out of training. No related work added beyond the two RLVR references; Kenton et al. stays in the RG3 motivation.
+
 ## Revision 3 of the full proposal (Oct 28): response to the v1 reviews
 
 Both reviews ([chatgpt_comment_v1.pdf](chatgpt_comment_v1.pdf), [claude_comments_v1.pdf](claude_comments_v1.pdf)) read commit 029dff1; revision 2 (4b12b31) had already credited Jaffe et al., cut the propositions to three, and added the "what remains open" lines. Revision 3 keeps the central question, three RGs, five tasks, and section order, and makes targeted edits:

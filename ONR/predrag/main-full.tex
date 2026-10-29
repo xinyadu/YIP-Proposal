@@ -121,6 +121,11 @@
     \fill[#3] ([yshift=-#5]#1.north west) rectangle (#1.north east);\end{scope}
   \draw[#4, line width=0.4pt] ([yshift=-#5]#1.north west) -- ([yshift=-#5]#1.north east);
   \draw[#4, line width=0.9pt, rounded corners=5pt] (#1.south west) rectangle (#1.north east);}
+% Same panel without the outer border (Figure 2).
+\newcommand{\bandpanelflat}[4]{%
+  \fill[#2, rounded corners=5pt] (#1.south west) rectangle (#1.north east);
+  \begin{scope}\clip[rounded corners=5pt] (#1.south west) rectangle (#1.north east);
+    \fill[#3] ([yshift=-#4]#1.north west) rectangle (#1.north east);\end{scope}}
 % Box for a central idea or pipeline (navy title bar, light fill).
 \newtcolorbox{keybox}[1]{enhanced, breakable, colback=headblue!4, colframe=headblue, coltitle=white, fonttitle=\bfseries, title={#1}, boxrule=0.8pt, arc=2pt, left=5pt, right=5pt, top=3pt, bottom=3pt, toptitle=1.5pt, bottomtitle=1.5pt, before skip=6pt, after skip=6pt}
 \newcommand{\hlhead}[1]{{\setlength{\fboxsep}{1.5pt}\colorbox{badfill}{\textbf{#1}}}}
@@ -229,7 +234,7 @@ For example, a watch officer at a Navy maritime operations center must decide wh
 \centering
 \begin{tikzpicture}[font=\footnotesize,
   ptitle/.style={font=\footnotesize\bfseries, anchor=center, inner sep=1pt},
-  box/.style={rounded corners=3pt, inner sep=2.5pt, align=left, anchor=north, fill=white},
+  box/.style={rounded corners=3pt, inner sep=2.5pt, align=left, anchor=north, fill=white, line width=0.6pt},
   wa/.style={text width=3.36cm},
   wb/.style={text width=3.64cm},
   wc/.style={text width=3.50cm},
@@ -238,8 +243,8 @@ For example, a watch officer at a Navy maritime operations center must decide wh
   fb/.style={-{Stealth[length=5.5pt,width=4.5pt]}, line width=1pt, dashed, black!60},
   lab/.style={font=\footnotesize\itshape, text=black!70, fill=white, inner sep=1.5pt}]
 % Column 1: each agent answers alone
-\node[box, wa] (q1) at (1.868,0) {\ico{ship}\ \textbf{\textit{Question}} from a watch officer: Has cargo vessel V left port? (In fact, it has not.)};
-\node[box, wa, below=0.18cm of q1] (a1) {\renewcommand{\arraystretch}{1.1}%
+\node[box, draw=qline, fill=qfill, wa] (q1) at (1.868,0) {\ico{ship}\ \textbf{\textit{Question}} from a watch officer: Has cargo vessel V left port? (In fact, it has not.)};
+\node[box, draw=black!35, wa, below=0.18cm of q1] (a1) {\renewcommand{\arraystretch}{1.1}%
 \ico{robot}\ \textit{Answers:}\\[1pt]
 \begin{tabular}{@{}l@{\hspace{2.5pt}}l@{\hspace{2.5pt}}l@{}}
 A1 & \textbf{Yes} & schedule S\\
@@ -249,27 +254,27 @@ A4 & \textbf{No} & port report\\
 A5 & \textbf{No} & position track\\
 \end{tabular}\\[3pt]
 \ico{gavel}\ A6 did not answer and is available to judge.};
-\node[box, wa, below=0.18cm of a1] (mv) {\ico{circle-xmark}\ \textit{Majority vote:} Yes, 3 to 2. \textbf{Wrong.}\\[2pt]
+\node[box, draw=badline, fill=badfill, wa, below=0.18cm of a1] (mv) {\ico{circle-xmark}\ \textit{Majority vote:} Yes, 3 to 2. \textbf{Wrong.}\\[2pt]
 \ico{circle-xmark}\ \textit{Open discussion:} A3 argues confidently, and A1 and A2 back each other up. \textbf{May do no better.}};
 % Column 2: RG1
-\node[box, wb] (t11) at (6.124,0) {\textbf{\textit{Task 1.1: weights}}\\[1pt]
+\node[box, draw=rgline, wb] (t11) at (6.124,0) {\textbf{\textit{Task 1.1: weights}}\\[1pt]
 A1 and A2 often gave the same unusual answers, so they share an error factor and count about once.\\[2pt]
 Yes $\approx 2$, \ No $\approx 2$: no clear leader, so the question is debated.};
-\node[box, wb, below=0.18cm of t11] (t12) {\textbf{\textit{Task 1.2: roles}}\\[1pt]
+\node[box, draw=rgline, wb, below=0.18cm of t11] (t12) {\textbf{\textit{Task 1.2: roles}}\\[1pt]
 Each underlying model forms a group.\\[2pt]
 Judge, drawn first: A6, which did not answer; it rates no one.\\[2pt]
 Groups split at random: \{A3\} and \{A4\} may argue; \{A1,\,A2\} and \{A5\} rate them. A3 argues yes, A4 no.};
 % Column 3: RG2
-\node[box, wc] (t21) at (10.450,0) {\textbf{\textit{Task 2.1: debate}}\\[1pt]
+\node[box, draw=rgtwoline, wc] (t21) at (10.450,0) {\textbf{\textit{Task 2.1: debate}}\\[1pt]
 A3 (yes): (1) S lists departure at 06:00, with no delay posted. (2) So V left at 06:00.\\[2pt]
 A4 (no): (1) Agreed. (2) A port report at 09:10, from the call \texttt{ports(V,\,\allowbreak since=06:00)}, lists V at berth 4.\\[2pt]
 \textit{Disputed:} each side disputes the other's step (2). A6 re-runs the call and picks \textbf{No}.};
-\node[box, wc, below=0.18cm of t21] (t22) {\textbf{\textit{Task 2.2: audits}}\\[1pt]
+\node[box, draw=rgtwoline, wc, below=0.18cm of t21] (t22) {\textbf{\textit{Task 2.2: audits}}\\[1pt]
 Planted debates and random human audits later flag A3, which loses its weight and its roles.};
 % Column 4: decision and RG3
-\node[box, wd] (dec) at (14.631,0) {\ico{circle-check}\ \textbf{Decision: No.} V is still in port, so no patrol is sent.\\[2pt]
+\node[box, draw=goodline, fill=goodfill, wd] (dec) at (14.631,0) {\ico{circle-check}\ \textbf{Decision: No.} V is still in port, so no patrol is sent.\\[2pt]
 \textit{Reasons:} A1 and A2 counted about once; the dispute came down to step (2); the judge reproduced the port report.};
-\node[box, wd, below=0.18cm of dec] (t3) {\textbf{\textit{Task 3: training}}\\[1pt]
+\node[box, draw=goodline, wd, below=0.18cm of dec] (t3) {\textbf{\textit{Task 3: training}}\\[1pt]
 Agents train on the decision. Each first answer is scored against the other groups' answer, so A1's and A2's Yes earns nothing. A4's tool-backed step earns the most credit, and A3's unsupported claim is penalized.};
 % Panels of equal height with a title band; one color per research goal
 \path let \p1=(mv.south), \p2=(t12.south), \p3=(t22.south), \p4=(t3.south) in coordinate (bot) at (0,{min(\y1,\y2,\y3,\y4)});
@@ -279,10 +284,10 @@ Agents train on the decision. Each first answer is scored against the other grou
 \node[inner xsep=0.09cm, inner ysep=0.12cm, fit=(t11)(t12)(t11.north |- bot)(t11.north |- top)] (c2) {};
 \node[inner xsep=0.09cm, inner ysep=0.12cm, fit=(t21)(t22)(t21.north |- bot)(t21.north |- top)] (c3) {};
 \node[inner xsep=0.09cm, inner ysep=0.12cm, fit=(dec)(t3)(dec.north |- bot)(dec.north |- top)] (c4) {};
-\bandpanel{c1}{panelbg}{taskfill}{black!45}{0.66cm}
-\bandpanel{c2}{rgonebg}{rgfill}{rgline}{0.66cm}
-\bandpanel{c3}{rgtwobg}{auditfill}{rgtwoline}{0.66cm}
-\bandpanel{c4}{rgthreebg}{goodfill}{goodline}{0.66cm}
+\bandpanelflat{c1}{panelbg}{taskfill}{0.66cm}
+\bandpanelflat{c2}{rgonebg}{rgfill}{0.66cm}
+\bandpanelflat{c3}{rgtwobg}{auditfill}{0.66cm}
+\bandpanelflat{c4}{rgthreebg}{goodfill}{0.66cm}
 \end{scope}
 \node[ptitle, text=black!75] at ([yshift=-0.33cm]c1.north) {Answer alone};
 \node[ptitle, text=rgonedark] at ([yshift=-0.33cm]c2.north) {\ico{rg1-scale-balanced}\ RG1: Weigh, assign};

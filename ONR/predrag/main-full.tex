@@ -37,8 +37,8 @@
 \usepackage{tocloft}
 \usepackage[colorlinks=true,citecolor=blue,linkcolor=black,urlcolor=black]{hyperref}
 
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{3pt}
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{0pt}
 \setlength{\textfloatsep}{9pt plus 2pt minus 2pt}
 \setlength{\floatsep}{8pt plus 2pt minus 2pt}
 \setlength{\intextsep}{8pt plus 2pt minus 2pt}
@@ -65,7 +65,8 @@
 \setlength{\cftbeforesecskip}{3pt}
 
 % Run-in heads inside a task.
-\newcommand{\hd}[1]{\textbf{#1}\hspace{0.35em}}
+% Run-in heading: starts its own paragraph, flush left, with a small gap above.
+\newcommand{\hd}[1]{\ifhmode\par\fi\addvspace{3pt}\noindent\textbf{#1}\hspace{0.35em}}
 % Marks for Table 1: green tick (addressed), orange dot (partly), red cross (not addressed).
 \definecolor{markyes}{RGB}{34,139,80}
 \definecolor{markpart}{RGB}{230,126,34}
@@ -410,8 +411,10 @@ Here $\epsilon_{\text{cal}}=\mathbb{E}[(P(\hat y_q\neq y_q\mid\pi_q)-1+\pi_q)_+\
 \end{keybox}
 
 \subsection[RG1: Weigh Answers, and Choose the Debaters and the Judge]{\rgsecicon{rg1-scale-balanced}RG1: Weigh Answers, and Choose the Debaters and the Judge}\label{sec:rg1}
-\begin{wrapfigure}{r}{0.5\textwidth}
-\centering\vspace{-10pt}
+% Figure 3: a float with the caption beside the plot (a wrapfigure here got stranded when the RG1 heading fell at a page bottom).
+\begin{figure}[t]
+\begin{minipage}[c]{0.555\textwidth}
+\centering
 \begin{tikzpicture}
 \begin{axis}[width=8.9cm, height=5.0cm, xmin=-0.5, xmax=15.5, ymin=0.655, ymax=0.885,
   xlabel={Agents that copy one source}, ylabel={Accuracy of decisions},
@@ -426,10 +429,12 @@ Here $\epsilon_{\text{cal}}=\mathbb{E}[(P(\hat y_q\neq y_q\mid\pi_q)-1+\pi_q)_+\
 \node[font=\footnotesize, anchor=north, inner sep=1pt, text=orange!85!black] at (axis cs:9,0.687) {classical reliability model};
 \end{axis}
 \end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.425\textwidth}
 \caption{Task~1.1 simulation: agents copying one source drag majority vote and the classical reliability model down to the source's accuracy, while our reliability model, fitted without the true answers, keeps its accuracy. Five independent agents are each right 70\% of the time; each added agent copies a source that is wrong 30\% of the time. Means over 20 runs of 400 questions.}
 \label{fig:sim}
-\vspace{-8pt}
-\end{wrapfigure}
+\end{minipage}
+\end{figure}
 \hd{Challenges.} Before any debate, the group must decide which questions deserve one and which agents debate and judge. We identify three challenges. \textbf{First, shared mistakes make a vote overconfident.} Five agreeing agents are five pieces of evidence only if each agent's mistakes are its own. Agents that copy one source are wrong together, so a vote counts their one mistake several times, and such correlated votes can void the jury theorem's guarantee \citep{ladha1992condorcet}. LLM errors are correlated in practice \citep{kim2025correlated,goel2025great,kohli2026nine}. In Figure~\ref{fig:sim}, agents copying one source drag the majority vote of five independent agents from 84\% to the source's 70\%, and the classical reliability model, which assumes independent mistakes, falls sooner, reading the copies' agreement as skill. \textbf{Second, debate is too costly to run on every question.} It uses three to five times the tokens of a single answer, can overturn correct answers \citep{fan2026imad}, and often fails to outperform voting \citep{smit2024mad,choi2025debate}; yet a unanimous answer can rest on a shared mistake, so neither agreement nor confidence shows which questions need a debate. \textbf{Third, agents that choose debaters and judges can favor themselves.} If agents rate one another to choose a debater for each answer and a judge, an agent can rate rivals low to be chosen, agents built on similar models favor one another's outputs \citep{panickssery2024self,goel2025great}, and a judge that shares a model with one side may favor that side.
 
 \hd{Overview.} RG1 passes to RG2 the question, the two debated answers, their debaters, and the judge. Its two tasks address these challenges and control the first terms of (\ref{eq:decomp}) (Figures~\ref{fig:agree} and~\ref{fig:t12}):

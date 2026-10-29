@@ -518,36 +518,33 @@ In the running example (Figure~\ref{fig:t12}), A6, which did not answer, is draw
 
 \textbf{Proposition~3} \textit{(impartiality and its price).} (a)~For any group $g$ and any two rating profiles that differ only in ratings given by members of $g$, each member of $g$ has the same probability of being the judge or a representative. (b)~If each rater's ratings rank agents by argument quality $Q\ge0$ and every weight $w_b$ is positive, then $\mathbb{E}[Q(R_y)]\ge\frac12\,Q(a^*_y)$ for each debated answer $y$ given by two or more groups other than $g(J)$, where $a^*_y$ is the best agent outside $g(J)$ that gave $y$. (c)~If $f$ of the $n_q$ eligible judges collude, a colluder judges with probability $f/n_q$, the least that any lottery can guarantee against every set of $f$ colluders. \textit{Proof.} (a)~$J$, the halves, the fallback draw, and the weights do not depend on current ratings, and (\ref{eq:rep}) can choose a member of $g$ only for the answer whose representative comes from $g$'s half, using ratings from the other half alone. (b)~Swapping the two halves preserves the coins' distribution and the redraw condition, so $g(a^*_y)$ lands in $y$'s half with probability exactly $\frac12$; then $a^*_y\in C_y$, $V_y$ is nonempty, and (\ref{eq:rep}) selects an agent as good as $a^*_y$. (c)~Under any lottery, the $f$ likeliest agents have total probability at least $f/n_q$.\hfill$\square$
 
-\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{wrapfigure}{r}{0.52\textwidth}
 \centering
 \begin{tikzpicture}[font=\footnotesize,
-  grp/.style={draw=taskline, rounded corners=3pt, fill=white, inner sep=2.5pt, align=center, minimum width=2.3cm, minimum height=0.66cm},
+  grp/.style={draw=taskline, rounded corners=3pt, fill=white, inner sep=2.5pt, align=center, minimum width=2.75cm, minimum height=0.66cm},
   pick/.style={grp, draw=rgline, fill=rgfill, line width=0.9pt},
-  ptitle/.style={font=\footnotesize, text=rgonedark, anchor=center, inner sep=1pt, align=center},
-  rowlab/.style={font=\footnotesize\bfseries, text=rgonedark, anchor=east, inner sep=1pt},
+  ptitle/.style={font=\footnotesize\bfseries, text=rgonedark, anchor=center, inner sep=1pt},
   rate/.style={-{Stealth[length=4.5pt]}, line width=0.8pt, black!65, dashed},
-  role/.style={font=\footnotesize\itshape, text=black!65}]
-% Columns are the two halves; rows are the answers the agents gave.
-\node[pick] (g2) at (2.45,0) {G2: \textbf{A3}\\[-1pt]{\itshape\color{black!65}candidate}};
-\node[grp] (g1) at (6.05,0) {G1: A1, A2\\[-1pt]{\itshape\color{black!65}raters}};
-\node[grp] (g4) at (2.45,-1.3) {G4: A5\\[-1pt]{\itshape\color{black!65}rater}};
-\node[pick] (g3) at (6.05,-1.3) {G3: \textbf{A4}\\[-1pt]{\itshape\color{black!65}candidate}};
-\node[rowlab] at (1.05,0) {gave Yes};
-\node[rowlab] at (1.05,-1.3) {gave No};
-\draw[rate] (g1.west) -- (g2.east);
-\draw[rate] (g4.east) -- (g3.west);
+  ratelab/.style={font=\footnotesize\itshape, text=black!60, inner sep=2pt}]
+% One panel per debated answer: raters on top, candidates below.
+\node[grp] (g1) at (0,0) {half 2, G1: A1, A2\\[-1pt]{\itshape\color{black!65}raters}};
+\node[pick] (g2) at (0,-1.5) {half 1, G2: \textbf{A3}\\[-1pt]{\itshape\color{black!65}candidate}};
+\node[grp] (g4) at (3.6,0) {half 1, G4: A5\\[-1pt]{\itshape\color{black!65}rater}};
+\node[pick] (g3) at (3.6,-1.5) {half 2, G3: \textbf{A4}\\[-1pt]{\itshape\color{black!65}candidate}};
+\draw[rate] (g1.south) -- node[ratelab, right]{rate} (g2.north);
+\draw[rate] (g4.south) -- node[ratelab, right]{rates} (g3.north);
 \begin{scope}[on background layer]
-\coordinate (t1) at ([yshift=0.62cm]g2.north); \coordinate (t2) at ([yshift=0.62cm]g1.north);
-\node[inner xsep=0.14cm, inner ysep=0.12cm, fit=(g2)(g4)(t1)] (h1) {};
-\node[inner xsep=0.14cm, inner ysep=0.12cm, fit=(g1)(g3)(t2)] (h2) {};
-\bandpanel{h1}{rgonebg}{rgfill}{rgline}{0.58cm}
-\bandpanel{h2}{rgonebg}{rgfill}{rgline}{0.58cm}
+\coordinate (gy) at ([yshift=0.62cm]g1.north); \coordinate (gn) at ([yshift=0.62cm]g4.north);
+\node[inner xsep=0.14cm, inner ysep=0.12cm, fit=(g1)(g2)(gy)] (cy) {};
+\node[inner xsep=0.14cm, inner ysep=0.12cm, fit=(g4)(g3)(gn)] (cn) {};
+\bandpanel{cy}{rgonebg}{rgfill}{rgline}{0.58cm}
+\bandpanel{cn}{rgonebg}{rgfill}{rgline}{0.58cm}
 \end{scope}
-\node[ptitle] at ([yshift=-0.29cm]h1.north) {\textbf{half 1}};
-\node[ptitle] at ([yshift=-0.29cm]h2.north) {\textbf{half 2}};
-\node[pick, minimum width=3.6cm, anchor=north] (j) at ([yshift=-0.3cm]$(h1.south)!0.5!(h2.south)$) {\ico{gavel}\ judge, drawn first, G5: \textbf{A6}};
+\node[ptitle] at ([yshift=-0.29cm]cy.north) {gave Yes};
+\node[ptitle] at ([yshift=-0.29cm]cn.north) {gave No};
+\node[pick, minimum width=3.6cm, anchor=north] (j) at ([yshift=-0.3cm]$(cy.south)!0.5!(cn.south)$) {\ico{gavel}\ judge, drawn first, G5: \textbf{A6}};
 \end{tikzpicture}
-\caption{Task~1.2 on the running example. Boxes are groups of agents built on one model (G1--G5), columns are the two halves drawn by coin, and rows are the answers the agents gave. Yes leads, so its candidates are its agents in half~1 and No's are its agents in half~2; arrows run from raters to candidates, as in (\ref{eq:rep}). The chosen debaters and the judge are in bold.}
+\caption{Task~1.2 on the running example. Each underlying model forms a group (G1--G5), and the judge agent A6 is drawn first. One coin per group splits the other groups into halves. Each answer's debater (bold) is chosen from that answer's agents in one half by its agents in the other half, as in (\ref{eq:rep}): half~1 supplies the debater for the leading answer, Yes, and half~2 the debater for No.}
 \label{fig:t12}
 \end{wrapfigure}
 \slab{Why this method.} Part~(a) is impartiality in the usual sense \citep{holzman2013impartial,kurokawa2015impartial}, extended from single agents to groups: no agent's ratings can change the chance that it, or any agent sharing its model, is chosen, so neither self-promotion nor a model's tendency to favor its own outputs \citep{panickssery2024self} can pick the debaters. \textbf{An agent's ratings never count toward its own selection.} Part~(b) makes its price explicit and small: half the best arguer's quality however many groups give the answer, where drawing one of the $K_y$ groups that give $y$ at random guarantees only $1/K_y$. Part~(c) is why judges are drawn uniformly, as in maximally fair panel selection \citep{flanigan2021fair}. \slab{What remains open.} Dishonest agents in different groups can still coordinate their ratings, forming a \emph{coalition}: for example, an agent in half~2 rates its partner in half~1 highest, so that the partner is chosen. Task~2.2's audits look for such collusion; here we will bound what coalitions gain and measure the price of impartiality.

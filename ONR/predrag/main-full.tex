@@ -580,7 +580,7 @@ Figure~\ref{fig:t12} shows the three steps on the running example: A6, which did
 \node[hpart, anchor=north east] (mem) at ([xshift=0cm, yshift=-0.25cm]ri.south east) {\fchead{database-24}{Memory}Logs every message, tool call, and result, for audits and training.};
 % right column
 \node[hpart, anchor=north west] (sb) at ([xshift=0.45cm]c1.north east) {\fchead{wrench-screwdriver-24}{Sandbox with tools}Document search, structured databases, code execution.};
-\node[hpart, anchor=north west] (vf) at ([xshift=0cm, yshift=-0.25cm]sb.south west) {\fchead{shield-checkmark-24}{Verification}Tool evidence carries its exact call; the judge re-runs it, and evidence that does not reproduce is discarded.};
+\node[hpart, anchor=south west] (vf) at (sb.south west |- c4.south) {\fchead{shield-checkmark-24}{Verification}Tool evidence carries its exact call; the judge re-runs it, and evidence that does not reproduce is discarded.};
 \begin{scope}[on background layer]
 \coordinate (htop) at ([yshift=0.62cm]cl.north);
 \node[inner sep=5pt, fit=(cl) (c4) (ri) (mem) (sb) (vf) (htop)] (h) {};
@@ -589,7 +589,7 @@ Figure~\ref{fig:t12} shows the three steps on the running example: A6, which did
 \node[font=\small\bfseries, text=rgtwodark, inner sep=1pt] at ([yshift=-0.3cm]h.north) {\ico{rg2-comments}\ Agentic debate harness};
 \node[anchor=south, font=\footnotesize, inner sep=1pt] (in) at ([yshift=0.55cm]h.north) {\textbf{From RG1:} the question and two answers, \fcico{bot-24}\fcico{bot-24} two debaters, and \fcico{bot-sparkle-24} a judge};
 \draw[bigarr] (in.south) -- (h.north);
-\draw[arr] (vf.south west) -- (c4.north east);
+\draw[arr] (c4.east -| vf.west) -- (c4.east);
 \draw[arr] (sb.south west) -- (c3.north east);
 \draw[arr] (c3.west) -- (c3.west -| mem.east);
 \node[anchor=north, align=center, font=\footnotesize] (out) at ([yshift=-0.28cm]h.south) {\fcico{checkbox-24}\ \textbf{Decision with reasons} $\rightarrow$ audits (Task 2.2) and training (Task 3)};

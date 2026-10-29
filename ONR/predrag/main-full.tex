@@ -432,7 +432,7 @@ Here $\epsilon_{\text{cal}}=\mathbb{E}[(P(\hat y_q\neq y_q\mid\pi_q)-1+\pi_q)_+\
 \centering
 \begin{tikzpicture}
 \begin{axis}[width=8.9cm, height=5.0cm, xmin=-0.5, xmax=15.5, ymin=0.655, ymax=0.885,
-  xlabel={Agents that copy one source}, ylabel={Accuracy of decisions},
+  xlabel={Number of agents copying the same source}, ylabel={Accuracy of group decisions},
   xlabel style={font=\footnotesize, yshift=3pt}, ylabel style={font=\footnotesize, yshift=-4pt},
   tick label style={font=\footnotesize}, /pgf/number format/assume math mode=true, xtick={0,3,6,9,12,15}, ytick={0.7,0.75,0.8,0.85},
   grid=major, grid style={black!8}, every axis plot/.append style={line width=1.2pt}]
@@ -446,7 +446,7 @@ Here $\epsilon_{\text{cal}}=\mathbb{E}[(P(\hat y_q\neq y_q\mid\pi_q)-1+\pi_q)_+\
 \end{tikzpicture}
 \end{minipage}\hfill
 \begin{minipage}[c]{0.425\textwidth}
-\caption{Task~1.1 simulation: agents copying one source drag majority vote and the classical reliability model down to the source's accuracy, while our reliability model, fitted without the true answers, keeps its accuracy. Five independent agents are each right 70\% of the time; each added agent copies a source that is wrong 30\% of the time. Means over 20 runs of 400 questions.}
+\caption{Task~1.1 simulation. Five independent agents are each right 70\% of the time, and we add agents that all copy the same source, which is wrong 30\% of the time. The copies drag majority vote and the classical reliability model down to the source's accuracy, while our reliability model, fitted without the true answers, keeps its accuracy. Means over 20 runs of 400 questions.}
 \label{fig:sim}
 \end{minipage}
 \end{figure}

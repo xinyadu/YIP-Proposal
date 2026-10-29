@@ -536,14 +536,14 @@ where $r_{ba}$ is $b$'s rating of $a$'s argument and $w_b$ its track-record weig
 \begin{tikzpicture}[font=\footnotesize,
   hpart/.style={draw=taskline, rounded corners=3pt, fill=white, align=left, inner sep=3pt, text width=4.2cm},
   lstep/.style={draw=rgtwoline, rounded corners=3pt, fill=auditfill, align=left, inner sep=2pt, text width=4.9cm},
-  arr/.style={-{Stealth[length=4.5pt]}, line width=0.8pt, black!75},
+  arr/.style={-{Stealth[length=6pt,width=5pt]}, line width=1.1pt, black!78},
   bigarr/.style={-{Stealth[length=6pt,width=5pt]}, line width=1.3pt, black!85}]
 % control loop column
 \node[font=\footnotesize\bfseries\itshape, text=rgtwodark] (cl) at (0,0) {\fcico{arrow-sync-24}\ Control loop};
 \node[lstep, below=0.12cm of cl] (c1) {1. Each side lays out its argument in numbered steps.};
-\node[lstep, below=0.16cm of c1] (c2) {2. Each side names the first step of the other's argument that it disputes.};
-\node[lstep, below=0.16cm of c2] (c3) {3. A short exchange on the disputed steps, with optional tool evidence.};
-\node[lstep, below=0.16cm of c3] (c4) {4. Stop. The judge re-runs the evidence and rules on the disputed steps.};
+\node[lstep, below=0.42cm of c1] (c2) {2. Each side names the first step of the other's argument that it disputes.};
+\node[lstep, below=0.42cm of c2] (c3) {3. A short exchange on the disputed steps, with optional tool evidence.};
+\node[lstep, below=0.42cm of c3] (c4) {4. Stop. The judge re-runs the evidence and rules on the disputed steps.};
 \draw[arr] (c1) -- (c2); \draw[arr] (c2) -- (c3); \draw[arr] (c3) -- (c4);
 % left column
 \node[hpart, anchor=north east] (ri) at ([xshift=-0.45cm]c1.north west) {\fchead{clipboard-task-24}{Role instructions}Debaters defend one answer, step by step, attaching evidence where a tool applies. The judge rules only on the disputed steps.};

@@ -18,6 +18,7 @@ RG3 now follows the standard set in the RG1 and RG2 revisions: plain words, one 
   - "First answer" is renamed (Xinya: confusing). The text now says "each agent's answer, the one it gives alone before seeing the others," and calls its reward the "answer reward," in Sections 1.2, 1.3, Task 1.2, Figure 2, and RG3.
   - Only the two rewards carry italic labels, "Answers" and "Debate messages" (Xinya). "Why this method" is merged into the text: the noisy-label identity now sits in the Approach opening, and how the left-out reference meets its condition sits under "Answers." The "Which debates count" and "Safeguards" paragraphs keep their text without labels.
   - ω_q is defined beside Eq. (5).
+  - The Approach now says which models Task 3 updates (Xinya): the open-weight models behind the agents. The answer reward trains every agent that answered, and message credit trains the two debaters. The judge only scores the debate and is never trained on the group's decisions.
   - Cut as not selling points: the GRPO-normalization note, the score-band note, and the potential-based-shaping analogy. Its policy-invariance caveat goes with it, since no analogy is left to qualify. Shao et al. (DeepSeekMath) and Ng et al. leave the references.
   - The safeguards sentence is shorter: flagged agents' decisions are dropped, planted cases never enter training, and no agent is trained on its own rulings or shares a reward with an agent that judges it.
   - The baseline sentence and the repeated held-out monitoring are cut.

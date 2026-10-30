@@ -621,18 +621,14 @@ The harness also supports the other two assumptions. For~(ii), the side with the
 \foreach \i in {1,...,14} {\draw[black!45, fill=white] (\i-1,0) rectangle (\i-0.2,0.8);}
 \foreach \i in {3,8,12} {\draw[black!45, fill=auditfill] (\i-1,0) rectangle (\i-0.2,0.8); \node at (\i-0.6,0.4) {P};}
 \foreach \i in {6,13} {\draw[black!85, line width=1pt] (\i-1,0) rectangle (\i-0.2,0.8); \node at (\i-0.6,0.4) {H};}
-\node[anchor=west, font=\footnotesize\bfseries] at (0,-1.5) {Agent A3's error rate};
-\draw[black!60] (0.2,-6.6) -- (13.2,-6.6);
-\fill[auditfill, draw=black!50] (1.5,-6.6) rectangle (4.5,-6.1);
-\fill[white, draw=black!85, line width=0.9pt] (7.5,-6.6) rectangle (10.5,-3.1);
-\node[anchor=south] at (3,-6.1) {5\%};
-\node[anchor=south] at (9,-3.1) {40\%};
-\node[anchor=north] at (3,-6.7) {planted (P)};
-\node[anchor=north] at (9,-6.7) {audited real (H)};
+\draw[black!45, fill=auditfill] (0,-1.6) rectangle (0.8,-0.8); \node at (0.4,-1.2) {P};
+\node[anchor=west, font=\footnotesize] at (1.0,-1.2) {planted debate, answer known};
+\draw[black!85, line width=1pt] (0,-2.8) rectangle (0.8,-2.0); \node at (0.4,-2.4) {H};
+\node[anchor=west, font=\footnotesize] at (1.0,-2.4) {real decision, audited by a person at random};
 \end{tikzpicture}
 \end{minipage}\hfill
 \begin{minipage}[c]{0.53\textwidth}
-\caption{Task~2.2: two kinds of audits. Planted debates (P) with known answers are mixed into the stream, and human audits (H) check a few real decisions drawn at random afterward. An agent that does much worse on audited real decisions than on planted ones, like the compromised agent A3 (its error rates here are examples), is flagged, loses its weight, and may no longer debate or judge.}
+\caption{Task~2.2: two kinds of audits. Planted debates (P), whose answers are known, are mixed into the stream, and human audits (H) check a few real decisions drawn at random afterward; an agent that fails either check is disqualified.}
 \label{fig:t22}
 \end{minipage}
 \end{figure}

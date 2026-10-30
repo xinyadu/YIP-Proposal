@@ -1,8 +1,8 @@
 """Build project-summary.tex and project-summary.pdf from the text in project-summary.md.
 
 Usage (from ONR/predrag): python3 build_project_summary.py
-The text's first paragraph must be "Approved for Public Release"; each later
-paragraph starts with a run-in label ending in a period, set in bold in the PDF.
+The text's first paragraph must be "Approved for Public Release". A later paragraph
+that starts with one of LABELS has that label set in bold in the PDF.
 """
 import os
 import re
@@ -24,9 +24,11 @@ for p in paras[1:]:
     assert all(32 <= ord(c) < 127 for c in p), p[:40]
     assert not any(ch in p for ch in "%&$#_{}~^\\\"`"), p[:40]
     label = next((l for l in LABELS if p.startswith(l + " ")), None)
-    assert label, p[:40]
-    rest = p[len(label) + 1:].replace("'", "\\textquotesingle{}")
-    body.append("\\textbf{" + label + "} " + rest)
+    if label:
+        rest = p[len(label) + 1:].replace("'", "\\textquotesingle{}")
+        body.append("\\textbf{" + label + "} " + rest)
+    else:
+        body.append(p.replace("'", "\\textquotesingle{}"))
 
 tex = r"""% Project Summary/Abstract (SF 424 Project Abstract; upload for R&R Other Project Information, Field 7)
 % ONR FY27 YIP, NOFO N0001426SF004. Compile with pdfLaTeX. The NOFO limit is one page or
@@ -50,8 +52,6 @@ tex = r"""% Project Summary/Abstract (SF 424 Project Abstract; upload for R&R Ot
 {\centering
 {\large\bfseries Trustworthy Collective Reasoning and Evaluation for AI Agents\par}
 \vspace{3pt}
-Xinya Du (PI), The University of Texas at Dallas\par
-\vspace{1pt}
 {\itshape Approved for Public Release}\par}
 \vspace{3pt}
 @@BODY@@

@@ -28,6 +28,7 @@ RG3 now follows the standard set in the RG1 and RG2 revisions: plain words, one 
   - The pilot is one sentence: majority agreement collapses, while Eq. (5) goes from 62% to 73%. Its fallback comment matches.
 - **Task 3 evaluation:**
   - The final-decision comparison is dropped, since H5 does not use it.
+  - Rewritten as a direct computation (Xinya). Known answers are hidden during training and used only to score held-out questions. The same open-weight models are trained with our rewards, with majority-agreement and debate-win rewards, and on the known answers (the RLVR oracle). Accuracy of answers and decisions is compared, label error rates are computed by topic, and invented evidence is counted as tool results that fail to reproduce.
   - One paragraph, with no italic label (Xinya): the measurements; the label-error measurement and the RLVR oracle (formerly "Checking the premise"); H5; and one risk, a misconception most agents share, with the audit stop rule.
   - Cut: "matched compute" and held-out model families (Section 2.5 covers both), "where human judges are unreliable," and the sentence on agents becoming alike.
 - **Task 2.1 (Xinya's questions):**

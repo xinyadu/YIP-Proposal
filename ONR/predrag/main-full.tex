@@ -26,6 +26,7 @@
 \captionsetup[table]{skip=9pt}
 \usepackage{booktabs}
 \usepackage{wrapfig}
+\usepackage{float}
 \usepackage{afterpage}
 \usepackage[most]{tcolorbox}
 \usepackage{tabularx}
@@ -736,8 +737,13 @@ C.\ Scientific claims and peer review & Whether a paper's evidence supports its 
 
 \hd{Conditions, baselines, and statistics.} Experiments vary how widely mistakes are shared (from none to most agents given the same flawed hint or outdated report, across one to five model families), the share of dishonest agents (up to 30\%, at red-team levels 1--4), the share of disputed steps a tool can settle and of reports that are outdated or forged, the budgets for debates, audits, and computation (including small models and few tool calls, as under limited connectivity), and the answer type. Regimes where the propositions say a method fails are included, so failures are measured, not assumed; transfer is measured on held-out topics and model families. Baselines at matched compute are a single AI judge (with and without the debaters' tools), majority vote, and equal-weight averaging; ablations remove each component, and each term of (\ref{eq:decomp}) is measured separately, so a gain can be traced to the task that produced it. Testbed B also reports the running example's measure, missed and false departure calls per 100 vessel questions at each audit budget. We report Brier score and expected calibration error, and means with confidence intervals over seeds and questions.
 
-\label{sec:expected}\newcommand{\g}{\cellcolor{ganttfill}}
-\begin{table}[t]
+\label{sec:expected}\hd{Results and new knowledge.} If successful, the project will deliver the methods of Section~\ref{sec:merit} with their theory (identifiability without an answer key, the price of impartiality, bounds on coalition gains and on a colluder's harm, and rewards whose expected update follows accuracy), an open debate harness, three testbeds, and red-team protocols. Scientifically, it will show when a debate among AI agents can be trusted and how few audits keep the agents honest, which would let conferences and funders try impartial, audited peer review by AI; because people audit only a small share of decisions and training needs no labels, the methods can scale to AI whose answers people cannot easily evaluate.
+
+\subsection{Project Schedule, Milestones, Goals, and Benchmarks}\label{sec:schedule}
+The project runs 36 months from April 1, 2027, with milestones M1--M6 (Table~\ref{tab:schedule}).
+% Schedule table placed here, inside Section 3.6 ([H] = exactly here, not floated to a page top).
+\newcommand{\g}{\cellcolor{ganttfill}}
+\begin{table}[H]
 \centering\small
 \renewcommand{\arraystretch}{1.05}
 \setlength{\tabcolsep}{4pt}
@@ -760,10 +766,7 @@ Red-team level 4; full evaluation; release & & & & & \g & \g\\
 \caption{Schedule by half-year (Y1 = April 2027 -- March 2028) and milestones.}
 \label{tab:schedule}
 \end{table}
-\hd{Results and new knowledge.} If successful, the project will deliver the methods of Section~\ref{sec:merit} with their theory (identifiability without an answer key, the price of impartiality, bounds on coalition gains and on a colluder's harm, and rewards whose expected update follows accuracy), an open debate harness, three testbeds, and red-team protocols. Scientifically, it will show when a debate among AI agents can be trusted and how few audits keep the agents honest, which would let conferences and funders try impartial, audited peer review by AI; because people audit only a small share of decisions and training needs no labels, the methods can scale to AI whose answers people cannot easily evaluate.
-
-\subsection{Project Schedule, Milestones, Goals, and Benchmarks}\label{sec:schedule}
-The project runs 36 months from April 1, 2027, with milestones M1--M6 (Table~\ref{tab:schedule}). \label{sec:goalsbench}\hd{Goals and benchmarks.} The research goals are RG1--RG3 (Section~\ref{sec:goals}). Each task's hypothesis, H1--H5, is its benchmark, with its success criterion and target year stated in its evaluation (Sections~\ref{sec:rg1}--\ref{sec:rg3}); progress is checked at milestones M1--M6 and at the annual Program Reviews, and misses are reported as findings. Code, testbeds, protocols, and peer-reviewed papers with proofs are released by month 36.
+ \label{sec:goalsbench}\hd{Goals and benchmarks.} The research goals are RG1--RG3 (Section~\ref{sec:goals}). Each task's hypothesis, H1--H5, is its benchmark, with its success criterion and target year stated in its evaluation (Sections~\ref{sec:rg1}--\ref{sec:rg3}); progress is checked at milestones M1--M6 and at the annual Program Reviews, and misses are reported as findings. Code, testbeds, protocols, and peer-reviewed papers with proofs are released by month 36.
 
 
 

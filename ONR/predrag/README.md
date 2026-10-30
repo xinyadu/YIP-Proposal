@@ -9,19 +9,20 @@
 
 ## RG3 pass, and Task 2.1 and 2.2 fixes (Oct 30)
 
-RG3 now follows the standard set in the RG1 and RG2 revisions: plain words, one risk, a short preliminary result, and no detail that nothing else follows up. RG3 is about 14% shorter (about 1,450 to 1,250 words), and Sections 1–5 end seven lines earlier.
+RG3 now follows the standard set in the RG1 and RG2 revisions: plain words, one risk, a short preliminary result, no detail that nothing else follows up, and nothing that is not a selling point. RG3 is about a fifth shorter (about 1,450 to 1,140 words). With the other sessions' cuts, Sections 1–5 now end on page 20, with about a third of that page free.
 
-- **RG3 background and challenges:** opens from RG1 and RG2, keeps the RLVR framing with one example (vessel V), and gives each challenge a bold sentence. The second challenge names what existing label-free methods assume: that models' mistakes differ (Yang et al.), or that models do not collude (Qiu et al.).
-- **RG3 overview:** one bullet per reward. The first-answer bullet uses the v2 review's accurate wording: echoing one's own group earns nothing, and on yes-or-no questions the reward follows the true answer while the reference is right more often than wrong.
+- **RG3 background and challenges:** opens from RG1 and RG2 and keeps the RLVR framing with one example (vessel V). It now has two challenges, not three (Xinya: an RG need not list three). The rewards can be gamed, and the group's decisions are imperfect labels; each opens with a bold sentence. The third challenge, saying whose messages helped, is cut as not a selling point. The second challenge names what existing label-free methods assume: that models' mistakes differ (Yang et al.), or that models do not collude (Qiu et al.). RG1's and RG2's three challenges stay, since each maps to its own contribution.
+- **RG3 overview:** one bullet per reward, with no "addresses the first two / the third," since both rewards answer both challenges. The first-answer bullet uses the v2 review's accurate wording: echoing one's own group earns nothing, and on yes-or-no questions the reward follows the true answer while the reference is right more often than wrong.
 - **Task 3:**
   - Only the two rewards carry italic labels, "First answers" and "Debate messages" (Xinya). "Why this method" is merged into the text: the noisy-label identity now sits in the Approach opening, and how the left-out reference meets its condition sits under "First answers." The "Which debates count" and "Safeguards" paragraphs keep their text without labels.
-  - ω_q is defined beside Eq. (5), and GRPO is cited where its normalization comes up.
+  - ω_q is defined beside Eq. (5).
+  - Cut as not selling points: the GRPO-normalization note, the score-band note, and the potential-based-shaping analogy. Its policy-invariance caveat goes with it, since no analogy is left to qualify. Shao et al. (DeepSeekMath) and Ng et al. leave the references.
+  - The safeguards sentence is shorter: flagged agents' decisions are dropped, planted cases never enter training, and no agent is trained on its own rulings or shares a reward with an agent that judges it.
   - The baseline sentence and the repeated held-out monitoring are cut.
   - Message credit applies only in "debates the judge settled by re-running tool evidence" (two disputed steps, as in RG2), and such a decision is "a high-confidence label, close to an RLVR reward, but not an answer key."
-  - The policy-invariance caveat on potential-based shaping stays, because both v2 reviews asked to keep it.
   - The pilot is one sentence: majority agreement collapses, while Eq. (5) goes from 62% to 73%. Its fallback comment matches.
 - **Task 3 evaluation:**
-  - The final-decision comparison moves here from the approach.
+  - The final-decision comparison is dropped, since H5 does not use it.
   - One paragraph, with no italic label (Xinya): the measurements; the label-error measurement and the RLVR oracle (formerly "Checking the premise"); H5; and one risk, a misconception most agents share, with the audit stop rule.
   - Cut: "matched compute" and held-out model families (Section 2.5 covers both), "where human judges are unreliable," and the sentence on agents becoming alike.
 - **Task 2.1 (Xinya's questions):**

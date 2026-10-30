@@ -356,7 +356,7 @@ In these settings, Task~1.1 counts copied and stale reports once; Tasks~1.2, 2.1
 \hd{Path to transition.} The project's products are methods with stated guarantees, an open harness, benchmarks, and protocols that Navy laboratories, such as NRL's Navy Center for Applied Research in Artificial Intelligence, could evaluate on Navy data, with expert validation. The PI will pursue ONR Summer Faculty Research Program and Naval Research Enterprise Internship Program placements for students to work with Navy scientists on such evaluations.
 
 \section{Related Work}\label{sec:related}
-We build on six lines of work; Table~\ref{tab:compare} shows which of the four gaps each addresses.
+We build on six lines of work, each designed for a different problem; we note what each leaves open in our setting.
 
 \hd{AI judges and voting.} LLM judges are standard for evaluating models and training them with AI feedback \citep{zheng2023judging,bai2022constitutional,lee2024rlaif}, and panels of judges reduce single-judge biases \citep{verga2024juries}. \emph{But every vote counts equally, so judges that share a mistake count it several times} \citep{kim2025correlated}.
 
@@ -370,29 +370,6 @@ We build on six lines of work; Table~\ref{tab:compare} shows which of the four g
 
 \hd{Self-improvement without labels.} Models improve without labels by training on the answers most samples agree on, on multi-agent discussion, or on debate self-play \citep{huang2023selfimprove,subramaniam2025multiagent,arnesen2024selfplay}, \emph{but these rewards track agreement, persuasion, or approval, which agents can raise without being right} \citep{shafayat2025selftrain,kenton2026debate,wen2025mislead}.
 
-\begin{table}[t]
-\centering\small
-\renewcommand{\arraystretch}{1.05}
-\setlength{\tabcolsep}{2pt}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{7.6cm}>{\centering\arraybackslash}p{1.85cm}*{4}{>{\centering\arraybackslash}p{1.59cm}}@{}}
-\toprule
-& \textbf{Gap~1} & \textbf{Gap~2} & \textbf{Gap~3} & \textbf{Gap~4} & \textbf{Skill}\\[-1pt]
-& \footnotesize shared mistakes over-counted & \footnotesize dishonest, colluding agents & \footnotesize judge can't verify evidence & \footnotesize rewards track agreement & \footnotesize learned without labels\\
-\midrule
-Single AI judge \citep{zheng2023judging} & \nonem & \nonem & \nonem & \nonem & \nonem\\
-Majority vote, juries \citep{verga2024juries} & \nonem & \nonem & \nonem & \nonem & \nonem\\
-Label-free reliability models \citep{dawid1979maximum} & \halfm & \nonem & \nonem & \nonem & \fullm\\
-Impartial peer review \citep{kurokawa2015impartial} & \nonem & \halfm & \nonem & \nonem & \halfm\\
-LLM open discussion \citep{du2024debate} & \nonem & \nonem & \nonem & \nonem & \nonem\\
-Standard debate \citep{irving2018debate} & \nonem & \halfm & \nonem & \halfm & \nonem\\
-AI control \citep{greenblatt2024control} & \nonem & \fullm & \nonem & \nonem & \nonem\\
-\midrule
-\textbf{This project} & \fullm & \fullm & \fullm$^{\dagger}$ & \fullm$^{\dagger}$ & \fullm\\
-\bottomrule
-\end{tabular}
-\caption{How current approaches address the four gaps: \mbox{\fullm~addressed}, \mbox{\halfm~partly}, \mbox{\nonem~not addressed}; $^{\dagger}$where a tool applies (for Gap~4, in the credit given to debate messages). No current approach fully addresses Gap~1, 3, or 4, and none fully addresses more than one column.}
-\label{tab:compare}
-\end{table}
 
 \section{Technical Approach}\label{sec:approach}
 

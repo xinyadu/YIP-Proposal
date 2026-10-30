@@ -29,6 +29,7 @@ RG3 now follows the standard set in the RG1 and RG2 revisions: plain words, one 
 - **Task 3 evaluation:**
   - The final-decision comparison is dropped, since H5 does not use it.
   - Rewritten as a direct computation (Xinya). Known answers are hidden during training and used only to score held-out questions. The same open-weight models are trained with our rewards, with majority-agreement and debate-win rewards, and on the known answers (the RLVR oracle). Accuracy of answers and decisions is compared, and label error rates are computed by topic. Only what H5 and the risk need is kept (Xinya): the count of invented evidence, and H5's "do not raise dishonest behavior," are cut.
+  - No risk sentence (Xinya), so the heading is "Evaluation", as in Tasks 1.2 and 2.2. The audit stop rule moves into the approach as part of the method: training on a topic stops when audits put its error rate above a threshold below one half, the condition both rewards need. Section 1.2 still refers to it. Denisov-Blanch et al. leave the references.
   - One paragraph, with no italic label (Xinya): the measurements; the label-error measurement and the RLVR oracle (formerly "Checking the premise"); H5; and one risk, a misconception most agents share, with the audit stop rule.
   - Cut: "matched compute" and held-out model families (Section 2.5 covers both), "where human judges are unreliable," and the sentence on agents becoming alike.
 - **Task 2.1 (Xinya's questions):**

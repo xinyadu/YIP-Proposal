@@ -368,7 +368,7 @@ We build on six lines of work, each designed for a different problem; we note wh
 
 \hd{AI control and adversarial crowdsourcing.} AI control keeps protocols safe even if a model subverts them, using a small budget of trusted audits and monitors validated on planted examples \citep{greenblatt2024control}, and in adversarial crowdsourcing a fixed number of trusted ratings suffices even when honest raters are a minority \citep{steinhardt2016avoiding}. \emph{But colluding workers learn to recognize gold questions} \citep{checco2018gold}, \emph{and capable LLMs can often tell an evaluation from real use} \citep{needham2025evaluated}.
 
-\hd{Self-improvement without labels.} Models improve without labels by training on the answers most samples agree on, on multi-agent discussion, or on debate self-play \citep{huang2023selfimprove,subramaniam2025multiagent,arnesen2024selfplay}, \emph{but these rewards track agreement, persuasion, or approval, which agents can raise without being right} \citep{shafayat2025selftrain,kenton2026debate,wen2025mislead}.
+\hd{Self-improvement without labels.} Models improve without labels by training on the answers most samples agree on, on multi-agent discussion, or on debate self-play \citep{huang2023selfimprove,subramaniam2025multiagent,arnesen2024selfplay}, \emph{but these rewards track agreement, persuasion, or approval, which agents can raise without being right} \citep{shafayat2025selftrain,kenton2026debate,wen2025mislead}. We know of no label-free training whose rewards count a shared mistake once or credit a debate message only when the judge has verified its evidence.
 
 
 \section{Technical Approach}\label{sec:approach}

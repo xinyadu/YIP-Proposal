@@ -385,17 +385,17 @@ Here $\epsilon_{\text{cal}}=\mathbb{E}[(P(\hat y_q\neq y_q\mid\pi_q)-1+\pi_q)_+\
 % Benchmarks table placed here, inside Section 3.1 ([H] = exactly here).
 \begin{table}[H]
 \centering\small
-\renewcommand{\arraystretch}{1.08}
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.0cm}@{}}
+\renewcommand{\arraystretch}{1.0}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{4.3cm}>{\raggedright\arraybackslash}p{2.7cm}@{}}
 \toprule
 Benchmark & Questions and sources & Shared mistakes and dishonesty & Tools in the sandbox\\
 \midrule
-A.\ Math and code & GSM8K and MATH problems \citep{cobbe2021gsm8k,hendrycks2021math}; programming problems with reference outputs & Some agents receive the same flawed hint, so the groups that share mistakes are known; dishonest agents & Calculator, code execution\\
-B.\ Multi-document questions & Questions composed from event structures by our MEQA pipeline \citep{li2024meqa}, including synthetic maritime scenarios whose reports form source trees of originals, copies, paraphrases, and outdated versions & Circular reporting built into the source trees; forged reports and spoofed position tracks; a compromised agent & Document search; a port and vessel database built from the same events\\
-C.\ Scientific claims and peer review & Whether a paper's evidence supports its claims, on public papers with their OpenReview reviews and rebuttals, and the PeerRead corpus \citep{kang2018peerread} & Planted errors in papers \citep{schroter2008errors}; AI reviewers that share an underlying model & Paper search; code execution for released code\\
+A.\ Math and code & GSM8K and MATH problems \citep{cobbe2021gsm8k,hendrycks2021math}; coding problems with reference outputs & Agents given the same flawed hint, so groups are known; dishonest agents & Calculator, code execution\\
+B.\ Multi-document questions & Questions built by our MEQA pipeline \citep{li2024meqa}, with maritime scenarios whose reports form source trees of originals, copies, paraphrases, and outdated versions & Circular reporting in the source trees; forged reports and spoofed tracks; a compromised agent & Document search; port and vessel database\\
+C.\ Scientific claims and peer review & Whether a paper's evidence supports its claims, on public papers with their OpenReview reviews and rebuttals, and PeerRead \citep{kang2018peerread} & Planted errors in papers \citep{schroter2008errors}; AI reviewers that share a model & Paper search; code execution\\
 \bottomrule
 \end{tabularx}
-\caption{Benchmarks. Each provides known answers, controlled shared mistakes, and tools whose results the judge can re-run.}
+\caption{The benchmarks: known answers, controlled shared mistakes, and tools the judge can re-run.}
 \label{tab:benchmarks}
 \end{table}
 

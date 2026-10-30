@@ -713,8 +713,8 @@ where $P_J$ is the judge's probability of the decision $D_q$ given the debate so
 
 \slab{Checking the premise.} The testbeds' known answers, which Task~3's rewards never use, also test its premise: we measure how often the labels are wrong, by topic and kind of reward, which checks $\eta_q<\frac12$ directly, and train the same agents on the known answers (standard RLVR) as an oracle reference, reporting the share of its gain each label-free reward recovers. A misconception most agents share makes $\eta_q$ exceed one half on some questions, and agreement then amplifies it, as polling does \citep{denisovblanch2026consensus}. Task~2.2's random human audits also estimate each topic's error rate at no added cost, and training on a topic stops once an anytime-valid test puts that rate above a preset threshold below one half; on the testbeds, held-out accuracy on known answers also detects this, and all training stops if it falls. Training on the same decisions can make agents alike, so we measure shared error factors before and after training and train agents on different subsets of decisions.
 
-\subsection{Evaluation, Expected Results, and Limitations}\label{sec:eval}
-Every scored question has a known answer (in testbed C, claims checked by a published reproducibility report or made false by an inserted error) and is kept apart from those used as planted cases; a human audit reveals the known answer of a random decision, and we also study audits that are sometimes wrong (Table~\ref{tab:testbeds}).
+\subsection{Shared Evaluation Setup, Expected Results, and Limitations}\label{sec:eval}
+Each task states its own evaluation, hypothesis (H1--H5), and risks; this section gives what they share. Every scored question has a known answer (in testbed C, a claim checked by a published reproducibility report \citep{pineau2021reproducibility} or made false by an inserted error), kept apart from the planted cases; a human audit reveals the known answer of a random decision, and we also study audits that are sometimes wrong (Table~\ref{tab:testbeds}).
 
 \begin{table}[t]
 \centering\small
@@ -732,28 +732,9 @@ C.\ Scientific claims and peer review & Whether a paper's evidence supports its 
 \label{tab:testbeds}
 \end{table}
 
-\hd{A peer-review example.} In testbed C, two AI reviewers disagree on whether a paper's experiments support its claimed five-point gain; the doubter disputes the step ``the baseline was evaluated on the same data split,'' and the judge re-runs the released evaluation script for both settings, so an area chair sees the disputed step and the reproduced numbers.
+\hd{Agent pools and red team.} Agents are built on open-weight models of several families and sizes, plus commercial models where licenses allow, with varied role instructions and tools; in testbed C they are not told which claims have reports, so human audits cannot be dodged there. Our red team, modeled on AI control evaluations \citep{greenblatt2024control}, builds attackers of increasing strength: (1)~a fixed dishonest agent; (2)~one that knows the protocol but not its random draws; (3)~one trained to spot planted debates that cheats rarely, and only when it expects no audit; and (4)~a debater and a judge that coordinate through hidden signals. We report the wrong decisions that get through at each audit budget against the useful work still done, as safety--usefulness curves.
 
-\hd{Agent pools and red team.} Agents are built on open-weight models of several families and sizes, plus commercial models where licenses allow, with varied role instructions and tools. In testbed C, published reproducibility reports supply known answers for human audits \citep{pineau2021reproducibility}, and agents are not told which claims have reports, so audits cannot be dodged within that set. Our red team, modeled on AI control evaluations \citep{greenblatt2024control}, builds attackers of increasing strength:
-\begin{enumerate}[label=(\arabic*),leftmargin=1.9em]
-\item a fixed dishonest agent;
-\item an agent that knows the protocol but not its random draws;
-\item an agent trained to spot planted debates that cheats rarely, and only when it expects no audit;
-\item a debater and a judge that coordinate through hidden signals.
-\end{enumerate}
-We report wrong decisions that get through at each audit budget, and the useful work still done, as safety--usefulness curves.
-
-\hd{Conditions varied.} Experiments vary the conditions under which each method should help or fail:
-\begin{itemize}
-\item \slab{Shared mistakes:} from no agents to most given the same flawed hint or outdated report, and from one to five model families;
-\item \slab{Dishonesty:} from none to 30\% of agents, at red-team levels 1--4;
-\item \slab{Evidence:} the share of disputed steps a tool can settle and of reports that are outdated or forged;
-\item \slab{Budgets} for debates, audits, and computation, including small models and few tool calls, as under limited connectivity;
-\item \slab{Answer types:} from yes or no to score bands.
-\end{itemize}
-Regimes where the propositions say the methods fail are included, so failures are measured, not assumed; transfer is measured on held-out topics and model families.
-
-\hd{Metrics, baselines, and statistics.} Primary metrics are decision accuracy and calibration (Brier score and expected calibration error), wrong decisions under attack, correct minorities recovered and correct majorities overturned, audits needed to flag colluders, and cost in computation and tool calls. Each term of (\ref{eq:decomp}) is measured separately, so a gain can be traced to the task that produced it. Baselines, at matched compute, are a single AI judge (with and without the debaters' tools), majority vote, and averaging with equal weights; ablations remove each component in turn. Testbed B also reports the running example's measure: missed and false departure calls per 100 vessel questions, at each audit budget. We report means with confidence intervals over seeds and question samples.
+\hd{Conditions, baselines, and statistics.} Experiments vary how widely mistakes are shared (from none to most agents given the same flawed hint or outdated report, across one to five model families), the share of dishonest agents (up to 30\%, at red-team levels 1--4), the share of disputed steps a tool can settle and of reports that are outdated or forged, the budgets for debates, audits, and computation (including small models and few tool calls, as under limited connectivity), and the answer type. Regimes where the propositions say a method fails are included, so failures are measured, not assumed; transfer is measured on held-out topics and model families. Baselines at matched compute are a single AI judge (with and without the debaters' tools), majority vote, and equal-weight averaging; ablations remove each component, and each term of (\ref{eq:decomp}) is measured separately, so a gain can be traced to the task that produced it. Testbed B also reports the running example's measure, missed and false departure calls per 100 vessel questions at each audit budget. We report Brier score and expected calibration error, and means with confidence intervals over seeds and questions.
 
 \label{sec:expected}\newcommand{\g}{\cellcolor{ganttfill}}
 \begin{table}[t]
@@ -798,18 +779,9 @@ G6. Code, testbeds, protocols; peer-reviewed papers with proofs & Public release
 \label{tab:goals}
 \end{table}
 
-\hd{Results and new knowledge.} If successful, the project will produce:
-\begin{enumerate}[label=(\roman*),leftmargin=2.2em]
-\item a reliability model that counts a group sharing a mistake at most once, with conditions for learning it without an answer key and rates for detecting groups;
-\item an impartial mechanism for choosing debaters and judges, with its measured price and bounds on coalition gains;
-\item an open agentic debate harness that reduces judging a question to judging single steps;
-\item an audit scheme with bounds on the harm a colluder can do before it is flagged;
-\item a self-improvement method whose expected update follows accuracy rather than agreement.
-\end{enumerate}
+\hd{Results and new knowledge.} If successful, the project will deliver the methods of Section~\ref{sec:merit} with their theory (identifiability without an answer key, the price of impartiality, bounds on coalition gains and on a colluder's harm, and rewards whose expected update follows accuracy), an open debate harness, three testbeds, and red-team protocols. Scientifically, it will show when a debate among AI agents can be trusted and how few audits keep the agents honest, which would let conferences and funders try impartial, audited peer review by AI; because people audit only a small share of decisions and training needs no labels, the methods can scale to AI whose answers people cannot easily evaluate.
 
-Scientifically, it will show when a debate among AI agents can be trusted and how few audits keep the agents honest, which would let conferences and funders try impartial, audited peer review by AI; because people audit only a small share of decisions and training needs no labels, the methods can scale to AI whose answers people cannot easily evaluate.
-
-\hd{Limitations.} Where no tool applies, the judge rules on argument alone, and re-running verifies reported evidence, not its source. A misconception every agent shares cannot be detected from answers alone (Proposition~2), and training would reinforce it on a topic until that topic's human audits reveal it (Task~3). A group that cheats once is caught at most with the audit probability (Task~2.2). Paraphrasing limits but does not remove hidden signals \citep{mathew2025hidden}. Navy use would need Navy data and expert validation.
+\hd{Limitations.} Where no tool applies, the judge rules on argument alone, and re-running verifies reported evidence, not its source (Task~2.1). A misconception every agent shares cannot be detected from answers alone, and training would reinforce it on a topic until that topic's audits reveal it (Proposition~2, Task~3). A group that cheats once is caught at most with the audit probability, and paraphrasing limits but does not remove hidden signals \citep{mathew2025hidden} (Task~2.2). Navy use would need Navy data and expert validation.
 
 \subsection{Project Schedule, Milestones, Goals, and Benchmarks}\label{sec:schedule}
 The project runs 36 months from April 1, 2027, with milestones M1--M6 (Table~\ref{tab:schedule}). \label{sec:goalsbench}Each goal has a benchmark and a criterion for success (Table~\ref{tab:goals}); misses will be reported as findings.

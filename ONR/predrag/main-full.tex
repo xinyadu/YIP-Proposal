@@ -650,7 +650,7 @@ The harness also supports the other two assumptions. For~(ii), the side with the
 \hd{Overview.} Task~3 addresses both with two rewards that need no human labels; by lowering the agents' own error rates, it can shrink every term of Eq.~(\ref{eq:decomp}):
 \begin{itemize}
 \item The \emph{answer reward} of Eq.~(\ref{eq:firstanswer}) rewards each agent's answer for matching a reference the agent did not shape: the decision, if the judge settled the question by re-running tool evidence, and otherwise the answer the other groups favor. On yes-or-no questions, it favors the true answer on average whenever the reference is right more often than wrong.
-\item The \emph{message credit} of Eq.~(\ref{eq:credit}) credits each debate message by how far it moved the judge toward the decision, only in debates the judge settled by re-running tool evidence, so the credit rests on evidence rather than persuasion.
+\item The \emph{message credit} of Eq.~(\ref{eq:credit}) credits each debate message by how far it moved the judge toward the decision, only in debates the judge settled by re-running tool evidence, so the credit rests on verifiable evidence rather than persuasion.
 \end{itemize}
 
 \subsubsection{Task 3: Rewarding each agent's contribution to collective decisions}\label{sec:t3}

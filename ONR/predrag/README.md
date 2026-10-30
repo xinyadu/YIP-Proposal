@@ -39,7 +39,12 @@ RG3 now follows the standard set in the RG1 and RG2 revisions: plain words, one 
   - Section 1.3 no longer lists FG-PRM among the work the tasks build on, and Section 4 says HiPRAG is the basis for Task 3's single-step credit.
   - The schedule's Task 2.1 row reads "sub-step recursion" instead of "false-step search."
 - **Task 2.2 (Xinya):** "Why this method" is removed. The clause that pointed to it ("human audits keep the guarantee") now says human audits still apply, because a colluder cannot know which real decisions will be audited.
-- **Section 1.2:** "debates whose disputed step a re-run tool verified" now reads "debates the judge settled by re-running tool evidence."
+- **Section 1 now matches the RG sections (Xinya):**
+  - Section 1.2, RG3: as in RG3's background, "Task 3 extends reinforcement learning with verifiable rewards to the agents' own decisions, without human labels," and "focuses on decisions settled by re-running tool evidence, because these are grounded, verifiable, and usually correct." Answers are scored against "the answer the other groups favor," and message credit "rests on verifiable evidence rather than persuasion," in the RG3 overview's words. The noisy-label sentence stays: it is Section 1's answer to "what if the decisions are wrong?" and points to the audit stop rule. The other session's trims to this paragraph (Navy-needs pass) are kept.
+  - Section 1.3 (ii) names RG2's two new ways: tool calls that the judge re-runs, and a control loop that stops the debate at the steps in dispute. (iv) says the rewards cannot be raised by agreeing with one's own group and rest mainly on decisions settled by re-running tool evidence; "nor persuasion earns reward" is gone, since message credit does reward moving the judge toward such a decision.
+  - The novelty paragraph now opens with RG2's claim: "To our knowledge, prior peer evaluation by LLMs is not agentic: agents call no tools, and no judge re-runs their calls." This replaces (ii)'s "to our knowledge the first for peer evaluation."
+  - RG1's text in Section 1 already matched RG1. The project summary's RG3 sentence names the same focus (3,706 characters; one page with about two lines to spare).
+  - Section 1 keeps its length, so every page break after it is unchanged and Sections 1–5 still end on page 20.
 - **Section 2.6:** the "Goals and benchmarks" paragraph now comes before the schedule table, which shrinks the blank space the table leaves when it moves to the next page.
 
 ## Revision 4 (Oct 29): response to the v2 reviews

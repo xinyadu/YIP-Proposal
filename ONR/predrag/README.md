@@ -22,7 +22,7 @@ RG3 now follows the standard set in the RG1 and RG2 revisions: plain words, one 
   - The pilot is one sentence: majority agreement collapses, while Eq. (5) goes from 62% to 73%. Its fallback comment matches.
 - **Task 3 evaluation:**
   - The final-decision comparison moves here from the approach.
-  - "Checking the premise" keeps the label-error measurement, the RLVR oracle, and one risk: a misconception most agents share, with the audit stop rule.
+  - One paragraph, with no italic label (Xinya): the measurements; the label-error measurement and the RLVR oracle (formerly "Checking the premise"); H5; and one risk, a misconception most agents share, with the audit stop rule.
   - Cut: "matched compute" and held-out model families (Section 2.5 covers both), "where human judges are unreliable," and the sentence on agents becoming alike.
 - **Task 2.1 (Xinya's questions):**
   - The paragraph after Proposition 4 now opens with what the proposition is for. It explains why the judge rules only on disputed steps, names the three ways a debate can still end wrong, and states the bound in words.

@@ -779,7 +779,11 @@ This is a single-PI award with no subawardees, collaborators, co-investigators, 
 \renewcommand{\thepage}{CV-\arabic{page}}
 \setcounter{page}{1}
 \refstepcounter{section}\phantomsection\addcontentsline{toc}{section}{\protect\numberline{\thesection}Principal Investigator's Curriculum Vitae}
-\IfFileExists{cv_onr.pdf}{\includepdf[pages=-,pagecommand={\thispagestyle{plain}}]{cv_onr.pdf}}{\section*{Principal Investigator's Curriculum Vitae}\confirm{[Add cv\_onr.pdf (the PI's full CV) to this folder; it is inserted here.]}}
+% \includepdf drops the CV's own links; cv_links.tex (from cv_links.py) puts them back over each page.
+\newcount\cvpage \cvpage=0
+\newcommand{\cvlinkspage}{\global\advance\cvpage by 1 \setlength{\unitlength}{1bp}\csname cvlinks@p\the\cvpage\endcsname}
+\InputIfFileExists{cv_links.tex}{}{}
+\IfFileExists{cv_onr.pdf}{\includepdf[pages=-,pagecommand={\thispagestyle{plain}},picturecommand={\cvlinkspage}]{cv_onr.pdf}}{\section*{Principal Investigator's Curriculum Vitae}\confirm{[Add cv\_onr.pdf (the PI's full CV) to this folder; it is inserted here.]}}
 
 \clearpage
 \renewcommand{\thepage}{LS-\arabic{page}}

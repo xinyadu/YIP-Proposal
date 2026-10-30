@@ -7,6 +7,31 @@
 | Four-page white paper v4 | [main-4page-v4.tex](main-4page-v4.tex) | [white_paper_predrag-4page-v4.pdf](white_paper_predrag-4page-v4.pdf) |
 | One-page discussion note | [main-1page.tex](main-1page.tex) | [white_paper_predrag-1page.pdf](white_paper_predrag-1page.pdf) |
 
+## RG3 pass, and Task 2.1 and 2.2 fixes (Oct 30)
+
+RG3 now follows the standard set in the RG1 and RG2 revisions: plain words, one risk, a short preliminary result, and no detail that nothing else follows up. RG3 is about 14% shorter (about 1,450 to 1,250 words), and Sections 1–5 end seven lines earlier.
+
+- **RG3 background and challenges:** opens from RG1 and RG2, keeps the RLVR framing with one example (vessel V), and gives each challenge a bold sentence. The second challenge names what existing label-free methods assume: that models' mistakes differ (Yang et al.), or that models do not collude (Qiu et al.).
+- **RG3 overview:** one bullet per reward. The first-answer bullet uses the v2 review's accurate wording: echoing one's own group earns nothing, and on yes-or-no questions the reward follows the true answer while the reference is right more often than wrong.
+- **Task 3:**
+  - ω_q is defined beside Eq. (5), and GRPO is cited where its normalization comes up.
+  - The baseline sentence and the repeated held-out monitoring are cut.
+  - "Which debates count" says "debates the judge settled by re-running tool evidence" (two disputed steps, as in RG2), and calls such a decision "a high-confidence label, close to an RLVR reward, but not an answer key."
+  - The policy-invariance caveat on potential-based shaping stays, because both v2 reviews asked to keep it.
+  - The pilot is one sentence: majority agreement collapses, while Eq. (5) goes from 62% to 73%. Its fallback comment matches.
+- **Task 3 evaluation:**
+  - The final-decision comparison moves here from the approach.
+  - "Checking the premise" keeps the label-error measurement, the RLVR oracle, and one risk: a misconception most agents share, with the audit stop rule.
+  - Cut: "matched compute" and held-out model families (Section 2.5 covers both), "where human judges are unreliable," and the sentence on agents becoming alike.
+- **Task 2.1 (Xinya's questions):**
+  - The paragraph after Proposition 4 now opens with what the proposition is for. It explains why the judge rules only on disputed steps, names the three ways a debate can still end wrong, and states the bound in words.
+  - FG-PRM and the entailment-model clause are gone. Assumption (ii) now rests on recursion into sub-steps.
+  - Section 1.3 no longer lists FG-PRM among the work the tasks build on, and Section 4 says HiPRAG is the basis for Task 3's single-step credit.
+  - The schedule's Task 2.1 row reads "sub-step recursion" instead of "false-step search."
+- **Task 2.2 (Xinya):** "Why this method" is removed. The clause that pointed to it ("human audits keep the guarantee") now says human audits still apply, because a colluder cannot know which real decisions will be audited.
+- **Section 1.2:** "debates whose disputed step a re-run tool verified" now reads "debates the judge settled by re-running tool evidence."
+- **Section 2.6:** the "Goals and benchmarks" paragraph now comes before the schedule table, which shrinks the blank space the table leaves when it moves to the next page.
+
 ## Revision 4 (Oct 29): response to the v2 reviews
 
 Both reviews ([chatgpt_comment_v2.pdf](chatgpt_comment_v2.pdf), [claude_comment_v2.pdf](claude_comment_v2.pdf)) read the proposal at 6682ee9. Revision 4 makes targeted edits and keeps the framing, the novelty claims, the central question, three RGs, five tasks, and section order. The edits add about six lines; compression to 20 pages is still one final pass.

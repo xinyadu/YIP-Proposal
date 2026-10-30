@@ -25,7 +25,7 @@ RG3 now follows the standard set in the RG1 and RG2 revisions: plain words, one 
   - The safeguards sentence is shorter: flagged agents' decisions are dropped, planted cases never enter training, and no agent is trained on its own rulings or shares a reward with an agent that judges it.
   - The baseline sentence and the repeated held-out monitoring are cut.
   - Message credit applies only in "debates the judge settled by re-running tool evidence" (two disputed steps, as in RG2), and such a decision is "a high-confidence label, close to an RLVR reward, but not an answer key."
-  - The pilot is one sentence: majority agreement collapses, while Eq. (5) goes from 62% to 73%. Its fallback comment matches.
+  - Preliminary results: only the pilot, in Xinya's wording. Majority agreement collapses, while Eq. (5) goes from 55% to 73%. It is now a result rather than an orange placeholder, as for Task 2.1, and its fallback comment is gone. HiPRAG moved out (Xinya), as Nova/COMET did for Task 2.2; it stays in Sections 1.3 and 4.
 - **Task 3 evaluation:**
   - The final-decision comparison is dropped, since H5 does not use it.
   - Rewritten as a direct computation (Xinya). Known answers are hidden during training and used only to score held-out questions. The same open-weight models are trained with our rewards, with majority-agreement and debate-win rewards, and on the known answers (the RLVR oracle). Accuracy of answers and decisions is compared, and label error rates are computed by topic. Only what H5 and the risk need is kept (Xinya): the count of invented evidence, and H5's "do not raise dishonest behavior," are cut.

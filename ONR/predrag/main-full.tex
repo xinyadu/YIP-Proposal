@@ -200,7 +200,7 @@ This proposal describes unclassified fundamental research. All data are public o
   alab/.style={font=\footnotesize\itshape, text=black!75, inner sep=1pt}]
 \node[tile, draw=rgline, fill=rgfill, anchor=north west] (r1) at (0,0) {\parbox[t][2.12cm][t]{\linewidth}{\raggedright\ico{rg1-scale-balanced}\ \textbf{\textcolor{rgonedark}{RG1}}\\[1pt] Weigh answers; assign debaters and judges impartially}};
 \node[tile, draw=rgtwoline, fill=auditfill, anchor=north east] (r2) at (7.15,0) {\parbox[t][2.12cm][t]{\linewidth}{\raggedright\ico{rg2-comments}\ \textbf{\textcolor{rgtwodark}{RG2}}\\[1pt] Debate before a judge that re-runs evidence; audit for collusion}};
-\node[found, anchor=north] (f) at ([yshift=-0.5cm]$(r1.south)!0.5!(r2.south)$) {\textit{Foundations:} statistics, social choice, game theory, AI safety, RL};
+\node[found, anchor=north] (f) at ([yshift=-0.5cm]$(r1.south)!0.5!(r2.south)$) {\textit{Foundations:} statistics, social choice, game theory, AI safety, Reinforcement Learning};
 \node[tile, draw=goodline, fill=goodfill, anchor=north] (r3) at ([yshift=-0.5cm]f.south) {\ico{rg3-graduation-cap}\ \textbf{\textcolor{rgthreedark}{RG3}}\\[1pt] Self-improve with RL on the group's decisions};
 % flow between the goals
 \draw[big] (r1.east) -- node[alab, above=1pt]{roles} (r2.west);

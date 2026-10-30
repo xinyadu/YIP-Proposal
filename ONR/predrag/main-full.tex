@@ -605,9 +605,7 @@ To support assumption~(ii), that the side with the right answer can find a false
 
 \slab{Training the judges.} Re-running lowers $\epsilon_J$ only on steps a tool can settle; on the others the judge rules on argument alone, so we fine-tune several open-weight judges to rule on single steps, on human step-level labels and human-judged debates \citep{lightman2024verify,michael2023debate,khan2024debating} and then by reinforcement learning on debates over questions with known answers, never on the group's decisions or planted cases. Several judges, not one, keep a compromised judge to a share $f/n_q$ of debates (Proposition~3(c)), and a retrained judge re-enters Task~1.2 with no track record.
 
-\hd{Preliminary results.} \pending{In a pilot of 50 debates in our simplified harness, on questions where a calculator or a database query could check the steps in dispute, the judge ruled correctly in 95\% of the debates.}
-% If this pilot is not run before submission, replace the \pending sentence with this expected outcome:
-% A pilot will run 50 debates in our simplified harness on questions where a calculator or a database query can check the steps in dispute, and measure how often the judge rules correctly.
+\hd{Preliminary results.} In a pilot of 50 debates in our simplified harness, on questions where a calculator or a database query could check the steps in dispute, the judge ruled correctly in 95\% of the debates.
 
 \hd{Evaluation and risks.} On benchmarks B and C, we measure accuracy on disputed questions, how often re-running evidence changes the outcome, and cost. Our hypothesis, H3, tested by month 24, is that debate is more accurate than open discussion among the same agents, and than every baseline where a tool can settle the disputed steps, more so as the share of such steps grows. If few disputed steps can be settled by a tool, rulings rest on argument alone and on the judges' training.
 

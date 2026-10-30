@@ -1,4 +1,4 @@
-"""Build project-summary.tex and project-summary.pdf from the text in project-summary.md.
+"""Build project-summary.tex, project-summary.pdf, and project-summary.docx from the text in project-summary.md.
 
 Usage (from ONR/predrag): python3 build_project_summary.py
 The text's first paragraph must be "Approved for Public Release". A later paragraph
@@ -77,3 +77,11 @@ for ext in ("aux", "log", "out"):
         os.remove(os.path.join(d, name + "." + ext))
     except FileNotFoundError:
         pass
+
+# Word copy of the same text (needs node and the docx package).
+import shutil
+if shutil.which("node"):
+    r = subprocess.run(["node", "project_summary_docx.js"], cwd=d, capture_output=True, text=True)
+    print((r.stdout or r.stderr).strip())
+else:
+    print("node not found: project-summary.docx not rebuilt")

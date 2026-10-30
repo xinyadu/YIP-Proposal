@@ -356,7 +356,7 @@ In these settings, Task~1.1 counts copied and stale reports once; Tasks~1.2, 2.1
 \hd{Path to transition.} The project's products are methods with stated guarantees, an open harness, benchmarks, and protocols that Navy laboratories, such as NRL's Navy Center for Applied Research in Artificial Intelligence, could evaluate on Navy data, with expert validation. The PI will pursue ONR Summer Faculty Research Program and Naval Research Enterprise Internship Program placements for students to work with Navy scientists on such evaluations.
 
 \section{Related Work}\label{sec:related}
-We build on six lines of work, each designed for a different problem; we note what each leaves open in our setting.
+We build on five lines of work, each designed for a different problem; we note what each leaves open in our setting.
 
 \hd{AI judges and voting.} LLM judges are standard for evaluating models and training them with AI feedback \citep{zheng2023judging,bai2022constitutional,lee2024rlaif}, and panels of judges reduce single-judge biases \citep{verga2024juries}. \emph{But every vote counts equally, so judges that share a mistake count it several times} \citep{kim2025correlated}.
 
@@ -368,7 +368,6 @@ We build on six lines of work, each designed for a different problem; we note wh
 
 \hd{AI control and adversarial crowdsourcing.} AI control keeps protocols safe even if a model subverts them, using a small budget of trusted audits and monitors validated on planted examples \citep{greenblatt2024control}, and in adversarial crowdsourcing a fixed number of trusted ratings suffices even when honest raters are a minority \citep{steinhardt2016avoiding}. \emph{But colluding workers learn to recognize gold questions} \citep{checco2018gold}, \emph{and capable LLMs can often tell an evaluation from real use} \citep{needham2025evaluated}.
 
-\hd{Self-improvement without labels.} Models improve without labels by training on the answers most samples agree on, on multi-agent discussion, or on debate self-play \citep{huang2023selfimprove,subramaniam2025multiagent,arnesen2024selfplay}, \emph{but these rewards track agreement, persuasion, or approval, which agents can raise without being right} \citep{shafayat2025selftrain,kenton2026debate,wen2025mislead}. We know of no label-free training whose rewards count a shared mistake once or credit a debate message only when the judge has verified its evidence.
 
 
 \section{Technical Approach}\label{sec:approach}
@@ -939,7 +938,6 @@ This is a single-PI award with no subawardees, collaborators, co-investigators, 
 \bibitem[{Shu(2026)}]{shu2026unanimity} Y. Shu (2026). \href{https://arxiv.org/abs/2609.26145}{Unanimity Without Persuasion: A Single Round of Debate Erases the Disagreement That Verification Needs}. arXiv:2609.26145.
 \bibitem[{Smit et~al.(2024)}]{smit2024mad} A. Smit, N. Grinsztajn, P. Duckworth, T. D. Barrett, and A. Pretorius (2024). \href{https://proceedings.mlr.press/v235/smit24a.html}{Should We Be Going MAD? A Look at Multi-Agent Debate Strategies for LLMs}. ICML.
 \bibitem[{Steinhardt et~al.(2016)}]{steinhardt2016avoiding} J. Steinhardt, G. Valiant, and M. Charikar (2016). \href{https://papers.nips.cc/paper_files/paper/2016/hash/0a87257e5308197df43230edf4ad1dae-Abstract.html}{Avoiding Imposters and Delinquents: Adversarial Crowdsourcing and Peer Prediction}. Advances in Neural Information Processing Systems 29 (NIPS 2016).
-\bibitem[{Subramaniam et~al.(2025)}]{subramaniam2025multiagent} V. Subramaniam, Y. Du, J. B. Tenenbaum, A. Torralba, S. Li, and I. Mordatch (2025). \href{https://openreview.net/forum?id=JtGPIZpOrz}{Multiagent Finetuning: Self Improvement with Diverse Reasoning Chains}. ICLR.
 \bibitem[{Tyen et~al.(2024)}]{tyen2024llms} G. Tyen, H. Mansoor, V. C\u{a}rbune, P. Chen, and T. Mak (2024). \href{https://doi.org/10.18653/v1/2024.findings-acl.826}{LLMs Cannot Find Reasoning Errors, but Can Correct Them Given the Error Location}. Findings of ACL, pp. 13894--13908.
 \bibitem[{U.S. Maritime Administration(2024)}]{marad2024ais} U.S. Maritime Administration (2024). \href{https://www.maritime.dot.gov/msci/2024-013-global-us-maritime-advisory-updates-resources-and-contacts}{U.S. Maritime Advisory 2024-013: Global---U.S. Maritime Advisory Updates, Resources, and Contacts}. Effective October 11, 2024; expired April 11, 2025.
 \bibitem[{van der Weij et~al.(2025)}]{vanderweij2025sandbagging} T. van der Weij, F. Hofst\"atter, O. Jaffe, S. F. Brown, and F. R. Ward (2025). \href{https://openreview.net/forum?id=7Qa2SpjxIS}{AI Sandbagging: Language Models can Strategically Underperform on Evaluations}. ICLR.

@@ -44,8 +44,8 @@ tex = r"""% Project Summary/Abstract (SF 424 Project Abstract; upload for R&R Ot
 \DisableLigatures{encoding = *, family = *}
 \usepackage[hidelinks]{hyperref}
 \hypersetup{pdftitle={Project Summary/Abstract: Trustworthy Collective Reasoning and Evaluation for AI Agents},pdfauthor={Xinya Du}}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{4pt}
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{0pt}
 \hyphenpenalty=10000 \exhyphenpenalty=10000
 \pagestyle{empty}
 \begin{document}
@@ -56,7 +56,7 @@ tex = r"""% Project Summary/Abstract (SF 424 Project Abstract; upload for R&R Ot
 \vspace{3pt}
 @@BODY@@
 \end{document}
-""".replace("@@BODY@@", "\n\n".join(body))
+""".replace("@@BODY@@", "\\noindent " + "\n\n".join(body))
 open(out_tex, "w", encoding="utf-8").write(tex)
 
 d = os.path.dirname(os.path.abspath(out_tex))

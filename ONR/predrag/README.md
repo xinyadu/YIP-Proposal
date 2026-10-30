@@ -14,9 +14,10 @@ RG3 now follows the standard set in the RG1 and RG2 revisions: plain words, one 
 - **RG3 background and challenges:** opens from RG1 and RG2, keeps the RLVR framing with one example (vessel V), and gives each challenge a bold sentence. The second challenge names what existing label-free methods assume: that models' mistakes differ (Yang et al.), or that models do not collude (Qiu et al.).
 - **RG3 overview:** one bullet per reward. The first-answer bullet uses the v2 review's accurate wording: echoing one's own group earns nothing, and on yes-or-no questions the reward follows the true answer while the reference is right more often than wrong.
 - **Task 3:**
+  - Only the two rewards carry italic labels, "First answers" and "Debate messages" (Xinya). "Why this method" is merged into the text: the noisy-label identity now sits in the Approach opening, and how the left-out reference meets its condition sits under "First answers." The "Which debates count" and "Safeguards" paragraphs keep their text without labels.
   - ω_q is defined beside Eq. (5), and GRPO is cited where its normalization comes up.
   - The baseline sentence and the repeated held-out monitoring are cut.
-  - "Which debates count" says "debates the judge settled by re-running tool evidence" (two disputed steps, as in RG2), and calls such a decision "a high-confidence label, close to an RLVR reward, but not an answer key."
+  - Message credit applies only in "debates the judge settled by re-running tool evidence" (two disputed steps, as in RG2), and such a decision is "a high-confidence label, close to an RLVR reward, but not an answer key."
   - The policy-invariance caveat on potential-based shaping stays, because both v2 reviews asked to keep it.
   - The pilot is one sentence: majority agreement collapses, while Eq. (5) goes from 62% to 73%. Its fallback comment matches.
 - **Task 3 evaluation:**

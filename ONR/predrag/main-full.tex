@@ -66,8 +66,8 @@
 \setlength{\cftbeforesecskip}{3pt}
 
 % Run-in heads inside a task.
-% Run-in heading: starts its own paragraph, flush left, with a small gap above.
-\newcommand{\hd}[1]{\ifhmode\par\fi\addvspace{3pt}\noindent\textbf{#1}\hspace{0.35em}}
+% Run-in heading: starts its own paragraph, flush left, with a 1pt gap above (was 3pt; Oct 29).
+\newcommand{\hd}[1]{\ifhmode\par\fi\addvspace{1pt}\noindent\textbf{#1}\hspace{0.35em}}
 % Run-in label inside a subsection (bold italic): sub-steps, "Why this method", "What remains open".
 \newcommand{\slab}[1]{\textbf{\textit{#1}}}
 % Marks for Table 1: green tick (addressed), orange dot (partly), red cross (not addressed).
@@ -760,7 +760,7 @@ This is a single-PI award with no subawardees, collaborators, co-investigators, 
 \item \emph{Peer evaluation among AI judges.} PRD \citep{li2024prd} introduced peer ranking and peer discussion among AI judges, which agree with human judgments better than the strongest single judge and reduce a judge's bias toward its own model; researchers at NYU, Anthropic, and Cohere have built on it. It underlies PeerEval (\href{https://peereval-ai.github.io}{peereval-ai.github.io}), a public leaderboard on which seven AI models answer the same questions and judge one another anonymously (40,156 pairwise judgments in its first release). IQA-EVAL \citep{li2024iqa} evaluates interactive question answering with persona-driven AI agents.
 \item \emph{Rewards and verification.} FG-PRM \citep{li2025fgprm} detects six types of hallucination at each step of a math solution; HiPRAG \citep{wu2026hiprag} rewards each search decision of an agent, cutting unnecessary searches to 2.3\% while missing fewer needed ones; and \citet{liang2026reasoning} show that a reasoning model can verify answers without further training.
 \item \emph{Benchmarks and AI for science.} MEQA \citep{li2024meqa} provides event-centric multi-hop questions with explanations, FaithScore \citep{jing2024faithscore} measures fine-grained hallucinations, LMR-Bench \citep{yan2025lmrbench} evaluates agents that reproduce research code, and DSBench \citep{jing2025dsbench}, which OpenAI used to evaluate ChatGPT agent \citep{openai2025agent}, tests agents on realistic data-science tasks; the PI co-wrote a survey of LLMs for scientific research, including peer review \citep{luo2025llm4sr}, and the group's research-idea generator appears at EMNLP 2026 \citep{li2026ldc}.
-\item \emph{Adversarial evaluation.} The PI co-advised one of the five university red teams in the Amazon Nova AI Challenge (Task~2.2) and holds an Open Philanthropy grant on control evaluations of AI debate, \confirm{limited to two debaters and a judge on reading-comprehension questions; it funds none of the many-agent methods of RG1--RG3}.
+\item \emph{Adversarial evaluation.} The PI co-advised one of the five university red teams in the Amazon Nova AI Challenge (Task~2.2) and holds an Open Philanthropy grant on control evaluations of AI debate.
 \end{itemize}
 
 \section{Responsibility}\label{sec:resp}

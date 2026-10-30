@@ -661,7 +661,7 @@ The harness also supports the other two assumptions. For~(ii), the side with the
 \mathrm{reward}_a(q)=\omega_{a,q}\,\mathbf{1}\{x_{a,q}=\tilde D_{a,q}\},
 \label{eq:firstanswer}
 \end{equation}
-where $\mathbf{1}\{\cdot\}$ is 1 if the answer matches the reference and 0 otherwise, and the weight $\omega_{a,q}=1-2\hat\eta_{a,q}$ lets questions with a more reliable reference count more and, unlike dividing by $1-2\hat\eta_{a,q}$ to undo the shrinkage \citep{natarajan2013noisy}, never amplifies a noisy reference. Here $\hat\eta_{a,q}$ is the estimated probability that the reference is wrong, from the judge's calibrated probability for a decision and from the left-out posterior otherwise (with more answers, the gap between the two likeliest answers' probabilities).
+where $\mathbf{1}\{\cdot\}$ is 1 if the answer matches the reference and 0 otherwise, and the weight $\omega_{a,q}=1-2\hat\eta_{a,q}$ lets questions with a more reliable reference count more and, unlike dividing by $1-2\hat\eta_{a,q}$ to restore the full update \citep{natarajan2013noisy}, never amplifies a noisy reference. Here $\hat\eta_{a,q}$ is the estimated probability that the reference is wrong, from the judge's calibrated probability for a decision and from the left-out posterior otherwise (with more answers, the gap between the two likeliest answers' probabilities).
 
 \slab{Debate messages.} Each message $m_t$ is credited by how far it moves the judge toward the decision:
 \begin{equation}

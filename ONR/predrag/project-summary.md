@@ -2,7 +2,7 @@
 
 ONR FY27 YIP (NOFO N0001426SF004), "Trustworthy Collective Reasoning and Evaluation for AI Agents." The text between the two rules goes into the SF 424 Project Abstract form. The NOFO asks it to identify the research problem and objectives, the technical approach, the anticipated outcome if successful, and the impact on DoW capabilities, in at most one page or 4,000 characters including spaces, with standard keyboard characters only, marked "Approved for Public Release." It is posted on DTIC if the project is funded.
 
-This draft is 3,863 characters including spaces and line breaks (3,873 if each line break counts as two), uses only keyboard characters, and fits on one page at 12-point Times with 1-inch margins and indented paragraphs, with less than a line to spare.
+This draft is 3,863 characters including spaces and line breaks (3,873 if each line break counts as two) and uses only keyboard characters. The grants office will use the same abstract in two places: this text in the SF 424 Project Abstract form, and [project-summary.pdf](project-summary.pdf) (built from [project-summary.tex](project-summary.tex), which holds the same text) as the Field 7 upload, which Grants.gov required after leaving the field blank gave an error. The PDF fits on one page at 12-point Times with 1-inch margins, with less than a line to spare. Edit the text here and in the .tex together.
 
 ---
 

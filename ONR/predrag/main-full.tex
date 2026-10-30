@@ -580,8 +580,8 @@ In the running example (Figure~\ref{fig:t12}), A6, which did not answer, is draw
 
 \hd{Overview.} Two tasks address them and control the terms of Eq.~(\ref{eq:decomp}) labeled Tasks~2.1 and~2.2 (Figures~\ref{fig:t21} and~\ref{fig:t22}):
 \begin{itemize}
-\item Task~2.1 addresses the first two with an agentic debate harness, to our knowledge the first for peer evaluation. It is new in two ways: its agents use tools, with debaters gathering evidence through tool calls that the judge re-runs, and its control loop stops the debate at the first disputed step for the judge to rule on, shrinking $\epsilon_{\text{step}}$.
-\item Task~2.2 addresses the third with automatic audits on planted debates and human audits of random real decisions, shrinking $\epsilon_{\text{role}}$ with Task~1.2.
+\item Task~2.1 addresses the first two with an agentic debate harness, to our knowledge the first for peer evaluation. It is new in two ways: its agents use tools, with debaters gathering evidence through tool calls that the judge re-runs, and its control loop stops the debate at the first disputed step for the judge to rule on. It shrinks $\epsilon_{\text{step}}$, the chance that a debate ends wrong even when no one steers it.
+\item Task~2.2 addresses the third with automatic audits on planted debates and human audits of random real decisions. With Task~1.2, it shrinks $\epsilon_{\text{role}}$, the chance that a dishonest debater or judge steers the outcome.
 \end{itemize}
 
 

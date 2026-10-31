@@ -30,7 +30,7 @@ Arena Academic Partnerships Program, Fall 2026 \quad 12 months \quad \$50,000\pa
 \end{center}
 
 \section*{Research objective and foundation}
-We will develop human-calibrated peer evaluation: a way to combine multiple LLM judges with limited human feedback to produce reliable model rankings. Arena's studies of judge self-preference and its AutoEval system motivate a central question: when does model consensus predict human preferences, and when does it amplify shared biases \citep{selfpreference,autoeval}? Our PRD method weights judges according to the quality of their own answers as assessed by peers \citep{prd}. Its implementation, PeerEval, already provides an open-source evaluation package and public leaderboard \citep{peereval}. The proposed advance is to turn peer competence into a starting point for human-aligned judging, then allocate additional judgments where they can improve ranking reliability.
+We will develop human-calibrated peer evaluation: a way to combine multiple LLM judges with limited human feedback to produce reliable model rankings. Arena's studies of judge self-preference and its AutoEval system motivate a central question: when does model consensus predict human preferences, and when does it amplify shared biases \citep{selfpreference,autoeval}? Our PRD method weights judges according to the quality of their own answers as assessed by peers \citep{prd}. Its implementation, \href{https://peereval-ai.github.io/}{PeerEval}, already provides an open-source evaluation package and public leaderboard \citep{peereval}. The proposed advance is to turn peer competence into a starting point for human-aligned judging, then allocate additional judgments where they can improve ranking reliability.
 
 \section*{Research approach}
 \hd{1. Build independent peer evidence and a competence prior.}
@@ -60,7 +60,7 @@ The \$50,000 gift will support graduate research (\$36,000, including applicable
 \setlength{\itemsep}{0pt}
 \setlength{\parskip}{0pt}
 \bibitem{prd} Li R, Patel T, Du X. PRD Peer Rank and Discussion Improve Large Language Model based Evaluations. TMLR, 2024. \href{https://arxiv.org/abs/2307.02762}{Paper}.
-\bibitem{peereval} PeerEval. Leaderboard, project blog, and open-source evaluation package. 2026. \href{https://peereval-ai.github.io/blog.html}{Project}.
+\bibitem{peereval} PeerEval. Leaderboard, project blog, and open-source evaluation package. 2026. \url{https://peereval-ai.github.io/}.
 \bibitem{selfpreference} Arena Team. Self-Preference of AI Judges. September 30, 2026. \href{https://arena.ai/blog/llm-judge-self-preference}{Article}.
 \bibitem{autoeval} Arena Team. Introducing AutoEval to the Arena leaderboards. July 30, 2026. \href{https://arena.ai/blog/autoeval-scores}{Article}.
 \end{thebibliography}
@@ -76,7 +76,7 @@ The \$50,000 gift will support graduate research (\$36,000, including applicable
 \textbf{Duration / funding:} 12 months from receipt of funding; \$50,000.
 
 \formq{3--5 sentence summary of proposed research}
-We propose human-calibrated peer evaluation to produce reliable LLM rankings from multiple model judges and limited human feedback. Building on PRD and PeerEval, we will calibrate peer competence weights against human preferences while correcting self-preference and correlated errors. A sequential policy will request additional model or human judgments when uncertainty could change a ranking. Using Arena battles, we will test preference prediction, ranking validity, and cost under shifts in time and model families. We will release methods, code, and reproducible audits showing when peer evaluation can complement human votes and AutoEval.
+We propose human-calibrated peer evaluation to produce reliable LLM rankings from multiple model judges and limited human feedback. We will extend PRD and PeerEval (\url{https://peereval-ai.github.io/}) with human-calibrated weights that correct self-preference and shared errors. A sequential policy will request additional model or human judgments when uncertainty could change a ranking. Using Arena battles, we will test preference prediction, ranking validity, and cost under shifts in time and model families. We will release methods, code, and reproducible audits showing when peer evaluation can complement human votes and AutoEval.
 
 \formq{Additional dataset access and why it is needed}
 We request approximately 10,000 de-identified recent text battles containing prompts, paired responses, stable model identifiers, human preference outcomes (including ties and both-bad), and coarse timestamps. Domain tags and repeated votes would support subgroup and ambiguity analyses. Recent battles enable transfer tests on new models and changing preferences. Public data support the core study; additional access would follow Arena's agreements and scoped research conditions.

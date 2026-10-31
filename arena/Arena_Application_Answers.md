@@ -42,7 +42,7 @@ PeerEval: Aligning LLM Peer Judgments with Human Preferences
 
 ## Three to five sentence summary of proposed research
 
-We propose human-calibrated peer evaluation to produce reliable LLM rankings from multiple model judges and limited human feedback. Building on PRD and PeerEval, we will calibrate peer competence weights against human preferences while correcting self-preference and correlated errors. A sequential policy will request additional model or human judgments when uncertainty could change a ranking. Using Arena battles, we will test preference prediction, ranking validity, and cost under shifts in time and model families. We will release methods, code, and reproducible audits showing when peer evaluation can complement human votes and AutoEval.
+We propose human-calibrated peer evaluation to produce reliable LLM rankings from multiple model judges and limited human feedback. We will extend PRD and PeerEval (https://peereval-ai.github.io/) with human-calibrated weights that correct self-preference and shared errors. A sequential policy will request additional model or human judgments when uncertainty could change a ranking. Using Arena battles, we will test preference prediction, ranking validity, and cost under shifts in time and model families. We will release methods, code, and reproducible audits showing when peer evaluation can complement human votes and AutoEval.
 
 ## Which Arena resources or support would be most relevant
 

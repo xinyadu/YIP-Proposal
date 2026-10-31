@@ -42,7 +42,7 @@ PeerEval: Learning Whose AI Judgments to Trust
 
 ## Three to five sentence summary of proposed research
 
-We will extend PRD, our framework in which language models review one another and iteratively update their influence, to learn judge weights directly from peer agreement. Building on PeerEval (https://peereval-ai.github.io/), the method scores each judge's agreement with judges from other model families and updates its weight until the panel stabilizes. We will study convergence, shared biases, and transfer to new questions and models. Arena's human votes will test the results, rather than set the main method's weights. Outputs will include a paper, an open-source tool, and reproducible evaluation reports.
+We propose to use mutual agreement to determine how much influence each AI judge receives. A panel compares anonymous answer pairs, scores each judge's agreement with other model families, and repeatedly updates normalized weights. The final weights produce collective preferences and model rankings through our PeerEval platform (https://peereval-ai.github.io/). We will analyze convergence and shared biases, then test accuracy and transfer on Arena data with human votes held out for evaluation. Outputs will include a paper, open-source code, and reproducible evaluation reports.
 
 ## Which Arena resources or support would be most relevant
 
@@ -59,7 +59,7 @@ We request up to 10,000 recent, de-identified text battles with prompts, paired 
 
 ## Expected outputs
 
-A paper on iterative peer weighting, its assumptions, and failure cases; an open-source PeerEval extension; and reproducible evaluations of preference prediction, model rankings, transfer, stability, and cost. We will release permitted judgments and analysis code, with restricted data governed by the access agreement. We welcome a joint blog post or talk with Arena.
+A paper on mutual-agreement weighting, its assumptions, and failure cases; an open-source implementation in PeerEval; and reproducible evaluations of preference prediction, model rankings, transfer, stability, and cost. We will release permitted judgments and analysis code, with restricted data governed by the access agreement. We welcome a joint blog post or talk with Arena.
 
 ## Expected project duration
 

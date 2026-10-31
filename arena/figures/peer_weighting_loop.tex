@@ -31,7 +31,7 @@
 \node[font=\fontsize{8.4}{9}\selectfont] at (0.50,0.98) {GPT};
 \node[font=\fontsize{8.4}{9}\selectfont] at (1.45,0.98) {Claude};
 \node[font=\fontsize{8.4}{9}\selectfont] at (2.40,0.98) {Gemini};
-\node[text=muted,font=\fontsize{8}{9.2}\selectfont,align=center] at (1.45,0.54) {PRD: answer writers\\and reviewers};
+\node[text=muted,font=\fontsize{8}{9.2}\selectfont,align=center] at (1.45,0.54) {Review anonymous\\answer pairs};
 \draw[line] (2.9,1.15) -- (3.40,1.15);
 
 % Rows are anonymous answer pairs; columns are reviewers. No empirical values.
@@ -60,11 +60,11 @@
 \draw[box,fill=ink!2] (10.25,0.25) rectangle (16.0,2.05);
 \node[align=center] at (13.12,1.15) {Compare anonymous answers\\[3pt]Compute model scores and rankings};
 
-% The two rows are alternative update rules, not a claim about original PRD.
+% The feedback loop uses only mutual agreement among model families.
 \node[box,draw=teal,fill=teal!5,text width=9.45cm,inner sep=4pt,
   font=\fontsize{8.5}{10.5}\selectfont,align=left] (update) at (10.70,-0.94)
-  {\textbf{PRD:} peer-assessed answer scores become the next judge weights.\\
-   \textbf{Proposed:} agreement with other families becomes the next judge weights.};
+  {\textbf{Score agreement} with judges from other model families.\\
+   \textbf{Update weights:} smooth and normalize the agreement scores.};
 \draw[loop] (15.65,0.25)--(15.65,-0.94)--(update.east);
 \draw[loop] (update.west)--(5.55,-0.94)--(5.55,-0.28)--(8.60,-0.28)--(8.60,0.25);
 \node[text=teal,font=\fontsize{8}{9}\selectfont,anchor=west] at (0,-0.88) {Start equal; normalize and repeat.};

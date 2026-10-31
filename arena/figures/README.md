@@ -1,10 +1,9 @@
 # Peer-weighting figure
 
-The figure adapts the structure of Figure 1 in PRD to explain the shared
-weighting loop and distinguish two update rules:
-
-- Original PRD uses each model's peer-assessed answer score as its next reviewer weight.
-- The proposed extension uses a judge's agreement with judges from other model families.
+The figure explains the proposed mutual-agreement weighting loop. Models review
+anonymous answer pairs, their votes produce weighted decisions, and each judge's
+agreement with judges from other model families determines its next weight.
+Weights start equal and are smoothed and normalized after each update.
 
 The matrix is schematic and contains no experimental results. The depicted
 providers illustrate a panel, not the final choice of models. Human votes are

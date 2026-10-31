@@ -23,46 +23,46 @@
 \titlespacing*{\section}{0pt}{7pt}{3pt}
 \newcommand{\hd}[1]{\ifhmode\par\fi\addvspace{4pt}\noindent\textbf{#1}\hspace{0.35em}}
 \newcommand{\formq}[1]{\par\addvspace{5pt}\noindent\textbf{#1}\par\nopagebreak\noindent\ignorespaces}
-\hypersetup{pdftitle={PeerEval: Learning Whose AI Judgments to Trust},pdfauthor={Xinya Du}}
+\hypersetup{pdftitle={PeerEval: Reliable Peer Evaluation among AI Models},pdfauthor={Xinya Du}}
 \begin{document}
 \begin{center}
-{\large\bfseries PeerEval: Learning Whose AI Judgments to Trust\par}
+{\large\bfseries PeerEval: Reliable Peer Evaluation among AI Models\par}
 \vspace{2pt}
 Xinya Du, The University of Texas at Dallas\par
 Arena Academic Partnerships Program, Fall 2026 \quad 12 months \quad \$50,000\par
 \end{center}
 
 \section*{Research objective}
-AI judges compare answers and decide which is better, but they can favor their own model family. Arena found a 37-percentage-point gap between three same-provider judges' preferences for their family and human votes \citep{selfpreference}. \textbf{We propose to use mutual agreement to determine how much influence each AI judge receives.} A panel repeatedly scores each judge's agreement with other model families and updates its weight. The scientific question is when this feedback loop identifies useful judges and when it amplifies a shared bias.
+\textbf{We propose a peer-evaluation framework in which AI models review one another's answers and collectively assess their quality.} Reviewers can share biases: Arena found a 37-percentage-point gap between three same-provider judges' preferences for their family and human votes \citep{selfpreference}. We use mutual agreement to learn how much influence each reviewer should have within this framework. The central question is when peer evaluation produces reliable answer comparisons and model rankings despite shared biases.
 
-\section*{Proposed method and preliminary evidence}
-Several language models review the same anonymous answer pairs. We start with equal judge weights and combine their votes into collective preferences. Each judge then receives an agreement score based on how consistently its votes match the weighted votes of judges from other model families. We smooth and normalize these scores to obtain the next weights, and repeat the calculation until weights stabilize or reach an iteration limit. The final weights determine answer preferences and model rankings. Judge influence is learned from peer reviews, with human votes held out to evaluate the results.
+\section*{Peer-evaluation framework and preliminary evidence}
+Models contribute answers and peer reviews. Reviewers compare anonymous answer pairs, and their votes are combined into answer-quality decisions and model rankings. The panel starts with equal reviewer weights. We score each reviewer's agreement with the weighted votes of reviewers from other model families, smooth and normalize these scores, and use them to update reviewer influence. The collective evaluation is then recomputed. This repeats until weights stabilize or reach an iteration limit. Human votes are held out to test the quality of the resulting peer evaluations.
 
 Our prior peer-evaluation work \citep{prd} and \href{https://peereval-ai.github.io/}{PeerEval leaderboard and tool} \citep{peereval} provide the infrastructure for the project. A pilot covers 1,179 human-labeled battles with four judges. On 794 crowd battles, agreement weighting matched 67.8\% of votes, versus 65.7\% for equal weighting. These exploratory results motivate testing when agreement is useful evidence and when it repeats a shared bias.
 
 \begin{center}
 \includegraphics[width=\textwidth]{figures/peer_weighting_loop.pdf}
-\captionof{figure}{\textbf{Proposed mutual-agreement weighting.} Judges compare anonymous answers. Their agreement with judges from other model families determines the next weights, which are used to recompute collective preferences and rankings. Each iteration reuses the collected reviews. Icons illustrate model families.}
+\captionof{figure}{\textbf{Peer evaluation among AI models.} Peers review anonymous answers and combine their judgments into quality assessments and rankings. Mutual agreement with other model families updates each reviewer's influence within this process. Each iteration reuses the collected reviews. Icons illustrate model families.}
 \label{fig:loop}
 \end{center}
 
 \hd{Project scope and requested support.}
-Months 1--3 will establish data and baselines; months 4--8 will develop the agreement loop; months 9--12 will complete transfer tests and release a paper, code, and evaluation reports. The \$50,000 gift allocates \$36,000 to graduate research, including fringe and tuition; \$10,000 to APIs and computing; and \$4,000 to evaluation annotations. At maximum scale, 10,000 pairs $\times$ eight judges $\times$ two orders require 160,000 judging calls; pilot costs will set the affordable scale. Results will complement Arena's voting and AutoEval \citep{autoeval}.
+Months 1--3 will establish data and baselines; months 4--8 will develop the peer-evaluation methods; months 9--12 will complete transfer tests and release a paper, code, and evaluation reports. The \$50,000 gift allocates \$36,000 to graduate research, including fringe and tuition; \$10,000 to APIs and computing; and \$4,000 to evaluation annotations. At maximum scale, 10,000 pairs $\times$ eight judges $\times$ two orders require 160,000 judging calls; pilot costs will set the affordable scale. Results will complement Arena's voting and AutoEval \citep{autoeval}.
 
 \newpage
 \section*{Research approach}
-\hd{1. Update judge weights from mutual agreement.}
-Six to eight judges from different families will review anonymous answer pairs in both display orders, choosing A, B, tie, or both bad. We will align the orders and average each judge's votes. At iteration $t$, judge $i$ receives an agreement score $a_i^{(t)}$: its mean agreement with the weighted votes of judges \emph{outside its own model family}. This comparison excludes the judge's own vote and family. Starting from equal weights, we update
+\hd{1. Learn reviewer influence within peer evaluation.}
+Six to eight peer reviewers from different model families will compare anonymous answer pairs in both display orders, choosing A, B, tie, or both bad. We will align the orders and average each reviewer's votes. At iteration $t$, reviewer $i$ receives an agreement score $a_i^{(t)}$: its mean agreement with the weighted votes of reviewers \emph{outside its own model family}. This comparison excludes the reviewer's own vote and family. Starting from equal weights, we update
 \[
 w_i^{(t+1)}=(1-\eta)w_i^{(t)}+
 \eta\,\frac{\varepsilon+a_i^{(t)}}{\sum_j(\varepsilon+a_j^{(t)})},
 \]
-where $0<\eta\le1$ controls how quickly weights change and $\varepsilon>0$ keeps every judge eligible. We stop when weights stabilize or reach a fixed iteration limit. The final weighted votes determine answer preferences and model rankings. No human labels enter these updates.
+where $0<\eta\le1$ controls how quickly weights change and $\varepsilon>0$ keeps every reviewer eligible. We stop when weights stabilize or reach a fixed iteration limit. The final weighted reviews determine answer preferences and model rankings. No human labels enter these updates.
 
-\hd{2. Determine when the weighting loop is reliable.}
+\hd{2. Establish when peer evaluation is reliable.}
 Agreement can reward a shared mistake, so we will study what prevents a group of similar judges from reinforcing itself. We will compare ordinary agreement, agreement excluding a judge's own family, and a version that limits any one family's total influence. We will analyze convergence, sensitivity to initialization, and how many correlated judges it takes to change a decision. Peer-assessed answer-quality weights \citep{prd} and a fixed combination of answer quality and agreement will serve as comparisons. These tests separate the benefit of the update rule from simply adding more judges.
 
-\hd{3. Test whether peer weights transfer to new questions and models.}
+\hd{3. Transfer peer evaluations to new questions and models.}
 We will construct weights on development prompts, freeze them for unseen prompts, and compare this with recomputing weights on new unlabeled prompts. Later time windows and new answer-model families will test transfer. We will bootstrap questions and remove one judge family at a time to measure how stable the resulting rankings are. Instability will flag a result for additional review; we will test whether this flag predicts disagreement with people. For the proposed method, human votes are used only for evaluation.
 
 \section*{Evaluation, outputs, and feasibility}
@@ -85,23 +85,23 @@ We will use up to 10,000 public and, subject to agreement, recent Arena battles.
 \noindent\textbf{Applicant:} Xinya Du; Assistant Professor of Computer Science; The University of Texas at Dallas; Richardson, Texas; Department of Computer Science.\\
 \textbf{Email:} \href{mailto:xinya.du@utdallas.edu}{xinya.du@utdallas.edu}. \textbf{Website:} \url{https://xinyadu.github.io/}.\\
 \textbf{Publications:} \url{https://xinyadu.github.io/publications.html}.\\
-\textbf{Project title:} PeerEval: Learning Whose AI Judgments to Trust.\\
+\textbf{Project title:} PeerEval: Reliable Peer Evaluation among AI Models.\\
 \textbf{Duration / funding:} 12 months from receipt of funding; \$50,000.
 
 \formq{3--5 sentence summary of proposed research}
-We propose to use mutual agreement to determine how much influence each AI judge receives. A panel compares anonymous answer pairs, scores each judge's agreement with other model families, and repeatedly updates normalized weights. The final weights produce collective preferences and model rankings through our PeerEval platform (\url{https://peereval-ai.github.io/}). We will analyze convergence and shared biases, then test accuracy and transfer on Arena data with human votes held out for evaluation. Outputs will include a paper, open-source code, and reproducible evaluation reports.
+We propose a peer-evaluation framework in which AI models review one another's answers and collectively assess their quality. Mutual agreement determines how much influence each reviewer receives, with weights updated from consistency with reviewers in other model families. The framework produces answer preferences and model rankings through our PeerEval platform (\url{https://peereval-ai.github.io/}). We will study when peer evaluation is reliable and test accuracy, bias, and transfer on Arena data with human votes held out for evaluation. Outputs will include a paper, an open-source peer-evaluation tool, and reproducible evaluation reports.
 
 \formq{Additional dataset access and why it is needed}
 We request up to 10,000 recent, de-identified text battles with prompts, paired responses, model identifiers, preference outcomes including ties and both-bad, coarse timestamps, and per-vote display order. Randomization metadata and repeated independent votes on the same response pairs in both orders, where available, would help separate order effects from preference ambiguity. Recent battles enable tests on new models and changing preferences. Public data support the core study; additional access would follow Arena's agreements.
 
 \formq{Expected outputs (paper, dataset, code release, etc.)}
-A paper on mutual-agreement weighting, its assumptions, and failure cases; an open-source implementation in PeerEval; and reproducible evaluations of preference prediction, model rankings, transfer, stability, and cost. We will release permitted judgments and analysis code, with restricted data governed by the access agreement. We welcome a joint blog post or talk with Arena.
+A paper on peer evaluation, its reliability, and failure cases; an open-source implementation in PeerEval; and reproducible evaluations of preference prediction, model rankings, transfer, stability, and cost. We will release permitted judgments and analysis code, with restricted data governed by the access agreement. We welcome a joint blog post or talk with Arena.
 
 \formq{Brief budget explanation (3--5 sentences)}
 Approximately \$36,000 will support graduate research, including applicable fringe and tuition. Model APIs and computing will receive \$10,000, with pilot costs determining the final panel and sample size. Independent evaluation annotations will receive \$4,000. Allocations will follow UTD requirements; no indirect costs are included unless required by institutional policy.
 
 \formq{Why is this work relevant to Arena?}
-Arena's self-preference findings show why a panel needs more than a simple vote, while its human preferences provide a strong independent test of AI judges. Our project will determine whether models can learn useful evaluation weights from their own peer reviews and when that process reinforces bias. The results could complement AutoEval, support evaluation of newly released models, and identify unstable rankings that warrant further review.
+Arena's self-preference findings show why peer evaluation needs to account for reviewer biases, while its human preferences provide a strong independent test of AI reviews. Our project will test when peer evaluation produces reliable answer comparisons and model rankings, using mutual agreement to learn reviewer influence. The results could complement AutoEval, support evaluation of newly released models, and identify unstable rankings that warrant further review.
 
 \formq{Requested resources and proposal link}
 Arena datasets; collaboration with Arena researchers. Joint publicity: Yes. Proposal: \href{https://github.com/xinyadu/YIP-Proposal/blob/main/arena/Arena_Proposal_2page.pdf}{two-page submission PDF on GitHub}.

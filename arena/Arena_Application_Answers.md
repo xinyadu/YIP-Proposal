@@ -38,11 +38,11 @@ Yes
 
 ## Project title
 
-PeerEval: Learning Whose AI Judgments to Trust
+PeerEval: Reliable Peer Evaluation among AI Models
 
 ## Three to five sentence summary of proposed research
 
-We propose to use mutual agreement to determine how much influence each AI judge receives. A panel compares anonymous answer pairs, scores each judge's agreement with other model families, and repeatedly updates normalized weights. The final weights produce collective preferences and model rankings through our PeerEval platform (https://peereval-ai.github.io/). We will analyze convergence and shared biases, then test accuracy and transfer on Arena data with human votes held out for evaluation. Outputs will include a paper, open-source code, and reproducible evaluation reports.
+We propose a peer-evaluation framework in which AI models review one another's answers and collectively assess their quality. Mutual agreement determines how much influence each reviewer receives, with weights updated from consistency with reviewers in other model families. The framework produces answer preferences and model rankings through our PeerEval platform (https://peereval-ai.github.io/). We will study when peer evaluation is reliable and test accuracy, bias, and transfer on Arena data with human votes held out for evaluation. Outputs will include a paper, an open-source peer-evaluation tool, and reproducible evaluation reports.
 
 ## Which Arena resources or support would be most relevant
 
@@ -59,7 +59,7 @@ We request up to 10,000 recent, de-identified text battles with prompts, paired 
 
 ## Expected outputs
 
-A paper on mutual-agreement weighting, its assumptions, and failure cases; an open-source implementation in PeerEval; and reproducible evaluations of preference prediction, model rankings, transfer, stability, and cost. We will release permitted judgments and analysis code, with restricted data governed by the access agreement. We welcome a joint blog post or talk with Arena.
+A paper on peer evaluation, its reliability, and failure cases; an open-source implementation in PeerEval; and reproducible evaluations of preference prediction, model rankings, transfer, stability, and cost. We will release permitted judgments and analysis code, with restricted data governed by the access agreement. We welcome a joint blog post or talk with Arena.
 
 ## Expected project duration
 
@@ -75,7 +75,7 @@ Approximately $36,000 will support graduate research, including applicable fring
 
 ## Why this work is relevant to Arena
 
-Arena's self-preference findings show why a panel needs more than a simple vote, while its human preferences provide a strong independent test of AI judges. Our project will determine whether models can learn useful evaluation weights from their own peer reviews and when that process reinforces bias. The results could complement AutoEval, support evaluation of newly released models, and identify unstable rankings that warrant further review.
+Arena's self-preference findings show why peer evaluation needs to account for reviewer biases, while its human preferences provide a strong independent test of AI reviews. Our project will test when peer evaluation produces reliable answer comparisons and model rankings, using mutual agreement to learn reviewer influence. The results could complement AutoEval, support evaluation of newly released models, and identify unstable rankings that warrant further review.
 
 ## Program acknowledgments
 

@@ -19,10 +19,10 @@
   box/.style={draw=ink!35,rounded corners=2pt,line width=0.5pt,fill=white,align=center}]
 \path[use as bounding box] (-0.1,-1.55) rectangle (16.1,2.7);
 
-\node[font=\bfseries] at (1.45,2.45) {LLM panel};
-\node[font=\bfseries] at (5.25,2.45) {Pairwise reviews};
-\node[font=\bfseries,align=center] at (8.6,2.45) {Current\\weights};
-\node[font=\bfseries] at (13.2,2.45) {Weighted decisions};
+\node[font=\bfseries] at (1.45,2.45) {Peer reviewers};
+\node[font=\bfseries] at (5.25,2.45) {Peer reviews};
+\node[font=\bfseries,align=center] at (8.6,2.45) {Reviewer\\weights};
+\node[font=\bfseries] at (13.2,2.45) {Peer-evaluation outcomes};
 
 \draw[box,fill=ink!2] (0,0.25) rectangle (2.9,2.05);
 \node at (0.50,1.48) {\includegraphics[width=0.48cm]{model_icons/openai.pdf}};
@@ -31,7 +31,7 @@
 \node[font=\fontsize{8.4}{9}\selectfont] at (0.50,0.98) {GPT};
 \node[font=\fontsize{8.4}{9}\selectfont] at (1.45,0.98) {Claude};
 \node[font=\fontsize{8.4}{9}\selectfont] at (2.40,0.98) {Gemini};
-\node[text=muted,font=\fontsize{8}{9.2}\selectfont,align=center] at (1.45,0.54) {Review anonymous\\answer pairs};
+\node[text=muted,font=\fontsize{8}{9.2}\selectfont,align=center] at (1.45,0.54) {Review one another's\\anonymous answers};
 \draw[line] (2.9,1.15) -- (3.40,1.15);
 
 % Rows are anonymous answer pairs; columns are reviewers. No empirical values.
@@ -58,13 +58,13 @@
 \draw[line] (9.50,1.15)--(10.20,1.15);
 
 \draw[box,fill=ink!2] (10.25,0.25) rectangle (16.0,2.05);
-\node[align=center] at (13.12,1.15) {Compare anonymous answers\\[3pt]Compute model scores and rankings};
+\node[align=center] at (13.12,1.15) {Assess answer quality\\[3pt]Rank the answer models};
 
-% The feedback loop uses only mutual agreement among model families.
+% Agreement-based weights refine reviewer influence within peer evaluation.
 \node[box,draw=teal,fill=teal!5,text width=9.45cm,inner sep=4pt,
   font=\fontsize{8.5}{10.5}\selectfont,align=left] (update) at (10.70,-0.94)
-  {\textbf{Score agreement} with judges from other model families.\\
-   \textbf{Update weights:} smooth and normalize the agreement scores.};
+  {\textbf{Reviewer weighting:} score agreement across model families.\\
+   \textbf{Refine influence:} smooth and normalize reviewer weights.};
 \draw[loop] (15.65,0.25)--(15.65,-0.94)--(update.east);
 \draw[loop] (update.west)--(5.55,-0.94)--(5.55,-0.28)--(8.60,-0.28)--(8.60,0.25);
 \node[text=teal,font=\fontsize{8}{9}\selectfont,anchor=west] at (0,-0.88) {Start equal; normalize and repeat.};

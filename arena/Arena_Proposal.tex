@@ -1,0 +1,96 @@
+% Arena Academic Partnerships Program Fall 2026
+% Formatting adapted from xinyadu/YIP-Proposal, ONR/predrag/main-full.tex.
+% Default: two-page proposal plus a third page of application form answers.
+% Submission copy: pdflatex -jobname=Arena_Proposal_2page '\def\proposalonly{1}\input{Arena_Proposal.tex}'
+% Compile each version twice. No external assets or bibliography files are needed.
+\documentclass[12pt,letterpaper]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{microtype}
+\usepackage[numbers,square,sort&compress]{natbib}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=black,urlcolor=black]{hyperref}
+\urlstyle{same}
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{0pt}
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{8pt}{3pt}
+\newcommand{\hd}[1]{\ifhmode\par\fi\addvspace{4pt}\noindent\textbf{#1}\hspace{0.35em}}
+\newcommand{\formq}[1]{\par\addvspace{5pt}\noindent\textbf{#1}\par\nopagebreak\noindent\ignorespaces}
+\hypersetup{pdftitle={PeerEval Aligning LLM Peer Judgments with Human Preferences},pdfauthor={Xinya Du}}
+\begin{document}
+\begin{center}
+{\large\bfseries PeerEval: Aligning LLM Peer Judgments with Human Preferences\par}
+\vspace{3pt}
+Xinya Du, The University of Texas at Dallas\par
+Arena Academic Partnerships Program, Fall 2026 \quad 12 months \quad \$50,000\par
+\end{center}
+
+\section*{Research objective and foundation}
+We will develop human-calibrated peer evaluation: a way to combine multiple LLM judges with limited human feedback to produce reliable model rankings. Arena's studies of judge self-preference and its AutoEval system motivate a central question: when does model consensus predict human preferences, and when does it amplify shared biases \citep{selfpreference,autoeval}? Our PRD method weights judges according to the quality of their own answers as assessed by peers \citep{prd}. Its implementation, PeerEval, already provides an open-source evaluation package and public leaderboard \citep{peereval}. The proposed advance is to turn peer competence into a starting point for human-aligned judging, then allocate additional judgments where they can improve ranking reliability.
+
+\section*{Research approach}
+\hd{1. Build independent peer evidence and a competence prior.}
+We will assemble six to eight judges from multiple model families. Each judge will independently evaluate anonymous response pairs in both display orders, choosing an A win, B win, tie, or both responses being bad. Order reversals will expose unstable judgments rather than silently counting them as independent votes. On a representative set of prompts, panel members will also generate answers and evaluate one another's responses. Applying PRD to these comparisons yields normalized peer weights, which measure answer competence before any human labels are used. We will exclude self-judgments and compare family-balanced panels with unrestricted panels. All answer-generation and judging calls used to construct the prior will count toward the evaluation budget.
+
+\hd{2. Calibrate judge influence with a small human reference set.}
+For each comparison, a judge's two order-normalized votes define a smoothed distribution over the four preference outcomes. We will fit a nonnegative weighted mixture of these distributions to human votes on a separate calibration split, with weights summing to one. A regularizer will shrink the fitted weights toward the PRD prior; its strength will be selected within the calibration data. Thus a capable answerer can retain influence when labels are scarce, but lose influence when its judgments systematically disagree with people. We will compare this estimator with a uniform mixture and the same human-fitted mixture without the peer prior. Label-budget curves will reveal whether PRD improves sample efficiency or merely adds inference cost. Ties and both-bad outcomes will remain distinct during fitting and scoring.
+
+\hd{3. Correct shared errors and test where calibration transfers.}
+High agreement among related judges can overstate the amount of independent evidence. We will estimate co-errors against human outcomes on the calibration split and test a covariance penalty that discourages redundant judge influence. Self-exclusion, family balancing, and this penalty will be evaluated separately and together, so gains can be attributed to specific corrections. Where sufficient data exist, domain-specific weights will shrink toward a shared global mixture rather than being fitted independently. Prompt-disjoint audit sets, later time windows, and held-out answer-model families will test whether the weights track judgment quality beyond the examples used to learn them. Audit labels will never enter weight fitting or judge prompts.
+
+\newpage
+\hd{4. Acquire additional judgments when they can change a ranking.}
+Evaluation will begin with a small, family-diverse panel. We will estimate uncertainty in pairwise outcomes and aggregate model ranks using prompt-level bootstrap resampling that refits the calibration weights. Comparisons with uncertain outcomes and substantial influence on unresolved rank orderings will receive priority for another judge. To estimate ranking influence, we will recompute orderings under plausible alternative outcomes and prioritize comparisons that can resolve an uncertain ordering. If disagreement persists across families or a new model falls outside the calibration distribution, the policy can request a human vote. Thresholds and stopping rules will be chosen on an acquisition pool, then frozen before the final audit. Random exploration with logged selection probabilities and inverse-probability weighting will account for selective sampling; a minimum exploration rate will keep every eligible comparison selectable. At matched total costs, we will compare this policy with random allocation and a complete panel. We will track dollars, model calls, and human votes separately, so savings in calls accompanied by disproportionate human effort will not count as an efficiency gain. Every calibration or acquired human vote will count toward the human-label budget.
+
+\section*{Evaluation and deliverables}
+We will target approximately 10,000 Arena text battles, using public data for the core study and recent data subject to agreement. Human-label budgets of 0, 50, 100, 250, and 500 comparisons will support comparisons with single judges, uniform panels, original PRD, and human-calibrated mixtures without a peer prior. Primary outcomes are held-out preference log loss, Kendall correlation with human model rankings, and total evaluation cost. Bias audits and repeated human annotations will measure self-preference and preference ambiguity. We target improved calibration at equal cost and at least 25\% fewer judge calls than a complete panel at matched ranking agreement. Failures and uncertainty will be reported alongside gains.
+
+Months 1--3 will establish data and baselines; months 4--6 will develop calibration; months 7--9 will evaluate acquisition and transfer; months 10--12 will complete the paper, open-source PeerEval extension, and reproducible benchmark report. Releases will include permitted judgments and analysis scripts, with restricted data governed by Arena's agreement.
+
+\hd{Requested support and value to Arena.}
+The \$50,000 gift will support graduate research (\$36,000, including applicable fringe and tuition), model APIs and computing (\$10,000), and human annotations (\$4,000), subject to UTD requirements. The study will identify when peer judgments can complement human voting and AutoEval, and when additional human review is needed.
+
+\begingroup
+\footnotesize
+\begin{thebibliography}{9}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\bibitem{prd} Li R, Patel T, Du X. PRD Peer Rank and Discussion Improve Large Language Model based Evaluations. TMLR, 2024. \href{https://arxiv.org/abs/2307.02762}{Paper}.
+\bibitem{peereval} PeerEval. Leaderboard, project blog, and open-source evaluation package. 2026. \href{https://peereval-ai.github.io/blog.html}{Project}.
+\bibitem{selfpreference} Arena Team. Self-Preference of AI Judges. September 30, 2026. \href{https://arena.ai/blog/llm-judge-self-preference}{Article}.
+\bibitem{autoeval} Arena Team. Introducing AutoEval to the Arena leaderboards. July 30, 2026. \href{https://arena.ai/blog/autoeval-scores}{Article}.
+\end{thebibliography}
+\endgroup
+
+\ifdefined\proposalonly\else
+\newpage
+\section*{Application form answers}
+\noindent\textbf{Applicant:} Xinya Du; Assistant Professor of Computer Science; The University of Texas at Dallas; Richardson, Texas; Department of Computer Science.\\
+\textbf{Email:} \href{mailto:xinya.du@utdallas.edu}{xinya.du@utdallas.edu}. \textbf{Website:} \url{https://xinyadu.github.io/}.\\
+\textbf{Publications:} \url{https://xinyadu.github.io/publications.html}.\\
+\textbf{Project title:} PeerEval: Aligning LLM Peer Judgments with Human Preferences.\\
+\textbf{Duration / funding:} 12 months from receipt of funding; \$50,000.
+
+\formq{3--5 sentence summary of proposed research}
+We propose human-calibrated peer evaluation to produce reliable LLM rankings from multiple model judges and limited human feedback. Building on PRD and PeerEval, we will calibrate peer competence weights against human preferences while correcting self-preference and correlated errors. A sequential policy will request additional model or human judgments when uncertainty could change a ranking. Using Arena battles, we will test preference prediction, ranking validity, and cost under shifts in time and model families. We will release methods, code, and reproducible audits showing when peer evaluation can complement human votes and AutoEval.
+
+\formq{Additional dataset access and why it is needed}
+We request approximately 10,000 de-identified recent text battles containing prompts, paired responses, stable model identifiers, human preference outcomes (including ties and both-bad), and coarse timestamps. Domain tags and repeated votes would support subgroup and ambiguity analyses. Recent battles enable transfer tests on new models and changing preferences. Public data support the core study; additional access would follow Arena's agreements and scoped research conditions.
+
+\formq{Expected outputs (paper, dataset, code release, etc.)}
+A research paper; an open-source PeerEval extension for calibrated judge weighting and sequential evaluation; and a reproducible benchmark report on preference prediction, rankings, bias, uncertainty, and costs. We will release permitted judgments, configurations, and analysis scripts. Restricted data will remain subject to its access agreement. We welcome a joint blog post or talk with Arena.
+
+\formq{Brief budget explanation (3--5 sentences)}
+Approximately \$36,000 will provide partial graduate research support, including applicable fringe and tuition, for method development, experiments, and the code release. Model API access and computing will receive \$10,000. The remaining \$4,000 will support repeated human annotations and targeted audits. Allocations will follow UTD requirements; no indirect costs are included unless required by institutional policy.
+
+\formq{Why is this work relevant to Arena?}
+Arena needs scalable automated evaluations grounded in human preferences. Our project tests how to combine model judges without amplifying shared biases, and how limited human feedback can improve ranking reliability per dollar. Transfer experiments will test usefulness for new models and changing tasks. The methods and audits could inform when peer judgments should supplement human votes and AutoEval, and when more human review is needed.
+
+\formq{Requested resources and proposal link}
+Arena datasets; collaboration with Arena researchers. Joint publicity: Yes. Proposal: \href{https://github.com/xinyadu/YIP-Proposal/blob/main/arena/Arena_Proposal_2page.pdf}{two-page submission PDF on GitHub}.
+\fi
+\end{document}

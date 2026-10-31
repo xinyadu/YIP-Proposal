@@ -1,0 +1,73 @@
+% Compile in this directory after converting the SVG icons to PDF (see README.md).
+\documentclass[tikz,border=3pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{amsmath,graphicx}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\renewcommand{\familydefault}{\sfdefault}
+\definecolor{ink}{RGB}{35,46,61}
+\definecolor{muted}{RGB}{90,101,117}
+\definecolor{teal}{RGB}{26,116,104}
+\definecolor{peach}{RGB}{239,212,192}
+\definecolor{mint}{RGB}{215,235,225}
+\definecolor{lavender}{RGB}{224,226,247}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,font=\sffamily\fontsize{9}{10.2}\selectfont,
+  text=ink,>=Stealth,
+  line/.style={-{Stealth[length=2.3mm]},draw=ink,line width=0.75pt},
+  loop/.style={-{Stealth[length=2.3mm]},draw=teal,line width=1.0pt},
+  box/.style={draw=ink!35,rounded corners=2pt,line width=0.5pt,fill=white,align=center}]
+\path[use as bounding box] (-0.1,-1.55) rectangle (16.1,2.7);
+
+\node[font=\bfseries] at (1.45,2.45) {LLM panel};
+\node[font=\bfseries] at (5.25,2.45) {Pairwise reviews};
+\node[font=\bfseries,align=center] at (8.6,2.45) {Current\\weights};
+\node[font=\bfseries] at (13.2,2.45) {Weighted decisions};
+
+\draw[box,fill=ink!2] (0,0.25) rectangle (2.9,2.05);
+\node at (0.50,1.48) {\includegraphics[width=0.48cm]{model_icons/openai.pdf}};
+\node at (1.45,1.48) {\includegraphics[width=0.48cm]{model_icons/claude.pdf}};
+\node at (2.40,1.48) {\includegraphics[width=0.48cm]{model_icons/gemini.pdf}};
+\node[font=\fontsize{8.4}{9}\selectfont] at (0.50,0.98) {GPT};
+\node[font=\fontsize{8.4}{9}\selectfont] at (1.45,0.98) {Claude};
+\node[font=\fontsize{8.4}{9}\selectfont] at (2.40,0.98) {Gemini};
+\node[text=muted,font=\fontsize{8}{9.2}\selectfont,align=center] at (1.45,0.54) {PRD: answer writers\\and reviewers};
+\draw[line] (2.9,1.15) -- (3.40,1.15);
+
+% Rows are anonymous answer pairs; columns are reviewers. No empirical values.
+\fill[mint] (3.50,0.25) rectangle (4.60,2.05);
+\fill[peach] (4.60,0.25) rectangle (5.70,2.05);
+\fill[lavender] (5.70,0.25) rectangle (6.80,2.05);
+\draw[ink!35,line width=0.5pt] (3.50,0.25) rectangle (6.80,2.05);
+\foreach \x in {4.60,5.70}\draw[white,line width=1pt] (\x,0.25)--(\x,2.05);
+\foreach \y in {0.85,1.45}\draw[white,line width=1pt] (3.50,\y)--(6.80,\y);
+\foreach \x/\r in {4.05/1,5.15/2,6.25/3}{%
+  \node at (\x,1.75) {$v_{\r,1}$};
+  \node at (\x,1.15) {$v_{\r,2}$};
+  \node at (\x,0.55) {$v_{\r,3}$};}
+\node[text=muted,font=\fontsize{8}{9}\selectfont] at (5.15,0.0) {rows: answer pairs; columns: judges};
+\node[font=\Large] at (7.15,1.15) {$\times$};
+
+\fill[mint] (7.70,1.45) rectangle (9.50,2.05);
+\fill[peach] (7.70,0.85) rectangle (9.50,1.45);
+\fill[lavender] (7.70,0.25) rectangle (9.50,0.85);
+\draw[ink!35,line width=0.5pt] (7.70,0.25) rectangle (9.50,2.05);
+\node at (8.60,1.75) {$w_1^{(t)}$};
+\node at (8.60,1.15) {$w_2^{(t)}$};
+\node at (8.60,0.55) {$w_3^{(t)}$};
+\draw[line] (9.50,1.15)--(10.20,1.15);
+
+\draw[box,fill=ink!2] (10.25,0.25) rectangle (16.0,2.05);
+\node[align=center] at (13.12,1.15) {Compare anonymous answers\\[3pt]Compute model scores and rankings};
+
+% The two rows are alternative update rules, not a claim about original PRD.
+\node[box,draw=teal,fill=teal!5,text width=9.45cm,inner sep=4pt,
+  font=\fontsize{8.5}{10.5}\selectfont,align=left] (update) at (10.70,-0.94)
+  {\textbf{PRD:} peer-assessed answer scores become the next judge weights.\\
+   \textbf{Proposed:} agreement with other families becomes the next judge weights.};
+\draw[loop] (15.65,0.25)--(15.65,-0.94)--(update.east);
+\draw[loop] (update.west)--(5.55,-0.94)--(5.55,-0.28)--(8.60,-0.28)--(8.60,0.25);
+\node[text=teal,font=\fontsize{8}{9}\selectfont,anchor=west] at (0,-0.88) {Start equal; normalize and repeat.};
+\node[text=muted,font=\fontsize{8}{9}\selectfont,anchor=west] at (0,-1.30) {Reuse the same reviews at each update.};
+\end{tikzpicture}
+\end{document}

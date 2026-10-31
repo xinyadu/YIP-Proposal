@@ -1,66 +1,77 @@
 % Arena Academic Partnerships Program Fall 2026
-% Formatting adapted from xinyadu/YIP-Proposal, ONR/predrag/main-full.tex.
-% Default: two-page proposal plus one page of application form answers.
-% Submission: pdflatex -jobname=Arena_Proposal_2page '\def\proposalonly{1}\input{Arena_Proposal.tex}'
-% Compile twice. No external assets or bibliography files are needed.
+% Two-page proposal followed by a page of application answers.
+% Build figure: python figures/build_figure.py
+% Submission PDF: pdflatex -jobname=Arena_Proposal_2page '\def\proposalonly{1}\input{Arena_Proposal.tex}'
+% Working PDF: pdflatex Arena_Proposal.tex
+% Compile each twice. Figure source, vector output, and icon attribution are in figures/.
 \documentclass[12pt,letterpaper]{article}
 \usepackage[letterpaper,margin=1in]{geometry}
 \usepackage[T1]{fontenc}
-\usepackage{mathptmx}
+\usepackage{mathptmx,amsmath,graphicx}
 \usepackage[scaled=0.92]{helvet}
 \usepackage{microtype}
 \usepackage[numbers,square,sort&compress]{natbib}
-\usepackage{xcolor}
-\usepackage{titlesec}
+\usepackage{xcolor,titlesec}
+\usepackage[font=small,labelfont=bf,skip=3pt]{caption}
 \usepackage[colorlinks=true,citecolor=blue,linkcolor=black,urlcolor=black]{hyperref}
 \urlstyle{same}
 \setlength{\parindent}{1.5em}
 \setlength{\parskip}{0pt}
+\setlength{\abovedisplayskip}{5pt}
+\setlength{\belowdisplayskip}{5pt}
 \titleformat{\section}{\normalfont\large\bfseries}{\thesection}{0.6em}{}
-\titlespacing*{\section}{0pt}{8pt}{3pt}
+\titlespacing*{\section}{0pt}{7pt}{3pt}
 \newcommand{\hd}[1]{\ifhmode\par\fi\addvspace{4pt}\noindent\textbf{#1}\hspace{0.35em}}
 \newcommand{\formq}[1]{\par\addvspace{5pt}\noindent\textbf{#1}\par\nopagebreak\noindent\ignorespaces}
 \hypersetup{pdftitle={PeerEval: Learning Whose AI Judgments to Trust},pdfauthor={Xinya Du}}
 \begin{document}
 \begin{center}
 {\large\bfseries PeerEval: Learning Whose AI Judgments to Trust\par}
-\vspace{3pt}
+\vspace{2pt}
 Xinya Du, The University of Texas at Dallas\par
 Arena Academic Partnerships Program, Fall 2026 \quad 12 months \quad \$50,000\par
 \end{center}
 
 \section*{Research objective}
-AI models increasingly judge other AI models: they compare two answers and choose which is better. These verdicts make evaluation scalable, but consensus can reflect shared taste rather than users' preferences. In Arena's study, three judges from one provider rated their own model family 37 percentage points more favorably than human voters did \citep{selfpreference}. We propose \textbf{human-guided peer review}: a system that learns whose judgments deserve influence from peer evidence and limited human feedback, then identifies when collective judgment needs human review. The scientific question is how to distinguish useful collective expertise from mutually reinforcing bias.
+AI judges compare answers and decide which is better, but they can favor their own model family. Arena found a 37-percentage-point gap between three same-provider judges' preferences for their family and human votes \citep{selfpreference}. We will extend our \textbf{Peer Rank and Discussion (PRD)} framework so that a panel learns judge weights from repeated peer-agreement calculations. The aim is to make collective evaluation reliable using the models' own reviews, with human votes used to test the results.
 
-\section*{Foundation and preliminary evidence}
-Our PRD method makes every model both an answer writer and a reviewer: it ranks answers using peer judgments, then updates each judge's influence according to the quality of its own answers \citep{prd}. Our \href{https://peereval-ai.github.io/}{PeerEval platform} implements a working leaderboard and evaluation tool \citep{peereval}. A separate pilot covers 1,179 human-labeled battles with four judges. On 794 crowd battles, agreement-based weighting matched 67.8\% of human votes, versus 65.7\% for equal weighting. These exploratory results motivate the proposed advance: \textbf{learn how answer quality, peer agreement, and human feedback jointly determine which judgments to trust}.
+\section*{How PRD works, and what we will change}
+PRD gives each model two roles: answer writer and reviewer \citep{prd}. Models answer the same prompts and review anonymous pairs of answers. We start with equal reviewer weights, combine the reviews into answer scores, rescale and normalize each model's score, and use it as that model's reviewer weight in the next iteration. This repeats until the scores stabilize. PRD also lets reviewers discuss their disagreements. Its ranking rule assumes that a model that writes good answers is also a good judge; \textbf{we will instead test weights updated directly from agreement among judges}.
 
-\section*{Research approach}
-\hd{1. Infer judge reliability from complementary peer signals.}
-We will assemble six to eight judges from different model families. Each will compare anonymous answer pairs in both display orders, reporting an A win, B win, tie, or both answers being bad. Swapped judgments will be aligned to answer identity and averaged, preserving disagreement about the pair. On separate development prompts, we will construct two candidate signals: \emph{answer competence}, measured by how peers rate a model's own answers, and \emph{judgment agreement}, measured by consistency with judges from other families. We will compare both signals with equal weighting, exclude self-ratings, and smooth candidate weights so a weak answerer can still earn influence as a judge. Their ability to predict human preferences will be tested independently of the data used to construct them.
+Our \href{https://peereval-ai.github.io/}{PeerEval leaderboard and tool} implement this foundation \citep{peereval}. A pilot covers 1,179 human-labeled battles with four judges. On 794 crowd battles, agreement weighting matched 67.8\% of votes, versus 65.7\% for equal weighting. These exploratory results motivate studying when agreement is useful evidence and when it repeats a shared bias.
 
-\hd{2. Learn how much human evidence should change peer influence.}
-Using a total budget of 50 to 500 human-labeled comparisons for fitting and threshold selection, we will learn an interpretable combination of judge votes: each judge provides smoothed probabilities for the four outcomes, and nonnegative weights that sum to one determine its influence. Fitting initially favors a candidate peer weighting; calibration data determine which signal to retain and how strongly to retain it, including giving it no influence. Thus human evidence can retain useful peer expertise or override a misleading consensus. We will also penalize errors that judges repeatedly make together against human votes, reducing the influence of redundant opinions. For example, three related judges that favor elaborate answers rejected by people should contribute less than three independent endorsements. Comparisons with calibration from equal starting weights will isolate the value of peer evidence. Label-budget curves will show when peer signals reduce the human feedback needed for reliable evaluation.
+\begin{center}
+\includegraphics[width=\textwidth]{figures/peer_weighting_loop.pdf}
+\captionof{figure}{\textbf{Peer evaluation as an iterative weighting loop.} Original PRD feeds answer-quality scores back into reviewer weights. Our proposed extension uses agreement with other model families. Each iteration reuses the collected reviews; it does not require a new round of model calls. Icons illustrate model families.}
+\label{fig:loop}
+\end{center}
+
+\hd{Project scope and requested support.}
+Months 1--3 will reproduce PRD and establish data; months 4--8 will develop the agreement loop; months 9--12 will complete transfer tests and release a paper, code, and evaluation reports. The \$50,000 gift allocates \$36,000 to graduate research, including fringe and tuition; \$10,000 to APIs and computing; and \$4,000 to evaluation annotations. At maximum scale, 10,000 pairs $\times$ eight judges $\times$ two orders require 160,000 judging calls; pilot costs will set the affordable scale. Results will complement Arena's voting and AutoEval \citep{autoeval}.
 
 \newpage
-\hd{3. Identify when collective judgment requires human review.}
-A calibrated panel will also provide an interpretable reliability check. We will measure disagreement across model families, sensitivity to leaving out one family, and how different a comparison is from the calibration prompts. Using separate validation data, we will set thresholds that flag cases where confident-looking agreement has repeatedly failed to match human preferences. This directly addresses the failure that agreement alone cannot reveal: several judges can endorse the same answer for the same unhelpful reason. We will test the flagging rule on unseen prompts, later time windows, and newly introduced answer-model families, measuring errors among accepted decisions and the human review required to resolve flagged cases.
+\section*{Research approach}
+\hd{1. Update judge weights from mutual agreement.}
+Six to eight judges from different families will review anonymous answer pairs in both display orders, choosing A, B, tie, or both bad. We will align the orders and average each judge's votes. At iteration $t$, judge $i$ receives an agreement score $a_i^{(t)}$: its mean agreement with the weighted votes of judges \emph{outside its own model family}. This comparison excludes the judge's own vote and family. Starting from equal weights, we update
+\[
+w_i^{(t+1)}=(1-\eta)w_i^{(t)}+
+\eta\,\frac{\varepsilon+a_i^{(t)}}{\sum_j(\varepsilon+a_j^{(t)})},
+\]
+where $0<\eta\le1$ controls how quickly weights change and $\varepsilon>0$ keeps every judge eligible. We stop when weights stabilize or reach a fixed iteration limit. The final weighted votes determine answer preferences and model rankings. No human labels enter these updates.
 
-On held-out data, we will report how often the system makes an automatic decision and how often those accepted decisions disagree with people. Agreement that predicts low error will be retained; agreement that accompanies high error will trigger review. This converts a leaderboard from a single ordering into an auditable evaluation with a measured human workload. Separate tests of self-exclusion, family balancing, and the shared-error penalty will establish which corrections matter. As a follow-on extension, flagged comparisons that could change an uncertain model ordering will receive additional model or human judgments. This extension will retain random exploration, record selection probabilities, and correct for selective sampling. We will target 25\% fewer model calls than a complete panel at matched ranking agreement, counting all acquired human votes and prior-construction costs.
+\hd{2. Determine when the weighting loop is reliable.}
+Agreement can reward a shared mistake, so we will study what prevents a group of similar judges from reinforcing itself. We will compare ordinary agreement, agreement excluding a judge's own family, and a version that limits any one family's total influence. We will analyze convergence, sensitivity to initialization, and how many correlated judges it takes to change a decision. Original PRD's answer-quality weights and a fixed combination of answer quality and agreement will serve as comparisons. These tests separate the benefit of the new update rule from simply adding more judges.
+
+\hd{3. Test whether peer weights transfer to new questions and models.}
+We will construct weights on development prompts, freeze them for unseen prompts, and compare this with recomputing weights on new unlabeled prompts. Later time windows and new answer-model families will test transfer. We will bootstrap questions and remove one judge family at a time to measure how stable the resulting rankings are. Instability will flag a result for additional review; we will test whether this flag predicts disagreement with people. For the proposed method, human votes are used only for evaluation.
 
 \section*{Evaluation, outputs, and feasibility}
-We will target up to 10,000 Arena battles using public and, subject to agreement, recent data. Baselines cover single judges, equal weighting, original PRD, agreement weighting, and calibration without peer evidence. Outcomes are preference accuracy and log loss, agreement with human-derived model ranks (Kendall correlation), and cost, with paired bootstrap intervals that refit weights. Length-matched accuracy and an equal average over cases where people prefer longer versus shorter answers will diagnose dependence on length, alongside a longer-answer heuristic; these do not identify a causal effect. We will measure headroom over the strongest judge and use repeated votes across display orders to assess human disagreement. Shared blind spots and differing user preferences may limit gains.
-
-Months 1--3 will establish data and splits; months 4--8 will develop weighting and reliability checks; months 9--12 will complete transfer tests, a paper, an open-source PeerEval extension, and reproducible audits. Adaptive acquisition will follow the core results.
-
-\hd{Requested support and value to Arena.}
-The \$50,000 gift allocates \$36,000 to graduate research, including fringe and tuition; \$10,000 to APIs and computing; and \$4,000 to human annotations. At maximum scale, 10,000 pairs $\times$ eight judges $\times$ two orders require 160,000 judging calls; pilot costs, including prior construction, will determine the affordable scale. Results will identify peer signals that complement human voting and AutoEval \citep{autoeval} and cases warranting human review.
+We will use up to 10,000 public and, subject to agreement, recent Arena battles. Baselines include the strongest single judge, equal weighting, original PRD, static agreement weights, and weights fitted to limited human votes. We will measure preference accuracy, log loss, ranking agreement, stability, and cost, with paired bootstrap intervals that rerun the weighting loop. Length-matched tests, balanced longer/shorter-answer cases, and a length heuristic will check whether apparent gains come from verbosity. Repeated human votes and display-order metadata will help interpret disagreements. Shared biases may still limit gains; we will report those failure cases.
 
 \begingroup
 \footnotesize
 \begin{thebibliography}{9}
-\setlength{\itemsep}{0pt}
-\setlength{\parskip}{0pt}
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
 \bibitem{prd} Li R, Patel T, Du X. PRD: Peer Rank and Discussion Improve Large Language Model based Evaluations. TMLR, 2024. \href{https://arxiv.org/abs/2307.02762}{Paper}.
 \bibitem{peereval} PeerEval. \url{https://peereval-ai.github.io/}; \href{https://github.com/peereval-ai/peereval-ai.github.io/blob/main/figures_modified_du.json}{pilot results}. 2026.
 \bibitem{selfpreference} Arena Team. Self-Preference of AI Judges. September 30, 2026. \href{https://arena.ai/blog/llm-judge-self-preference}{Article}.
@@ -78,19 +89,19 @@ The \$50,000 gift allocates \$36,000 to graduate research, including fringe and 
 \textbf{Duration / funding:} 12 months from receipt of funding; \$50,000.
 
 \formq{3--5 sentence summary of proposed research}
-We propose human-guided peer review to learn which AI judges to trust when human feedback is scarce. Building on PeerEval (\url{https://peereval-ai.github.io/}), we will compare evidence from answer quality and agreement across judge families, then learn their influence from limited human votes. The method will flag cases where collective judgments need human review. Arena battles will support tests of preference prediction, ranking validity, superficial biases, and transfer to new models. Outputs will include a paper, an open-source tool, and reproducible audits of reliability and cost.
+We will extend PRD, our framework in which language models review one another and iteratively update their influence, to learn judge weights directly from peer agreement. Building on PeerEval (\url{https://peereval-ai.github.io/}), the method scores each judge's agreement with judges from other model families and updates its weight until the panel stabilizes. We will study convergence, shared biases, and transfer to new questions and models. Arena's human votes will test the results, rather than set the main method's weights. Outputs will include a paper, an open-source tool, and reproducible evaluation reports.
 
 \formq{Additional dataset access and why it is needed}
 We request up to 10,000 recent, de-identified text battles with prompts, paired responses, model identifiers, preference outcomes including ties and both-bad, coarse timestamps, and per-vote display order. Randomization metadata and repeated independent votes on the same response pairs in both orders, where available, would help separate order effects from preference ambiguity. Recent battles enable tests on new models and changing preferences. Public data support the core study; additional access would follow Arena's agreements.
 
 \formq{Expected outputs (paper, dataset, code release, etc.)}
-A research paper; an open-source PeerEval extension for judge weighting and reliability checks; and a reproducible report on preference prediction, rankings, bias, transfer, and cost. We will release permitted judgments and analysis code, with restricted data governed by the access agreement. We welcome a joint blog post or talk with Arena.
+A paper on iterative peer weighting, its assumptions, and failure cases; an open-source PeerEval extension; and reproducible evaluations of preference prediction, model rankings, transfer, stability, and cost. We will release permitted judgments and analysis code, with restricted data governed by the access agreement. We welcome a joint blog post or talk with Arena.
 
 \formq{Brief budget explanation (3--5 sentences)}
-Approximately \$36,000 will support graduate research, including applicable fringe and tuition. Model APIs and computing will receive \$10,000, with pilot costs determining the final panel and sample size. Human annotations and targeted audits will receive \$4,000. Allocations will follow UTD requirements; no indirect costs are included unless required by institutional policy.
+Approximately \$36,000 will support graduate research, including applicable fringe and tuition. Model APIs and computing will receive \$10,000, with pilot costs determining the final panel and sample size. Independent evaluation annotations will receive \$4,000. Allocations will follow UTD requirements; no indirect costs are included unless required by institutional policy.
 
 \formq{Why is this work relevant to Arena?}
-Arena's self-preference findings expose the risk of models reinforcing one another's biases, while AutoEval shows the value of automation grounded in human votes. Our project connects these findings by learning when peer evidence is useful and when human feedback must override it. The methods and audits could help Arena evaluate new models with limited labels, diagnose misleading consensus, and direct human review where it matters most.
+Arena's self-preference findings show why a panel needs more than a simple vote, while its human preferences provide a strong independent test of AI judges. Our project will determine whether models can learn useful evaluation weights from their own peer reviews and when that process reinforces bias. The results could complement AutoEval, support evaluation of newly released models, and identify unstable rankings that warrant further review.
 
 \formq{Requested resources and proposal link}
 Arena datasets; collaboration with Arena researchers. Joint publicity: Yes. Proposal: \href{https://github.com/xinyadu/YIP-Proposal/blob/main/arena/Arena_Proposal_2page.pdf}{two-page submission PDF on GitHub}.

@@ -42,7 +42,7 @@ PeerEval: Learning Whose AI Judgments to Trust
 
 ## Three to five sentence summary of proposed research
 
-We propose human-guided peer review to learn which AI judges to trust when human feedback is scarce. Building on PeerEval (https://peereval-ai.github.io/), we will compare evidence from answer quality and agreement across judge families, then learn their influence from limited human votes. The method will flag cases where collective judgments need human review. Arena battles will support tests of preference prediction, ranking validity, superficial biases, and transfer to new models. Outputs will include a paper, an open-source tool, and reproducible audits of reliability and cost.
+We will extend PRD, our framework in which language models review one another and iteratively update their influence, to learn judge weights directly from peer agreement. Building on PeerEval (https://peereval-ai.github.io/), the method scores each judge's agreement with judges from other model families and updates its weight until the panel stabilizes. We will study convergence, shared biases, and transfer to new questions and models. Arena's human votes will test the results, rather than set the main method's weights. Outputs will include a paper, an open-source tool, and reproducible evaluation reports.
 
 ## Which Arena resources or support would be most relevant
 
@@ -59,7 +59,7 @@ We request up to 10,000 recent, de-identified text battles with prompts, paired 
 
 ## Expected outputs
 
-A research paper; an open-source PeerEval extension for judge weighting and reliability checks; and a reproducible report on preference prediction, rankings, bias, transfer, and cost. We will release permitted judgments and analysis code, with restricted data governed by the access agreement. We welcome a joint blog post or talk with Arena.
+A paper on iterative peer weighting, its assumptions, and failure cases; an open-source PeerEval extension; and reproducible evaluations of preference prediction, model rankings, transfer, stability, and cost. We will release permitted judgments and analysis code, with restricted data governed by the access agreement. We welcome a joint blog post or talk with Arena.
 
 ## Expected project duration
 
@@ -71,11 +71,11 @@ $50,000
 
 ## Brief budget explanation
 
-Approximately $36,000 will support graduate research, including applicable fringe and tuition. Model APIs and computing will receive $10,000, with pilot costs determining the final panel and sample size. Human annotations and targeted audits will receive $4,000. Allocations will follow UTD requirements; no indirect costs are included unless required by institutional policy.
+Approximately $36,000 will support graduate research, including applicable fringe and tuition. Model APIs and computing will receive $10,000, with pilot costs determining the final panel and sample size. Independent evaluation annotations will receive $4,000. Allocations will follow UTD requirements; no indirect costs are included unless required by institutional policy.
 
 ## Why this work is relevant to Arena
 
-Arena's self-preference findings expose the risk of models reinforcing one another's biases, while AutoEval shows the value of automation grounded in human votes. Our project connects these findings by learning when peer evidence is useful and when human feedback must override it. The methods and audits could help Arena evaluate new models with limited labels, diagnose misleading consensus, and direct human review where it matters most.
+Arena's self-preference findings show why a panel needs more than a simple vote, while its human preferences provide a strong independent test of AI judges. Our project will determine whether models can learn useful evaluation weights from their own peer reviews and when that process reinforces bias. The results could complement AutoEval, support evaluation of newly released models, and identify unstable rankings that warrant further review.
 
 ## Program acknowledgments
 

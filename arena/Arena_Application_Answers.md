@@ -38,11 +38,11 @@ Yes
 
 ## Project title
 
-PeerEval: Aligning LLM Peer Judgments with Human Preferences
+PeerEval: Learning Whose AI Judgments to Trust
 
 ## Three to five sentence summary of proposed research
 
-We propose human-calibrated peer evaluation to produce reliable LLM rankings from multiple model judges and limited human feedback. We will extend PRD and PeerEval (https://peereval-ai.github.io/) with human-calibrated weights that correct self-preference and shared errors. A sequential policy will request additional model or human judgments when uncertainty could change a ranking. Using Arena battles, we will test preference prediction, ranking validity, and cost under shifts in time and model families. We will release methods, code, and reproducible audits showing when peer evaluation can complement human votes and AutoEval.
+We propose human-guided peer review to learn which AI judges to trust when human feedback is scarce. Building on PeerEval (https://peereval-ai.github.io/), we will compare evidence from answer quality and agreement across judge families, then learn their influence from limited human votes. The method will flag cases where collective judgments need human review. Arena battles will support tests of preference prediction, ranking validity, superficial biases, and transfer to new models. Outputs will include a paper, an open-source tool, and reproducible audits of reliability and cost.
 
 ## Which Arena resources or support would be most relevant
 
@@ -55,11 +55,11 @@ The core research uses offline evaluations. Platform experiments could be consid
 
 ## Dataset access beyond publicly available datasets
 
-We request approximately 10,000 de-identified recent text battles containing prompts, paired responses, stable model identifiers, human preference outcomes (including ties and both-bad), and coarse timestamps. Domain tags and repeated votes would support subgroup and ambiguity analyses. Recent battles enable transfer tests on new models and changing preferences. Public data support the core study; additional access would follow Arena's agreements and scoped research conditions.
+We request up to 10,000 recent, de-identified text battles with prompts, paired responses, model identifiers, preference outcomes including ties and both-bad, coarse timestamps, and per-vote display order. Randomization metadata and repeated independent votes on the same response pairs in both orders, where available, would help separate order effects from preference ambiguity. Recent battles enable tests on new models and changing preferences. Public data support the core study; additional access would follow Arena's agreements.
 
 ## Expected outputs
 
-A research paper; an open-source PeerEval extension for calibrated judge weighting and sequential evaluation; and a reproducible benchmark report on preference prediction, rankings, bias, uncertainty, and costs. We will release permitted judgments, configurations, and analysis scripts. Restricted data will remain subject to its access agreement. We welcome a joint blog post or talk with Arena.
+A research paper; an open-source PeerEval extension for judge weighting and reliability checks; and a reproducible report on preference prediction, rankings, bias, transfer, and cost. We will release permitted judgments and analysis code, with restricted data governed by the access agreement. We welcome a joint blog post or talk with Arena.
 
 ## Expected project duration
 
@@ -71,11 +71,11 @@ $50,000
 
 ## Brief budget explanation
 
-Approximately $36,000 will provide partial graduate research support, including applicable fringe and tuition, for method development, experiments, and the code release. Model API access and computing will receive $10,000. The remaining $4,000 will support repeated human annotations and targeted audits. Allocations will follow UTD requirements; no indirect costs are included unless required by institutional policy.
+Approximately $36,000 will support graduate research, including applicable fringe and tuition. Model APIs and computing will receive $10,000, with pilot costs determining the final panel and sample size. Human annotations and targeted audits will receive $4,000. Allocations will follow UTD requirements; no indirect costs are included unless required by institutional policy.
 
 ## Why this work is relevant to Arena
 
-Arena needs scalable automated evaluations grounded in human preferences. Our project tests how to combine model judges without amplifying shared biases, and how limited human feedback can improve ranking reliability per dollar. Transfer experiments will test usefulness for new models and changing tasks. The methods and audits could inform when peer judgments should supplement human votes and AutoEval, and when more human review is needed.
+Arena's self-preference findings expose the risk of models reinforcing one another's biases, while AutoEval shows the value of automation grounded in human votes. Our project connects these findings by learning when peer evidence is useful and when human feedback must override it. The methods and audits could help Arena evaluate new models with limited labels, diagnose misleading consensus, and direct human review where it matters most.
 
 ## Program acknowledgments
 
@@ -100,3 +100,4 @@ The three-page working copy contains the two-page proposal and an additional pag
 - PeerEval blog: https://peereval-ai.github.io/blog.html
 - Arena judge self-preference: https://arena.ai/blog/llm-judge-self-preference
 - Arena AutoEval: https://arena.ai/blog/autoeval-scores
+- PeerEval pilot summaries: https://github.com/peereval-ai/peereval-ai.github.io/blob/main/figures_modified_du.json
